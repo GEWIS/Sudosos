@@ -16,11 +16,21 @@ class User extends BaseModel
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'user_code',
+        'pincode',
+        'card_id',
     ];
 
     protected $guarded=[
-        "id"
+        "id",'balance', 'type',
+    ];
+
+    protected $rules = [
+        "user_code"     => "required|digits:5",
+        "pincode"    => "required|string|max:336",
+        "card_id" => "required|string|max:336",
+        "balance"    => "required|integer",
+        "type" => "required|digits:1|in:0,1,2,3",
     ];
 
     /**
@@ -29,6 +39,24 @@ class User extends BaseModel
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'pincode'
     ];
+
+    // Relations
+    public function externalUserData()
+    {
+        return $this->hasOne('App\Models\ExternalUser');
+    }
+
+    public function products(){
+        return $this->hasMany('App\Models\Product','owner_id');
+    }
+
+    public function storages(){
+        return $this->hasMany('App\Models\Storage','owner_id');
+    }
+
+    public function pointsOfSale(){
+        return $this->hasMany('App\Models\PointOfSale','owner_id');
+    }
 }

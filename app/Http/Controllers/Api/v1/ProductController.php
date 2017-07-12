@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 
 use Illuminate\Http\Request;
+use Swagger\Annotations\Schema;
 
 class ProductController extends Controller
 {
@@ -14,16 +15,6 @@ class ProductController extends Controller
         return Product::all();
     }
 
-    public function getProduct($id){
-        $product = Product::find($id);
-
-        if($product){
-            return response()->json($product,200);
-        } else {
-            return response()->json("No product found", 404);
-        }
-
-    }
 
     public function store(Request $request){
 
@@ -37,4 +28,52 @@ class ProductController extends Controller
             ],401);
         }
     }
+
+    public function getProduct($id){
+        $product = Product::find($id);
+
+        if($product){
+            return response()->json($product,200);
+        } else {
+            return response()->json("No product found", 404);
+        }
+
+    }
+
+    public function putProduct(Request $request, $id){
+        $product = Product::find($id);
+
+        if($product){
+            $product->save($request->all());
+            return response()->json("Product succesfully updated", 200);
+        }else{
+            return response()->json("Product not found", 404);
+        }
+
+    }
+
+    public function deleteProduct($id){
+        $product = Product::find($id);
+//        Schema::hasColumn()
+        if($product){
+            $product -> delete();
+            return response()->json("Product succesfully deleted", 200);
+        }else{
+            return response()->json("Product not found", 404);
+        }
+    }
+
+    public function putProductProperty($property, $value,  $id){
+        $product = Product::find($id);
+
+        if($product){
+            $product->$property = $value;
+            $product->save();
+            return response()->json("Product succesfully updated", 200);
+        }else{
+            return response()->json("Product not found", 404);
+        }
+
+    }
+
 }
