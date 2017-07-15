@@ -15,9 +15,14 @@ use Illuminate\Http\Request;
 
 Route::group(['namespace' => 'Api\v1', 'prefix' => 'v1'], function () {
     Route::get('products', 'ProductController@index');
-    Route::delete('products/{id}', 'ProductController@deleteProduct');
-    Route::get('products/{id}', 'ProductController@getProduct');
     Route::post('products', 'ProductController@store');
+    Route::get('products/{id}', 'ProductController@getProduct');
+    Route::put('products/{id}', 'ProductController@putProduct');
+    Route::delete('products/{id}', 'ProductController@deleteProduct');
+    Route::patch('products/{id}/reinstate', 'ProductController@reinstateProduct');
+    Route::get('products/{id}/{property}', 'ProductController@getProductProperty');
+    Route::patch('products/{id}/{property}', 'ProductController@patchProductProperty');
+
 
 });
 
