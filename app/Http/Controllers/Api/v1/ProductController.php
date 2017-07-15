@@ -12,7 +12,8 @@ class ProductController extends Controller
 {
 
     public function index(){
-        return Product::all();
+        $data = Product::all();
+        return $this->response($data,200, "Success");
     }
 
 
@@ -23,8 +24,7 @@ class ProductController extends Controller
         if($product->isValid()){
             return response()->json($product->id,200);
         }else {
-            return response()->json([
-                stat
+            return response()->json([$product->getErrors()
             ],401);
         }
     }
