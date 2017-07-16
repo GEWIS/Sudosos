@@ -49,6 +49,11 @@ class User extends BaseModel
         return $this->hasOne('App\Models\ExternalUser');
     }
 
+    public function GEWISMember()
+    {
+        return $this->hasOne('App\Models\GEWIS\Member', 'lidnr', 'user_code');
+    }
+
     public function products(){
         return $this->hasMany('App\Models\Product','owner_id');
     }
