@@ -37,12 +37,12 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'password_users',
         ],
 
-        'api' => [
+        'pos' => [
             'driver' => 'passport',
-            'provider' => 'users',
+            'provider' => 'pin_users',
         ],
     ],
 
@@ -64,15 +64,13 @@ return [
     */
 
     'providers' => [
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => App\User::class,
+        'password_users' => [
+            'driver' => 'hybrid',
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'users' => [
+             'driver' => 'pin',
+        ],
     ],
 
     /*

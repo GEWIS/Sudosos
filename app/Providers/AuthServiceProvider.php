@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Extensions\HybridUserProvider;
+use App\Extensions\PincodeUserProvider;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Laravel\Passport\Passport;
@@ -25,6 +28,15 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+
+        Auth::provider('hybrid', function ($app, array $config) {
+            return new HybridUserProvider();
+        });
+
+        Auth::provider('pin', function ($app, array $config) {
+            return new PincodeUserProvider();
+        });
+
 
         Passport::routes();
     }
