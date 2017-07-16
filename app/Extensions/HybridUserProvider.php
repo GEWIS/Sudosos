@@ -74,7 +74,7 @@ class HybridUserProvider implements UserProvider {
             try {
                 $decoded = JWT::decode($credentials['jwt_token'], $this->websiteToken, ['HS256']);
                 return User::where(['user_code' => $decoded['lidnr']])->first();
-            } catch (\UnexpectedValueException) {
+            } catch (\UnexpectedValueException $e) {
                 return null;
             }
         }
