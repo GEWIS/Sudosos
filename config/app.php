@@ -179,6 +179,7 @@ return [
 
         L5Swagger\L5SwaggerServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
+        Laravel\Passport\PassportServiceProvider::class,
     ],
 
     /*
