@@ -1,10 +1,20 @@
 <?php
 namespace App\Extensions;
 
+use App\Models\ExternalUser;
+use App\Models\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
+use \Firebase\JWT\JWT;
 
 class HybridUserProvider implements UserProvider {
+
+    protected $websiteToken;
+
+    public function __construct($websiteToken)
+    {
+        $this->websiteToken = $websiteToken;
+    }
 
     /**
      * Retrieve a user by their unique identifier.
@@ -14,7 +24,7 @@ class HybridUserProvider implements UserProvider {
      */
     public function retrieveById($identifier)
     {
-        // TODO: Implement retrieveById() method.
+        return User::find($identifier);
     }
 
     /**
@@ -49,7 +59,27 @@ class HybridUserProvider implements UserProvider {
      */
     public function retrieveByCredentials(array $credentials)
     {
-        // TODO: Implement retrieveByCredentials() method.
+        if (isset($credentials['user_code'])) {
+            return User::where(['user_code' => $credentials['user_code']])->first();
+        }
+
+        if (isset($credentials['email'])) {
+            $externalUser = ExternalUser::where(['email' => $credentials['email']])->first();
+            if ($externalUser !== null) {
+                return $externalUser->user;
+            }
+        }
+
+        if (isset($credentials['jwt_token'])) {
+            try {
+                $decoded = JWT::decode($credentials['jwt_token'], $this->websiteToken, ['HS256']);
+                return User::where(['user_code' => $decoded['lidnr']])->first();
+            } catch (\UnexpectedValueException) {
+                return null;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -61,6 +91,19 @@ class HybridUserProvider implements UserProvider {
      */
     public function validateCredentials(Authenticatable $user, array $credentials)
     {
-        // TODO: Implement validateCredentials() method.
+        // Website user
+        if (isset($credentials['jwt_token'])) {
+            try {
+                $decoded = JWT::decode($credentials['jwt_token'], $this->websiteToken, ['HS256']);
+                return $decoded['lidnr'] == $user->user_code;
+            } catch (\UnexpectedValueException $e) {
+                return null;
+            }
+        }
+
+        // External users
+        if (isset($credentials['password']) && $user->externalUserData !== null) {
+            return Hash::check($credentials['password'], $user->externaluserData->password);
+        }
     }
 }

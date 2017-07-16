@@ -30,7 +30,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Auth::provider('hybrid', function ($app, array $config) {
-            return new HybridUserProvider();
+            return new HybridUserProvider($config['jwt_secret']);
         });
 
         Auth::provider('pin', function ($app, array $config) {

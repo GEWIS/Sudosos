@@ -66,6 +66,7 @@ return [
     'providers' => [
         'password_users' => [
             'driver' => 'hybrid',
+            'jwt_secret' => env('GEWISWEB_JWT_SECRET')
         ],
 
         'users' => [
