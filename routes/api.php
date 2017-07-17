@@ -32,6 +32,15 @@ Route::group(['namespace' => 'Api\v1', 'prefix' => 'v1'], function () {
     Route::get('pointsofsale/{id}/{property}', 'PointOfSaleController@getPointOfSaleProperty');
     Route::put('pointsofsale/{id}/{property}', 'PointOfSaleController@putPointOfSaleProperty');
 
+    Route::get('storage', 'StorageController@index');
+    Route::post('storage', 'StorageController@store');
+    Route::get('storage/{id}', 'StorageController@getStorage');
+    Route::put('storage/{id}', 'StorageController@putStorage');
+    Route::delete('storage/{id}', 'StorageController@deleteStorage');
+    Route::put('storage/{id}/reinstate', 'StorageController@reinstateStorage');
+    Route::get('storage/{id}/{property}', 'StorageController@getStorageProperty');
+    Route::put('storage/{id}/{property}', 'StorageController@postStorageProperty');
+
 
 });
 

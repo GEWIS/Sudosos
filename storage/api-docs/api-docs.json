@@ -6,44 +6,963 @@
     },
     "basePath": "/api/v1",
     "paths": {
-        "/customer/{customerId}/rate": {
+        "/pointsofsale": {
             "get": {
-                "summary": "List customer rates",
-                "operationId": "getCustomerRates",
+                "tags": [
+                    "POS"
+                ],
+                "summary": "Returns all points of sale.",
+                "description": "Returns all points of sale.",
+                "operationId": "getAllPointsOfSale",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "POS"
+                ],
+                "summary": "Create a new point of sale.",
+                "description": "Create a new point of sale.",
+                "operationId": "createpointofsale",
+                "produces": [
+                    "application/json"
+                ],
                 "parameters": [
                     {
-                        "name": "customerId",
-                        "in": "path",
-                        "description": "Target customer.",
+                        "name": "Point of Sale",
+                        "in": "body",
+                        "description": "Model of the point of sale to store",
                         "required": true,
-                        "type": "integer"
+                        "schema": {
+                            "$ref": "#/definitions/inputPointOfSale"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Point of sale created"
                     },
+                    "400": {
+                        "description": "Invalid request"
+                    }
+                }
+            }
+        },
+        "/pointsofsale/{id}": {
+            "get": {
+                "tags": [
+                    "POS"
+                ],
+                "summary": "Returns point of sale by id.",
+                "description": "Returns a point of sale with a specified id.",
+                "operationId": "getpointofsale",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
                     {
-                        "name": "filter",
-                        "in": "query",
-                        "description": "Filter results based on query string value.",
-                        "required": false,
-                        "type": "string",
-                        "enum": [
-                            "active",
-                            "expired",
-                            "scheduled"
-                        ]
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of the point of sale",
+                        "required": true,
+                        "type": "string"
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "successful operation"
                     },
-                    "406": {
-                        "description": "not acceptable"
+                    "404": {
+                        "description": "Point of sale not found"
+                    }
+                }
+            }
+        },
+        "/products": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Returns all products.",
+                "description": "Returns all products.",
+                "operationId": "getAllProducts",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Create a new product.",
+                "description": "Create a new product.",
+                "operationId": "createProduct",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Product",
+                        "in": "body",
+                        "description": "Model of the product to store",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/inputProduct"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "successful operation"
                     },
-                    "500": {
-                        "description": "internal server error"
+                    "400": {
+                        "description": "Product invalid."
+                    }
+                }
+            }
+        },
+        "/products/{id}": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Returns product by id.",
+                "description": "Returns a product with a specified id.",
+                "operationId": "getProduct",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of the product",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "404": {
+                        "description": "Product not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Updates a product by id.",
+                "description": "Updates the product.",
+                "operationId": "updateProduct",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "request",
+                        "in": "path",
+                        "description": "Request body in JSON.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of the product",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Product succesfully deleted"
+                    },
+                    "400": {
+                        "description": "Product not valid"
+                    },
+                    "404": {
+                        "description": "Product not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Delete a product by id.",
+                "description": "Delete a product by id.",
+                "operationId": "deleteProduct",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of the product",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Product succesfully deleted."
+                    },
+                    "404": {
+                        "description": "Product not found."
+                    }
+                }
+            }
+        },
+        "/products/{id}/reinstate": {
+            "put": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Reinstate a product by id.",
+                "description": "Reinstate a product by id.",
+                "operationId": "reinstateProduct",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of the product",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Product succesfully reinstated"
+                    },
+                    "404": {
+                        "description": "Product not found"
+                    },
+                    "409": {
+                        "description": "Product already active."
+                    }
+                }
+            }
+        },
+        "/products/{id}/{property}": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Returns a property of a product by id.",
+                "description": "Returns a property of a product by id.",
+                "operationId": "getProductProperty",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of the product",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "property",
+                        "in": "path",
+                        "description": "property of the product",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Product not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Update a property of a product by id.",
+                "description": "Update a property of a product by id.",
+                "operationId": "getProductProperty",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of the product",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "request",
+                        "in": "path",
+                        "description": "Request body in JSON.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "property",
+                        "in": "path",
+                        "description": "Property of the product.",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Product succesfully updated"
+                    },
+                    "404": {
+                        "description": "Product not found"
+                    },
+                    "400": {
+                        "description": "Invalid property value."
+                    }
+                }
+            }
+        },
+        "/storages": {
+            "get": {
+                "tags": [
+                    "storage"
+                ],
+                "summary": "Returns all storages.",
+                "description": "Returns all storages.",
+                "operationId": "getAllStorages",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "storage"
+                ],
+                "summary": "Create a new storage.",
+                "description": "Create a new storage.",
+                "operationId": "createStorage",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "storage",
+                        "in": "body",
+                        "description": "Model of the storage to store",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/inputStorage"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "storage invalid."
+                    }
+                }
+            }
+        },
+        "/storages/{id}": {
+            "get": {
+                "tags": [
+                    "storage"
+                ],
+                "summary": "Returns storage by id.",
+                "description": "Returns a storage with a specified id.",
+                "operationId": "getStorage",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of the storage",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "404": {
+                        "description": "storage not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "storage"
+                ],
+                "summary": "Updates a storage by id.",
+                "description": "Updates the storage.",
+                "operationId": "updateStorage",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "request",
+                        "in": "path",
+                        "description": "Request body in JSON.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of the storage",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "storage succesfully deleted"
+                    },
+                    "400": {
+                        "description": "storage not valid"
+                    },
+                    "404": {
+                        "description": "storage not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "storage"
+                ],
+                "summary": "Delete a storage by id.",
+                "description": "Delete a storage by id.",
+                "operationId": "deleteStorage",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of the storage",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "storage succesfully deleted."
+                    },
+                    "404": {
+                        "description": "storage not found."
+                    }
+                }
+            }
+        },
+        "/storages/{id}/reinstate": {
+            "put": {
+                "tags": [
+                    "storage"
+                ],
+                "summary": "Reinstate a storage by id.",
+                "description": "Reinstate a storage by id.",
+                "operationId": "reinstateStorage",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of the storage",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "storage succesfully reinstated"
+                    },
+                    "404": {
+                        "description": "storage not found"
+                    },
+                    "409": {
+                        "description": "storage already active."
+                    }
+                }
+            }
+        },
+        "/storages/{id}/{property}": {
+            "get": {
+                "tags": [
+                    "storage"
+                ],
+                "summary": "Returns a property of a storage by id.",
+                "description": "Returns a property of a storage by id.",
+                "operationId": "getStorageProperty",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of the storage",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "property",
+                        "in": "path",
+                        "description": "property of the storage",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "storage not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "storage"
+                ],
+                "summary": "Update a property of a storage by id.",
+                "description": "Update a property of a storage by id.",
+                "operationId": "getStorageProperty",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of the storage",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "request",
+                        "in": "path",
+                        "description": "Request body in JSON.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "property",
+                        "in": "path",
+                        "description": "Property of the storage.",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "storage succesfully updated"
+                    },
+                    "404": {
+                        "description": "storage not found"
+                    },
+                    "400": {
+                        "description": "Invalid property value."
+                    }
+                }
+            }
+        },
+        "/storages/{id}/stores": {
+            "get": {
+                "tags": [
+                    "storage"
+                ],
+                "summary": "Returns all products in a storage by id.",
+                "description": "Returns all products in a storage by id.",
+                "operationId": "getStorageProducts",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of the storage",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Storage not found"
+                    }
+                }
+            }
+        },
+        "/storages/{storage_id}/stock/{product_id}": {
+            "get": {
+                "tags": [
+                    "storage"
+                ],
+                "summary": "Returns all products in a storage by id.",
+                "description": "Returns all products in a storage by id.",
+                "operationId": "getStorageStockOfProducts",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "storage_id",
+                        "in": "path",
+                        "description": "id of the storage",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "product_id",
+                        "in": "path",
+                        "description": "id of the product",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Storage not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "storage"
+                ],
+                "summary": "Sets the stock of a product in a storage by id.",
+                "description": "Sets the stock of a product in a storage by id.",
+                "operationId": "putStorageStockOfProducts",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "storage_id",
+                        "in": "path",
+                        "description": "id of the storage",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "product_id",
+                        "in": "path",
+                        "description": "id of the product",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "stock",
+                        "in": "formData",
+                        "description": "id of the product",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Storage not found"
+                    }
+                }
+            }
+        },
+        "/storages/{storage_id}/stores/{product_id}": {
+            "put": {
+                "tags": [
+                    "storage"
+                ],
+                "summary": "Stores a product in a storage by id.",
+                "description": "Stores a product in a storage by id.",
+                "operationId": "putStorageStockOfProducts",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "storage_id",
+                        "in": "path",
+                        "description": "id of the storage",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "product_id",
+                        "in": "path",
+                        "description": "id of the product",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "stock",
+                        "in": "formData",
+                        "description": "id of the product",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Storage not found"
                     }
                 }
             }
         }
     },
-    "definitions": {}
+    "definitions": {
+        "pointofsale": {
+            "required": [
+                "id",
+                "owner_id",
+                "name"
+            ],
+            "properties": {
+                "id": {
+                    "description": "The id of the Point of Sale",
+                    "type": "string"
+                },
+                "owner_id": {
+                    "description": "Id of the owner from this Point of Sale",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "The name of the product",
+                    "type": "string"
+                },
+                "created_at": {
+                    "description": "Time of creation",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "updated_at": {
+                    "description": "Time of last update",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "deleted_at": {
+                    "description": "Time of deletion (inactive)",
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "inputPointOfSale": {
+            "required": [
+                "owner_id",
+                "name"
+            ],
+            "properties": {
+                "owner_id": {
+                    "description": "Id of the owner from this Point of Sale",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "The name of the product",
+                    "type": "string"
+                }
+            }
+        },
+        "product": {
+            "required": [
+                "id",
+                "name",
+                "owner_id",
+                "price",
+                "tray_size",
+                "category"
+            ],
+            "properties": {
+                "id": {
+                    "description": "The ID of the product",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "The name of the product",
+                    "type": "string"
+                },
+                "price": {
+                    "description": "The price in cents",
+                    "type": "integer"
+                },
+                "image": {
+                    "description": "The image displaying the product",
+                    "type": "string"
+                },
+                "tray_size": {
+                    "description": "Number of products in a tray of the product",
+                    "type": "integer"
+                },
+                "category": {
+                    "description": "Category the product belongs to",
+                    "type": "string",
+                    "enum": [
+                        "Drink",
+                        "Food",
+                        "Ticket",
+                        "Other"
+                    ]
+                },
+                "owner_id": {
+                    "description": "ID of the owner from this product",
+                    "type": "integer"
+                },
+                "created_at": {
+                    "description": "Time of creation",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "updated_at": {
+                    "description": "Time of last update",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "deleted_at": {
+                    "description": "Time of deletion (inactive)",
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "inputProduct": {
+            "required": [
+                "id",
+                "name",
+                "owner_id",
+                "price",
+                "tray_size",
+                "category"
+            ],
+            "properties": {
+                "name": {
+                    "description": "The name of the product",
+                    "type": "string"
+                },
+                "price": {
+                    "description": "The price in cents",
+                    "type": "integer"
+                },
+                "image": {
+                    "description": "The image displaying the product",
+                    "type": "string"
+                },
+                "tray_size": {
+                    "description": "Number of products in a tray of the product",
+                    "type": "integer"
+                },
+                "owner_id": {
+                    "description": "ID of the owner from this product",
+                    "type": "string"
+                },
+                "category": {
+                    "description": "Category the product belongs to",
+                    "type": "string",
+                    "default": "other",
+                    "enum": [
+                        "drink",
+                        "food",
+                        "ticket",
+                        "other"
+                    ]
+                }
+            }
+        },
+        "storages": {
+            "required": [
+                "id",
+                "name"
+            ],
+            "properties": {
+                "id": {
+                    "description": "The ID of the storage",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "The name of the storage",
+                    "type": "string"
+                },
+                "owner_id": {
+                    "description": "ID of the owner from this storage",
+                    "type": "integer"
+                },
+                "created_at": {
+                    "description": "Time of creation",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "updated_at": {
+                    "description": "Time of last update",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "deleted_at": {
+                    "description": "Time of deletion (inactive)",
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "inputStorage": {
+            "required": [
+                "id",
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "description": "The name of the storage",
+                    "type": "string"
+                },
+                "owner_id": {
+                    "description": "ID of the owner from this storage",
+                    "type": "string"
+                }
+            }
+        }
+    }
 }
