@@ -4,6 +4,6 @@
 $factory->define(App\Models\PointOfSale::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
-        'owner_id' => $faker->uuid,
+        'owner_id' => factory(App\Models\User::class)->create()->id,
     ];
 });
