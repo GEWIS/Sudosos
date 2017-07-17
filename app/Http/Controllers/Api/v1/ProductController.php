@@ -27,7 +27,7 @@ class ProductController extends Controller{
      */
     public function index(){
         $data = Product::all();
-        return $this->response($data,200, "Success");
+        return response()->json($data,200);
     }
 
     /**
@@ -51,7 +51,7 @@ class ProductController extends Controller{
      *     ),
      *     @SWG\Response(
      *         response=400,
-     *         description="operation unsuccessful",
+     *         description="Product invalid.",
      *     ),
      * ),
      */
@@ -62,7 +62,7 @@ class ProductController extends Controller{
         if ($product->isValid()) {
             return response()->json($product->id, 201);
         } else {
-            return response()->json($product->getErrors(), 400);
+            return $this->response(400,"Product invalid", $product->getErrors());
         }
     }
 
@@ -97,39 +97,134 @@ class ProductController extends Controller{
         if ($product) {
             return response()->json($product, 200);
         } else {
-            return response()->json("No product found", 404);
+            return $this->response(404,"Product not found");
         }
-
     }
-
+    /**
+     * @SWG\Put(
+     *     path ="/products/{id}",
+     *     summary = "Updates a product by id.",
+     *     tags = {"Product"},
+     *     description = "Updates the product.",
+     *     operationId = "updateProduct",
+     *     produces = {"application/json"},
+     *     @SWG\Parameter(
+     *         name="request",
+     *         in="path",
+     *         description="Request body in JSON.",
+     *         required=true,
+     *         type="string",
+     *     ),
+     *     @SWG\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="id of the product",
+     *         required=true,
+     *         type="string",
+     *     ),
+     *     @SWG\Response(
+     *         response=201,
+     *         description="Product succesfully deleted",
+     *     ),
+     *     @SWG\Response(
+     *         response=400,
+     *         description="Product not valid",
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Product not found",
+     *     ),
+     * ),
+     */
     public function putProduct(Request $request, $id){
         $product = Product::find($id);
 
         if ($product) {
-            $product->save($request->all());
-            return response()->json("Product succesfully updated", 200);
+            if($product->isValid()){
+                $product->update($request->all());
+                return response()->json("Product succesfully updated", 200);
+            }else{
+                return $this->response(400, "Product invalid",$product->getErrors());
+            }
         } else {
-            return response()->json("Product not found", 404);
+            return $this->response(404,"Product not found");
         }
 
     }
-
+    /**
+     * @SWG\Delete(
+     *     path="/products/{id}",
+     *     summary="Delete a product by id.",
+     *     description="Delete a product by id.",
+     *     operationId="deleteProduct",
+     *     produces={"application/json"},
+     *     tags={"Product"},
+     *     @SWG\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="id of the product",
+     *         required=true,
+     *         type="string",
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Product succesfully deleted."
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Product not found."
+     *     ),
+     * )
+     */
     public function deleteProduct($id){
         $product = Product::find($id);
         if ($product) {
             $product->delete();
             return response()->json("Product succesfully deleted", 200);
         } else {
-            return response()->json("Product not found", 404);
+            return $this->response(404,"Product not found");
         }
     }
 
+    /**
+     * @SWG\Put(
+     *     path ="/products/{id}/reinstate",
+     *     summary = "Reinstate a product by id.",
+     *     tags = {"Product"},
+     *     description = "Reinstate a product by id.",
+     *     operationId = "reinstateProduct",
+     *     produces = {"application/json"},
+     *     @SWG\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="id of the product",
+     *         required=true,
+     *         type="string",
+     *     ),
+     *     @SWG\Response(
+     *         response=201,
+     *         description="Product succesfully reinstated",
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Product not found",
+     *     ),
+     *     @SWG\Response(
+     *         response=409,
+     *         description="Product already active.",
+     *     ),
+     * ),
+     */
     public function reinstateProduct($id){
+        if(Product::find($id)){
+            return $this->response(409,"Product already active.");
+        }
         $product = Product::withTrashed()-> find($id);
         if($product){
-           return response() -> json($product -> restore(), 200);
+            $product -> restore();
+            return response() -> json("Product succesfully reinstated", 200);
         }else{
-            return response()->json("Product not found", 404);
+            return $this->response(404,"Product not found");
         }
 
     }

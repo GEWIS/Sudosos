@@ -116,13 +116,16 @@ class Product extends BaseModel
 
     protected $guarded = [
        "id",
+        "created_at",
+        "updated_at",
+        "deleted_at",
     ];
 
     protected $rules = [
        "name"     => "required|string|max:255",
         "price"    => "required|integer|max:9999999999|min:0",
         "owner_id" => "required|string|max:36|exists:users,id",
-        "image"    => "image",
+      //  "image"    => "image",
         "tray_size" => "required|integer|max:9999999999|min:0",
         "category" => "required|string|in:drink,food,ticket,other",
     ];

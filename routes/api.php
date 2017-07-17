@@ -19,7 +19,7 @@ Route::group(['namespace' => 'Api\v1', 'prefix' => 'v1'], function () {
     Route::get('products/{id}', 'ProductController@getProduct');
     Route::put('products/{id}', 'ProductController@putProduct');
     Route::delete('products/{id}', 'ProductController@deleteProduct');
-    Route::patch('products/{id}/reinstate', 'ProductController@reinstateProduct');
+    Route::put('products/{id}/reinstate', 'ProductController@reinstateProduct');
     Route::get('products/{id}/{property}', 'ProductController@getProductProperty');
     Route::put('products/{id}/{property}', 'ProductController@postProductProperty');
     
