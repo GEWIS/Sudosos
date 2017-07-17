@@ -5,9 +5,8 @@ namespace App\Http\Controllers\Api\v1;
 use App\Models\Product;
 use App\Http\Controllers\Controller;
 
-
 use Illuminate\Http\Request;
-use Swagger\Annotations\Schema;
+use Illuminate\Support\Facades\Schema;
 
 class ProductController extends Controller{
     /**
@@ -118,13 +117,13 @@ class ProductController extends Controller{
      *     @SWG\Parameter(
      *         name="id",
      *         in="path",
-     *         description="id of the product",
+     *         description="Id of the product",
      *         required=true,
      *         type="string",
      *     ),
      *     @SWG\Response(
-     *         response=201,
-     *         description="Product succesfully deleted",
+     *         response=200,
+     *         description="Product succesfully updated",
      *     ),
      *     @SWG\Response(
      *         response=400,
@@ -140,17 +139,17 @@ class ProductController extends Controller{
         $product = Product::find($id);
 
         if ($product) {
-            if($product->isValid()){
                 $product->update($request->all());
-                return response()->json("Product succesfully updated", 200);
-            }else{
-                return $this->response(400, "Product invalid",$product->getErrors());
-            }
+                if($product->isValid()){
+                    return response()->json("Product succesfully updated", 200);
+                }else{
+                    return $this->response(400, "Product invalid",$product->getErrors());
+               }
         } else {
             return $this->response(404,"Product not found");
         }
-
     }
+
     /**
      * @SWG\Delete(
      *     path="/products/{id}",
@@ -162,7 +161,7 @@ class ProductController extends Controller{
      *     @SWG\Parameter(
      *         name="id",
      *         in="path",
-     *         description="id of the product",
+     *         description="Id of the product",
      *         required=true,
      *         type="string",
      *     ),
@@ -197,7 +196,7 @@ class ProductController extends Controller{
      *     @SWG\Parameter(
      *         name="id",
      *         in="path",
-     *         description="id of the product",
+     *         description="Id of the product",
      *         required=true,
      *         type="string",
      *     ),
@@ -211,7 +210,7 @@ class ProductController extends Controller{
      *     ),
      *     @SWG\Response(
      *         response=409,
-     *         description="Product already active.",
+     *         description="Product already active",
      *     ),
      * ),
      */
@@ -239,14 +238,14 @@ class ProductController extends Controller{
      *     @SWG\Parameter(
      *         name="id",
      *         in="path",
-     *         description="id of the product",
+     *         description="Id of the product",
      *         required=true,
      *         type="string",
      *     ),
      *     @SWG\Parameter(
      *         name="property",
      *         in="path",
-     *         description="property of the product",
+     *         description="Property of the product",
      *         required=true,
      *         type="string",
      *     ),
@@ -260,7 +259,7 @@ class ProductController extends Controller{
      *     ),
      * ),
      */
-    public function getProductProperty($property, $id){
+    public function getProductProperty($id, $property){
         $product = Product::find($id);
         if (!$product) {
             return $this->response(404,"Product not found");
@@ -282,27 +281,23 @@ class ProductController extends Controller{
      *     @SWG\Parameter(
      *         name="id",
      *         in="path",
-     *         description="id of the product",
-     *         required=true,
-     *         type="string",
-     *     ),
-     *     @SWG\Parameter(
-     *         name="request",
-     *         in="path",
-     *         description="Request body in JSON.",
+     *         description="Id of the product",
      *         required=true,
      *         type="string",
      *     ),
      *         @SWG\Parameter(
      *         name="property",
      *         in="path",
-     *         description="Property of the product.",
+     *         description="Property of the product",
      *         required=true,
      *         type="string",
      *     ),
-     *     @SWG\Response(
-     *         response=201,
-     *         description="Product succesfully reinstated",
+     *         @SWG\Parameter(
+     *         name="value",
+     *         in="body",
+     *         description="Request in JSON",
+     *         required=true,
+     *         @SWG\Schema(ref="#/definitions/inputProperty"),
      *     ),
      *     @SWG\Response(
      *         response=404,
@@ -310,7 +305,7 @@ class ProductController extends Controller{
      *     ),
      *     @SWG\Response(
      *         response=400,
-     *         description="Invalid property value.",
+     *         description="Invalid property value",
      *     ),
      * ),
      */
@@ -319,17 +314,15 @@ class ProductController extends Controller{
         if (!$product) {
             return $this->response(404, "Product not found");
         }
-        if (Schema::hasColumn($product->getTable(), $property)) {
+        if (Schema::hasColumn($product->getTable(), $property) && !(in_array($property,$product->getGuarded()))){
             $product->$property = $request->value;
             if ($product->isValid()) {
                 $product->save();
                 return response()->json("Product succesfully updated", 200);
             }
-            return $this->response(400, "Invalid property value", $pos->getErrors());
-
+            return $this->response(400, "Invalid property value", $product->getErrors());
         } else {
             return  $this->response(404,"Property not found");
         }
-
     }
 }

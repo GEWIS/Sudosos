@@ -21,7 +21,7 @@ Route::group(['namespace' => 'Api\v1', 'prefix' => 'v1'], function () {
     Route::delete('products/{id}', 'ProductController@deleteProduct');
     Route::put('products/{id}/reinstate', 'ProductController@reinstateProduct');
     Route::get('products/{id}/{property}', 'ProductController@getProductProperty');
-    Route::put('products/{id}/{property}', 'ProductController@postProductProperty');
+    Route::put('products/{id}/{property}', 'ProductController@putProductProperty');
     
     Route::get('pointsofsale', 'PointOfSaleController@index');
     Route::post('pointsofsale', 'PointOfSaleController@store');

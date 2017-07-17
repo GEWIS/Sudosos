@@ -49,7 +49,7 @@ use Illuminate\Database\Eloquent\Model;
  *               required={"owner_id", "name"},
  *      @SWG\Property(
  *             property="owner_id",
- *             type="integer",
+ *             type="string",
  *             description="Id of the owner from this Point of Sale"
  *         ),
  *      @SWG\Property(
@@ -59,6 +59,18 @@ use Illuminate\Database\Eloquent\Model;
  *         ),
  *    )
  */
+
+/**    @SWG\Definition(
+ *               definition="inputProperty",
+ *               required={"value"},
+ *      @SWG\Property(
+ *             property="value",
+ *             type="string",
+ *             description="Value of the property"
+ *         ),
+ *    )
+ */
+
 
 class PointOfSale extends BaseModel
 {
