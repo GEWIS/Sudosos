@@ -228,28 +228,107 @@ class ProductController extends Controller{
         }
 
     }
-
+    /**
+     * @SWG\Get(
+     *     path ="/products/{id}/{property}",
+     *     summary = "Returns a property of a product by id.",
+     *     tags = {"Product"},
+     *     description = "Returns a property of a product by id.",
+     *     operationId = "getProductProperty",
+     *     produces = {"application/json"},
+     *     @SWG\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="id of the product",
+     *         required=true,
+     *         type="string",
+     *     ),
+     *     @SWG\Parameter(
+     *         name="property",
+     *         in="path",
+     *         description="property of the product",
+     *         required=true,
+     *         type="string",
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Product not found",
+     *     ),
+     * ),
+     */
     public function getProductProperty($property, $id){
         $product = Product::find($id);
         if (!$product) {
-            return response()->json("Product not found", 404);
-        } else if (Schema::hasColumn($product->getTable(), $property)) {
+            return $this->response(404,"Product not found");
+        }
+        if (Schema::hasColumn($product->getTable(), $property)) {
             return response()->json($product->$property, 200);
         } else {
-            return response()->json("Property not found", 404);
+            return  $this->response(404,"Property not found");
         }
     }
-
-    public function patchProductProperty($property, $value, $id){
+    /**
+     * @SWG\Put(
+     *     path ="/products/{id}/{property}",
+     *     summary = "Update a property of a product by id.",
+     *     tags = {"Product"},
+     *     description = "Update a property of a product by id.",
+     *     operationId = "getProductProperty",
+     *     produces = {"application/json"},
+     *     @SWG\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="id of the product",
+     *         required=true,
+     *         type="string",
+     *     ),
+     *     @SWG\Parameter(
+     *         name="request",
+     *         in="path",
+     *         description="Request body in JSON.",
+     *         required=true,
+     *         type="string",
+     *     ),
+     *         @SWG\Parameter(
+     *         name="property",
+     *         in="path",
+     *         description="Property of the product.",
+     *         required=true,
+     *         type="string",
+     *     ),
+     *     @SWG\Response(
+     *         response=201,
+     *         description="Product succesfully reinstated",
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Product not found",
+     *     ),
+     *     @SWG\Response(
+     *         response=400,
+     *         description="Invalid property value.",
+     *     ),
+     * ),
+     */
+    public function putProductProperty(Request $request, $id, $property){
         $product = Product::find($id);
         if (!$product) {
-            return response()->json("Product not found", 404);
-        } else if (Schema::hasColumn($product->getTable(), $property)) {
-            $product->$property = $value;
-            $product->save();
-            return response()->json("Product succesfully updated", 200);
+            return $this->response(404, "Product not found");
+        }
+        if (Schema::hasColumn($product->getTable(), $property)) {
+            $product->$property = $request->value;
+            if ($product->isValid()) {
+                $product->save();
+                return response()->json("Product succesfully updated", 200);
+            }
+            return $this->response(400, "Invalid property value", $pos->getErrors());
+
         } else {
-            return response()->json("Property not found", 404);
+            return  $this->response(404,"Property not found");
         }
 
     }
