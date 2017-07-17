@@ -36,7 +36,10 @@ class HybridUserProvider implements UserProvider {
      */
     public function retrieveByToken($identifier, $token)
     {
-        // TODO: Implement retrieveByToken() method.
+        return User::where([
+                'id' => $identifier,
+                'token' => $token
+        ])-first();
     }
 
     /**
@@ -48,7 +51,11 @@ class HybridUserProvider implements UserProvider {
      */
     public function updateRememberToken(Authenticatable $user, $token)
     {
-        // TODO: Implement updateRememberToken() method.
+        $user->setRememberToken($token);
+        $timestamps = $user->timestamps;
+        $user->timestamps = false;
+        $user->save();
+        $user->timestamps = $timestamps;
     }
 
     /**
@@ -78,13 +85,11 @@ class HybridUserProvider implements UserProvider {
                     // First login for user, create one
                     $user = User::create([
                         'user_code' => $decoded->lidnr,
-                        'type' => User::TYPE_GEWIS
+                        'type' => User::TYPE_GEWIS,
                     ]);
                 }
-
                 return $user;
             } catch (\UnexpectedValueException $e) {
-                dd($e);
                 return null;
             }
         }

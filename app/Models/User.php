@@ -24,7 +24,6 @@ class User extends BaseModel implements Authenticatable
     protected $fillable = [
         'user_code',
         'pincode',
-        'card_id',
         'type',
     ];
 
@@ -33,10 +32,10 @@ class User extends BaseModel implements Authenticatable
     ];
 
     protected $rules = [
-        "user_code"     => "required|digits:5",
-        "pincode"    => "required|string|max:336",
-        "card_id" => "required|string|max:336",
-        "balance"    => "required|integer",
+        "user_code"     => "required|min:4|max:6",
+        "pincode"    => "string|max:336",
+        "card_id" => "string|max:336",
+        "balance"    => "integer",
         "type" => "required|digits:1|in:0,1,2,3",
     ];
 
@@ -49,6 +48,10 @@ class User extends BaseModel implements Authenticatable
         'pincode'
     ];
 
+    protected $defaults = [
+        'pincode' => '',
+        'balance' => 0,
+    ];
     //protected $appends = ['first_name', 'last_name', 'email'];
 
     // Relations
@@ -117,7 +120,7 @@ class User extends BaseModel implements Authenticatable
      */
     public function getRememberToken()
     {
-        // TODO: Implement getRememberToken() method.
+        return $this->remember_token;
     }
 
     /**
@@ -128,7 +131,7 @@ class User extends BaseModel implements Authenticatable
      */
     public function setRememberToken($value)
     {
-        // TODO: Implement setRememberToken() method.
+        $this->remember_token = $value;
     }
 
     /**
@@ -138,6 +141,6 @@ class User extends BaseModel implements Authenticatable
      */
     public function getRememberTokenName()
     {
-        // TODO: Implement getRememberTokenName() method.
+        return 'remember_token';
     }
 }
