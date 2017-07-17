@@ -1,0 +1,24 @@
+<div class="buttons-div">
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Add product</button>
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">Edit product</button>
+</div>
+<table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp product-table">
+    <thead>
+    <tr>
+        <th class="mdl-data-table__cell--non-numeric product-table">Naam</th>
+        <th>Prijs</th>
+        <th>Afbeelding</th>
+        <th>Verpakkingsgrootte</th>
+        <th>Categorie</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="product in products">
+        <td class="mdl-data-table__cell--non-numeric">{{ product.name }}</td>
+        <td>{{ product.price }}</td>
+        <td><img src="{{ product.image }}"></td>
+        <td>{{ product.tray_size }}</td>
+        <td>{{ product.category }}</td>
+    </tr>
+    </tbody>
+</table>

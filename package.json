@@ -13,9 +13,27 @@
     "axios": "^0.16.2",
     "bootstrap-sass": "^3.3.7",
     "cross-env": "^5.0.1",
+    "gulp": "^3.9.1",
     "jquery": "^3.1.1",
     "laravel-mix": "^1.0",
     "lodash": "^4.17.4",
     "vue": "^2.1.10"
-  }
+  },
+  "name": "sudosos",
+  "description": "Sudosos",
+  "version": "1.0.0",
+  "main": "webpack.mix.js",
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GEWIS/Sudosos.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GEWIS/Sudosos/issues"
+  },
+  "homepage": "https://github.com/GEWIS/Sudosos#readme"
 }
