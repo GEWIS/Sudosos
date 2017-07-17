@@ -12,7 +12,7 @@ class IndexController extends Controller
 {
 
     public function index(){
-        dd(Auth::user());
+        dd(Auth::user()->toJson());
         return View('app');
     }
 

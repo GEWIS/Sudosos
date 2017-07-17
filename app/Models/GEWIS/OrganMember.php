@@ -3,7 +3,7 @@ namespace App\Models\GEWIS;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Organ extends Model
+class OrganMember extends Model
 {
     protected $connection = 'mysql_gewisdb';
     protected $table = 'OrganMember';
