@@ -103,7 +103,7 @@ return [
     |
     */
 
-    'key' => env('APP_KEY'),
+    'key' => env('APP_KEY', 'DoNotUseInProducDoNotUseInProduc'),
 
     'cipher' => 'AES-256-CBC',
 
@@ -179,6 +179,7 @@ return [
 
         L5Swagger\L5SwaggerServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
+        Laravel\Passport\PassportServiceProvider::class,
     ],
 
     /*

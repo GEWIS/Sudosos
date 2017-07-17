@@ -5,10 +5,11 @@ namespace App\Models;
 use Faker\Provider\Base;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Passport\HasApiTokens;
 //class User extends Authenticatable
 class User extends BaseModel
 {
-    use Notifiable;
+    use Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -46,6 +47,11 @@ class User extends BaseModel
     public function externalUserData()
     {
         return $this->hasOne('App\Models\ExternalUser');
+    }
+
+    public function GEWISMember()
+    {
+        return $this->hasOne('App\Models\GEWIS\Member', 'lidnr', 'user_code');
     }
 
     public function products(){

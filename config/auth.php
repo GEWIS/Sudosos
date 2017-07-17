@@ -17,7 +17,6 @@ return [
         'guard' => 'web',
         'passwords' => 'users',
     ],
-
     /*
     |--------------------------------------------------------------------------
     | Authentication Guards
@@ -38,12 +37,12 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'password_users',
         ],
 
-        'api' => [
-            'driver' => 'token',
-            'provider' => 'users',
+        'pos' => [
+            'driver' => 'passport',
+            'provider' => 'pin_users',
         ],
     ],
 
@@ -65,15 +64,14 @@ return [
     */
 
     'providers' => [
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => App\User::class,
+        'password_users' => [
+            'driver' => 'hybrid',
+            'jwt_secret' => env('GEWISWEB_JWT_SECRET')
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'users' => [
+             'driver' => 'pin',
+        ],
     ],
 
     /*

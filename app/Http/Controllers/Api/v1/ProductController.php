@@ -26,7 +26,8 @@ class ProductController extends Controller{
      * ),
      */
     public function index(){
-        return response()-> json(Product::all(),200);
+        $data = Product::all();
+        return $this->response($data,200, "Success");
     }
 
     /**
