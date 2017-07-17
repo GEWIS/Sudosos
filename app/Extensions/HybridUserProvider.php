@@ -73,8 +73,18 @@ class HybridUserProvider implements UserProvider {
         if (isset($credentials['jwt_token'])) {
             try {
                 $decoded = JWT::decode($credentials['jwt_token'], $this->websiteToken, ['HS256']);
-                return User::where(['user_code' => $decoded['lidnr']])->first();
+                $user = User::where(['user_code' => $decoded->lidnr])->first();
+                if ($user === null) {
+                    // First login for user, create one
+                    $user = User::create([
+                        'user_code' => $decoded->lidnr,
+                        'type' => User::TYPE_GEWIS
+                    ]);
+                }
+
+                return $user;
             } catch (\UnexpectedValueException $e) {
+                dd($e);
                 return null;
             }
         }
@@ -95,7 +105,7 @@ class HybridUserProvider implements UserProvider {
         if (isset($credentials['jwt_token'])) {
             try {
                 $decoded = JWT::decode($credentials['jwt_token'], $this->websiteToken, ['HS256']);
-                return $decoded['lidnr'] == $user->user_code;
+                return $decoded->lidnr == $user->user_code;
             } catch (\UnexpectedValueException $e) {
                 return null;
             }

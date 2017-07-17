@@ -4,11 +4,11 @@ namespace App\Providers;
 
 use App\Extensions\HybridUserProvider;
 use App\Extensions\PincodeUserProvider;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Laravel\Passport\Passport;
-
 class AuthServiceProvider extends ServiceProvider
 {
     /**
@@ -37,7 +37,10 @@ class AuthServiceProvider extends ServiceProvider
             return new PincodeUserProvider();
         });
 
-
         Passport::routes();
+
+        Passport::tokensExpireIn(Carbon::now()->addHours(1));
+
+        Passport::refreshTokensExpireIn(Carbon::now()->addDays(30));
     }
 }

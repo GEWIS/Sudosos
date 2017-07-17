@@ -11,6 +11,18 @@
 |
 */
 
-Route::get('/', function(){
-   return View('welcome');
+Route::group(['namespace' => 'Web'], function () {
+    Route::get('/', 'IndexController@index');
+
 });
+
+Route::group(['namespace' => 'Auth', 'prefix' => 'auth'], function () {
+    Route::get('login', 'LoginController@index');
+    Route::get('login/gewis', 'LoginController@showGEWISLogin');
+    Route::get('login/gewis-done', 'LoginController@doGEWISLogin');
+    Route::get('login/external', 'LoginController@showExternalLogin');
+    Route::post('login/external', 'LoginController@doExternalLogin');
+
+});
+
+Route::get('products', 'ProductController@index');
