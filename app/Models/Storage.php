@@ -72,5 +72,13 @@ class Storage extends BaseModel
     ];
 
     // Relations
+    public function products(){
+        return $this->belongsToMany('App\Models\Product')
+            ->withPivot('stock');
+    }
+
+    public function pointsOfSale(){
+        return $this->belongsToMany('App\Models\PointOfSale','storage_pointofsale');
+    }
 
 }

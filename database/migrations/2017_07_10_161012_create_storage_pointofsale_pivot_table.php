@@ -12,12 +12,12 @@ class CreateStoragePointofsalePivotTable extends Migration
      */
     public function up()
     {
-        Schema::create('pointsofsale_storage', function (Blueprint $table) {
-            $table->uuid('pointsofsale_id');
-            $table->foreign('pointsofsale_id')->references('id')->on('pointsofsales')->onDelete('cascade');
+        Schema::create('storage_pointofsale', function (Blueprint $table) {
             $table->uuid('storage_id');
             $table->foreign('storage_id')->references('id')->on('storages')->onDelete('cascade');
-            $table->primary(['pointsofsale_id', 'storage_id']);
+            $table->uuid('pointofsale_id');
+            $table->foreign('pointofsale_id')->references('id')->on('pointsofsales')->onDelete('cascade');
+            $table->primary(['storage_id','pointofsale_id']);
         });
     }
 
@@ -28,6 +28,6 @@ class CreateStoragePointofsalePivotTable extends Migration
      */
     public function down()
     {
-        Schema::drop('pointsofsale_storage');
+        Schema::drop('storage_pointofsale');
     }
 }

@@ -90,4 +90,8 @@ class PointOfSale extends BaseModel
     ];
 
     // Relations
+    public function storages(){
+        return $this->belongsToMany('App\Models\Storage','storage_pointofsale','pointofsale_id');
+    }
+
 }
