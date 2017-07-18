@@ -123,7 +123,11 @@ class User extends BaseModel implements Authenticatable
     public function getOrganRoles()
     {
         $organRoles = [];
-        foreach ($this->GEWISMember->organMembers)
+        foreach ($this->GEWISMember->organMemberships as $om) {
+            if ($om->dischargeDate === null) {
+                $organRoles[$om->organ->abbr] = $om->function;
+            }
+        }
     }
     /**
      * Get the name of the unique identifier for the user.
