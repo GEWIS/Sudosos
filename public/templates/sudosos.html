@@ -1,58 +1,50 @@
-<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
-    <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
-        <div class="mdl-layout__header-row">
-            <span class="mdl-layout-title">{{ $stateNames[$state.current.name] }}</span>
-            <div class="mdl-layout-spacer"></div>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-                <label class="mdl-button mdl-js-button mdl-button--icon" for="search">
-                    <i class="material-icons">search</i>
-                </label>
-                <div class="mdl-textfield__expandable-holder">
-                    <input class="mdl-textfield__input" type="text" id="search">
-                    <label class="mdl-textfield__label" for="search">Enter your query...</label>
+<div>
+    <header class="main-header">
+        <a href="#" class="logo">
+            <span class="logo-mini">
+                <img src="img/logo.svg" class="sudosos-logo">
+            </span>
+            <span class="logo-lg">
+                <img src="img/logo.svg" class="sudosos-logo">
+                <span class="sudosos-logo-text"> SudoSOS</span>
+            </span>
+        </a>
+        <nav class="navbar navbar-static-top" role="navigation">
+            <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+        </nav>
+    </header>
+    <aside class="main-sidebar">
+        <section class="sidebar">
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <img src="http://gewis.nl/willem" class="img-circle">
+                </div>
+                <div class="pull-left info">
+                    <p>{{ user.name }}</p>
+                    <a href="#">Balance: €{{ user.currentBalance }}</a>
                 </div>
             </div>
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
-                <i class="material-icons">more_vert</i>
-            </button>
-            <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
-                <li class="mdl-menu__item">About</li>
-                <li class="mdl-menu__item">Contact</li>
-                <li class="mdl-menu__item">Legal information</li>
+
+            <ul class="sidebar-menu tree" data-widget="tree">
+                <li ui-sref="sudosos.financial" ui-sref-active="active">
+                    <a href="#" >
+                        <i class="material-icons">&#xE227;</i>
+                        <span> Financial</span>
+                    </a>
+                </li>
+                <li ui-sref="sudosos.products" ui-sref-active="active">
+                    <a href="#" >
+                        <i class="fa fa-th"></i>
+                        <span>Products</span>
+                    </a>
+                </li>
             </ul>
+        </section>
+    </aside>
+    <div class="content-wrapper">
+        <div ui-view="admin-panel-content">
         </div>
-    </header>
-    <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
-        <header class="drawer-header">
-            <img src="https://gewis.nl/sws/themes/bac/baclogo.png" class="committee-avatar">
-            <div class="avatar-dropdown">
-                <span>hello@example.com</span>
-                <div class="mdl-layout-spacer"></div>
-                <!-- The button to open the account select menu -->
-                <button id="select-button" class="mdl-button mdl-js-button mdl-button--icon">
-                    <i class="material-icons" role="presentation">arrow_drop_down</i>
-                    <span class="visuallyhidden">Accounts</span>
-                </button>
-                <!-- The menu that contains all committees -->
-                <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="select-button">
-                    <li class="mdl-menu__item">hello@example.com</li>
-                    <li class="mdl-menu__item">info@example.com</li>
-                    <li class="mdl-menu__item"><i class="material-icons">add</i>Add another account... </li>
-                </ul>
-
-            </div>
-        </header>
-        <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
-            <!-- Add menu items here -->
-            <a class="mdl-navigation__link" ui-sref="sudosos.products"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">view_module</i> Products</a>
-            <a class="mdl-navigation__link" ui-sref="sudosos.financial"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">attach_money</i> Financial</a>
-        </nav>
     </div>
-    <main class="mdl-layout__content mdl-color--grey-100">
-        <div class="mdl-grid demo-content">
-            <div ui-view="admin-panel-content">
-
-            </div>
-        </div>
-    </main>
 </div>
