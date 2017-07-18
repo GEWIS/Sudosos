@@ -3,7 +3,7 @@ angular.module('sudosos', ['sudosos.controllers', 'sudosos.filters', 'sudosos.se
         $stateProvider.state('sudosos', {
             url: '/sudosos',
             abstract: true,
-            templateUrl: 'sudosos.html',
+            templateUrl: 'templates/sudosos.html',
             controller: 'SudososCtrl'
         })
 
@@ -11,7 +11,7 @@ angular.module('sudosos', ['sudosos.controllers', 'sudosos.filters', 'sudosos.se
                 url: '/financial',
                 views: {
                     'admin-panel-content': {
-                        templateUrl: 'financial.html',
+                        templateUrl: 'templates/financial.html',
                         controller: 'FinancialCtrl'
                     }
                 }
@@ -21,7 +21,7 @@ angular.module('sudosos', ['sudosos.controllers', 'sudosos.filters', 'sudosos.se
                 url: '/products',
                 views: {
                     'admin-panel-content': {
-                        templateUrl: 'products.html',
+                        templateUrl: 'templates/products.html',
                         controller: 'ProductsCtrl'
                     }
                 }
