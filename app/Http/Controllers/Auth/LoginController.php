@@ -62,11 +62,25 @@ class LoginController extends Controller
 
     public function showExternalLogin()
     {
-
+        return View('auth.external-login');
     }
 
-    public function doExternalLogin()
+    public function doExternalLogin(Request $request)
     {
+        if (Auth::attempt([
+            'email' => $request->username,
+            'password' => $request->password
+        ])) {
+            return redirect()->intended('/');
+        }
 
+        if (Auth::attempt([
+            'user_code' => $request->username,
+            'password' => $request->password
+        ])) {
+            return redirect()->intended('/');
+        }
+
+        return View('auth.external-login')->with(['error' => 'Invalid username/password']);
     }
 }

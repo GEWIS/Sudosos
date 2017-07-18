@@ -12,7 +12,8 @@
         "laravel/tinker": "~1.0",
         "watson/validating": "^3.0",
         "webpatser/laravel-uuid": "^2.0",
-        "laravel/passport": "^3.0"
+        "laravel/passport": "^3.0",
+        "doctrine/dbal": "^2.5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
