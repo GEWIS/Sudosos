@@ -11,18 +11,20 @@
 |
 */
 
-Route::group(['namespace' => 'Web'], function () {
+Route::group(['namespace' => 'Web', 'middleware' => ['web']], function () {
     Route::get('/', 'IndexController@index');
-
 });
 
-Route::group(['namespace' => 'Auth', 'prefix' => 'auth'], function () {
-    Route::get('login', 'LoginController@index');
+Route::group(['namespace' => 'Auth', 'prefix' => 'auth', 'middleware' => ['web']], function () {
+    Route::get('login', ['as' => 'login', 'uses' => 'LoginController@index']);
     Route::get('login/gewis', 'LoginController@showGEWISLogin');
     Route::get('login/gewis-done', 'LoginController@doGEWISLogin');
     Route::get('login/external', 'LoginController@showExternalLogin');
     Route::post('login/external', 'LoginController@doExternalLogin');
+    Route::get('register', 'RegisterController@showRegister');
+    Route::post('register', 'RegisterController@doRegister');
 
 });
-
-Route::get('products', 'ProductController@index');
+Route::any('{catchall}', function () {
+    return Redirect::to('/');
+})->where('catchall', '.*');
