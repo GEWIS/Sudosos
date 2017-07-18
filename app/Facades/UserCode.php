@@ -2,6 +2,8 @@
 
 namespace App\Facades;
 
+use App\Models\User;
+
 class UserCode
 {
     const GEWIS_RANGE = [0,19999];

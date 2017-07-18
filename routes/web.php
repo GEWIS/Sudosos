@@ -22,6 +22,8 @@ Route::group(['namespace' => 'Auth', 'prefix' => 'auth', 'middleware' => ['web']
     Route::get('login/gewis-done', 'LoginController@doGEWISLogin');
     Route::get('login/external', 'LoginController@showExternalLogin');
     Route::post('login/external', 'LoginController@doExternalLogin');
+    Route::get('register', 'RegisterController@showRegister');
+    Route::post('register', 'RegisterController@doRegister');
 
 });
 

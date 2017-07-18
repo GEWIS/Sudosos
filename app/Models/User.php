@@ -59,7 +59,7 @@ class User extends BaseModel implements Authenticatable
     // Relations
     public function externalUserData()
     {
-        return $this->hasOne('App\Models\ExternalUser');
+        return $this->hasOne('App\Models\ExternalUser', 'user_id', 'id');
     }
 
     public function GEWISMember()
@@ -120,6 +120,11 @@ class User extends BaseModel implements Authenticatable
         }
     }
 
+    public function getOrganRoles()
+    {
+        $organRoles = [];
+        foreach ($this->GEWISMember->organMembers)
+    }
     /**
      * Get the name of the unique identifier for the user.
      *

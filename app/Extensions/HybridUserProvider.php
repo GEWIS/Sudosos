@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
 use \Firebase\JWT\JWT;
+use Illuminate\Support\Facades\Hash;
 
 class HybridUserProvider implements UserProvider {
 

@@ -15,6 +15,7 @@ class ExternalUser extends BaseModel
         'first_name',
         'last_name',
         'email',
+        'user_id'
     ];
 
     protected $guarded = [
@@ -33,6 +34,6 @@ class ExternalUser extends BaseModel
     // Relations
     public function user()
     {
-        return $this->hasOne('User');
+        return $this->hasOne('App\Models\User', 'id', 'user_id');
     }
 }
