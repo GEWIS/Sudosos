@@ -7,27 +7,26 @@ angular.module('sudosos', ['sudosos.controllers', 'sudosos.filters', 'sudosos.se
             controller: 'SudososCtrl'
         })
 
-            .state('sudosos.financial', {
-                url: '/financial',
-                views: {
-                    'admin-panel-content': {
-                        templateUrl: 'templates/financial.html',
-                        controller: 'FinancialCtrl'
-                    }
+        .state('sudosos.financial', {
+            url: '/financial',
+            views: {
+                'admin-panel-content': {
+                    templateUrl: 'templates/financial.html',
+                    controller: 'FinancialCtrl'
                 }
             }
         })
 
-            .state('sudosos.products', {
-                url: '/products',
-                views: {
-                    'admin-panel-content': {
-                        templateUrl: 'templates/products.html',
-                        controller: 'ProductsCtrl'
-                    }
+        .state('sudosos.products', {
+            url: '/products',
+            views: {
+                'admin-panel-content': {
+                    templateUrl: 'templates/products.html',
+                    controller: 'ProductsCtrl'
                 }
             }
         })
+
 
         .state('sudosos.increaseBalance', {
             url: '/balance',
