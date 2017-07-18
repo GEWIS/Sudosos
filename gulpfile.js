@@ -5,7 +5,6 @@ var gulp = require('gulp');
 var less = require('gulp-less');
 var minifyCSS = require('gulp-csso');
 var minify = require('gulp-minify');
-var gulpSass = require('gulp-sass');
 
 gulp.task('minify', function () {
    return gulp.src('www/js/*.js')
