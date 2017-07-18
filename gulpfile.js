@@ -32,6 +32,13 @@ gulp.task('AdminLTE', function () {
         .pipe(gulp.dest('public/css'))
 });
 
+gulp.task('AdminLTE-theme', function () {
+    return gulp.src('www/less/adminLTE/skins/skin-blue.less')
+        .pipe(less())
+        .pipe(minifyCSS())
+        .pipe(gulp.dest('public/css'))
+});
+
 gulp.task('css', function(){
     return gulp.src('www/less/sudosos.less')
         .pipe(less())
@@ -39,4 +46,4 @@ gulp.task('css', function(){
         .pipe(gulp.dest('public/css'))
 });
 
-gulp.task('default', [ 'css', 'minify', 'bootstrap', 'AdminLTE' ]);
+gulp.task('default', [ 'css', 'minify', 'bootstrap', 'AdminLTE', "AdminLTE-theme" ]);
