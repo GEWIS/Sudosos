@@ -2,14 +2,14 @@
  * Created by s156386 on 15-7-2017.
  */
 angular.module('sudosos.controllers', [])
-    .controller('SudososCtrl', function ($scope, $state) {
+    .controller('SudososCtrl', ['$scope', '$state', function ($scope, $state) {
         $scope.state = $state;
         $scope.stateNames = {
             "sudosos.products": "Products",
             "sudosos.financial": "Financial"
         };
-    })
-    .controller('ProductsCtrl', function ($scope, rootUrl) {
+    }])
+    .controller('ProductsCtrl',['$scope', 'rootUrl', function ($scope, rootUrl) {
         $scope.products = [
             {
                 "id":"18341b00-6ada-11e7-ac1c-4ffbc8896728",
@@ -120,10 +120,10 @@ angular.module('sudosos.controllers', [])
                 "deleted_at":null
             }
         ];
-    })
-    .controller('FinancialCtrl', function ($scope) {
+    }])
+    .controller('FinancialCtrl', ['$scope', function ($scope) {
 
-    })
+    }])
     .run(function () {
         console.log("Controllers loaded");
     });

@@ -1,5 +1,5 @@
 angular.module('sudosos', ['sudosos.controllers', 'sudosos.filters', 'sudosos.services', 'ui.router'])
-    .config(function ($stateProvider, $urlRouterProvider) {
+    .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
         $stateProvider.state('sudosos', {
             url: '/sudosos',
             abstract: true,
@@ -27,7 +27,7 @@ angular.module('sudosos', ['sudosos.controllers', 'sudosos.filters', 'sudosos.se
                 }
             });
         $urlRouterProvider.otherwise('/sudosos/products');
-    })
+    }])
     .value("rootUrl", "http://sudosos.dev")
     .run(['$rootScope', '$state', function ($rootScope, $state) {
 
