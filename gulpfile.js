@@ -5,9 +5,10 @@ var gulp = require('gulp');
 var less = require('gulp-less');
 var minifyCSS = require('gulp-csso');
 var minify = require('gulp-minify');
+var gulpSass = require('gulp-sass');
 
 gulp.task('minify', function () {
-   return gulp.src('public/js/*.js')
+   return gulp.src('www/js/*.js')
        .pipe(minify({
            ext: {
                src: '.js',
@@ -18,11 +19,17 @@ gulp.task('minify', function () {
        .pipe(gulp.dest('public/js'))
 });
 
+gulp.task('bootstrap', function () {
+    return gulp.src('www/less/bootstrap/bootstrap.less')
+        .pipe(less())
+        .pipe(minifyCSS())
+        .pipe(gulp.dest('public/css'))
+});
 gulp.task('css', function(){
-    return gulp.src('public/less/sudosos.less')
+    return gulp.src('www/less/sudosos.less')
         .pipe(less())
         .pipe(minifyCSS())
         .pipe(gulp.dest('public/css'))
 });
 
-gulp.task('default', [ 'css', 'minify' ]);
+gulp.task('default', [ 'css', 'minify', 'bootstrap' ]);

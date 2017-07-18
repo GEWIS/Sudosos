@@ -24,18 +24,22 @@
     </header>
     <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
         <header class="drawer-header">
-            <img src="../img/baclogo.png" class="committee-avatar">
+            <img src="https://gewis.nl/sws/themes/bac/baclogo.png" class="committee-avatar">
             <div class="avatar-dropdown">
                 <span>hello@example.com</span>
                 <div class="mdl-layout-spacer"></div>
-                <button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+                <!-- The button to open the account select menu -->
+                <button id="select-button" class="mdl-button mdl-js-button mdl-button--icon">
                     <i class="material-icons" role="presentation">arrow_drop_down</i>
                     <span class="visuallyhidden">Accounts</span>
                 </button>
-                <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
+                <!-- The menu that contains all committees -->
+                <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="select-button">
                     <li class="mdl-menu__item">hello@example.com</li>
                     <li class="mdl-menu__item">info@example.com</li>
+                    <li class="mdl-menu__item"><i class="material-icons">add</i>Add another account... </li>
                 </ul>
+
             </div>
         </header>
         <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
