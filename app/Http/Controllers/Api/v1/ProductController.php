@@ -311,6 +311,10 @@ class ProductController extends Controller{
      *         response=400,
      *         description="Invalid property value",
      *     ),
+     *     @SWG\Response(
+     *         response=409,
+     *         description="Property is guarded",
+     *     ),
      * ),
      */
     public function putProductProperty(Request $request, $id, $property){
@@ -327,7 +331,14 @@ class ProductController extends Controller{
             return $this->response(400, "Invalid property value", $product->getErrors());
 
         } else {
-            return  $this->response(404,"Property not found");
+
+            if (Schema::hasColumn($product->getTable(), $property)){
+                return @$this->response(409, "Property is guarded");
+            } else {
+                return  $this->response(404,"Property not found");
+            }
+
+
         }
     }
 }

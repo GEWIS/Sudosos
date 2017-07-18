@@ -506,7 +506,7 @@ class StorageController extends Controller{
     }
 
     /**
-     * @SWG\Put(
+     * @SWG\Delete(
      *     path ="/storages/{storage_id}/stores/{product_id}",
      *     summary = "Deletes a product in a storage by id.",
      *     tags = {"storage"},

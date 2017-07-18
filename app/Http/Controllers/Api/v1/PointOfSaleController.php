@@ -36,7 +36,7 @@ class PointOfSaleController extends Controller{
      *     summary = "Create a new point of sale.",
      *     tags = {"POS"},
      *     description = "Create a new point of sale.",
-     *     operationId = "createpointofsale",
+     *     operationId = "createPointOfSale",
      *     produces = {"application/json"},
      *     @SWG\Parameter(
      *         name="Point of Sale",
@@ -72,7 +72,7 @@ class PointOfSaleController extends Controller{
      *     summary = "Returns point of sale by id.",
      *     tags = {"POS"},
      *     description = "Returns a point of sale with a specified id.",
-     *     operationId = "getpointofsale",
+     *     operationId = "getPointOfSale",
      *     produces = {"application/json"},
      *     @SWG\Parameter(
      *         name="id",
@@ -113,9 +113,10 @@ class PointOfSaleController extends Controller{
      *     @SWG\Parameter(
      *         name="request",
      *         in="path",
-     *         description="Request body in JSON.",
+     *         description="Request body in JSON, specifies a new point of sale",
      *         required=true,
      *         type="string",
+     *        @SWG\Schema(ref="#/definitions/inputPointOfSale"),
      *     ),
      *     @SWG\Parameter(
      *         name="id",
@@ -163,7 +164,7 @@ class PointOfSaleController extends Controller{
      *     @SWG\Parameter(
      *         name="id",
      *         in="path",
-     *         description="id of the point of sale",
+     *         description="Id of the point of sale",
      *         required=true,
      *         type="string",
      *     ),
@@ -198,7 +199,7 @@ class PointOfSaleController extends Controller{
      *     @SWG\Parameter(
      *         name="id",
      *         in="path",
-     *         description="id of the point of sale",
+     *         description="Id of the point of sale",
      *         required=true,
      *         type="string",
      *     ),
@@ -227,7 +228,6 @@ class PointOfSaleController extends Controller{
         }else{
             return $this->response(404,"Point of sale not found");
         }
-
     }
 
     /**
@@ -241,14 +241,14 @@ class PointOfSaleController extends Controller{
      *     @SWG\Parameter(
      *         name="id",
      *         in="path",
-     *         description="id of the point of sale",
+     *         description="Id of the point of sale",
      *         required=true,
      *         type="string",
      *     ),
      *     @SWG\Parameter(
      *         name="property",
      *         in="path",
-     *         description="property of the point of sale",
+     *         description="Property of the point of sale",
      *         required=true,
      *         type="string",
      *     ),
@@ -260,6 +260,10 @@ class PointOfSaleController extends Controller{
      *         response=404,
      *         description="Point of sale not found",
      *     ),
+     *     @SWG\Response(
+     *         response=400,
+     *         description="Invalid property value",
+     *     ),
      * ),
      */
     public function getPointOfSaleProperty($id, $property){
@@ -270,7 +274,7 @@ class PointOfSaleController extends Controller{
         if(Schema::hasColumn($pos->getTable(), $property)){
             return response()->json($pos->$property, 200);
         } else {
-            return  $this->response(404,"Property not found");
+            return  $this->response(400,"Invalid property value");
         }
     }
 
@@ -289,17 +293,17 @@ class PointOfSaleController extends Controller{
      *         required=true,
      *         type="string",
      *     ),
-     *         @SWG\Parameter(
+     *    @SWG\Parameter(
      *         name="property",
      *         in="path",
      *         description="Property of the point of sale.",
      *         required=true,
      *         type="string",
      *     ),
-     *         @SWG\Parameter(
+     *     @SWG\Parameter(
      *         name="value",
      *         in="body",
-     *         description="Request in JSON",
+     *         description="Request body in JSON, specifies a new property value",
      *         required=true,
      *         @SWG\Schema(ref="#/definitions/inputProperty"),
      *     ),
@@ -315,6 +319,10 @@ class PointOfSaleController extends Controller{
      *         response=400,
      *         description="Invalid property value",
      *     ),
+     *     @SWG\Response(
+     *         response=409,
+     *         description="Property is guarded",
+     *     ),
      * ),
      */
     public function putPointOfSaleProperty(Request $request, $id, $property){
@@ -324,13 +332,17 @@ class PointOfSaleController extends Controller{
         }
         if (Schema::hasColumn($pos->getTable(), $property)  && !(in_array($property,$pos->getGuarded()))) {
             $pos->$property = $request->value;
-           if($pos->isValid()){
+            if($pos->isValid()){
                $pos->save();
                return response()->json("Point of sale succesfully updated", 200);
             }
             return $this->response(400, "Invalid property value", $pos->getErrors());
         } else {
-            return $this->response(404, "Property not found");
+            if (Schema::hasColumn($pos->getTable(), $property)){
+                return $this->response(409, "Property is guarded");
+            } else {
+                return $this->response(404, "Property not found");
+            }
         }
     }
 }
