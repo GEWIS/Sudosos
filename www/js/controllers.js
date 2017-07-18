@@ -12,10 +12,13 @@ angular.module('sudosos.controllers', [])
                 "EJC17-34"
             ]
         };
+
         $scope.currentCommittee = {
             committee: $scope.user.committees[0]
         };
-        console.log("SudoSOS running");
+
+        $scope.date = new Date();
+
     }])
     .controller('ProductsCtrl',['$scope', 'rootUrl', function ($scope, rootUrl) {
         $scope.products = [
