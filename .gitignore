@@ -164,3 +164,11 @@ GitHub.sublime-settings
 # Ignore vagrant dir
 .vagrant/*
 # End of https://www.gitignore.io/api/laravel,phpstorm,intellij,sublimetext
+
+# Compiled js and css
+/public/css/*
+
+/public/js/*
+!/public/js/angular.min.js
+!/public/js/angular-ui-router.min.js
+!/public/js/app.js
