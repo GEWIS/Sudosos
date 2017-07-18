@@ -15,7 +15,8 @@ angular.module('sudosos', ['sudosos.controllers', 'sudosos.filters', 'sudosos.se
                         controller: 'FinancialCtrl'
                     }
                 }
-            })
+            }
+        })
 
             .state('sudosos.products', {
                 url: '/products',
@@ -25,7 +26,22 @@ angular.module('sudosos', ['sudosos.controllers', 'sudosos.filters', 'sudosos.se
                         controller: 'ProductsCtrl'
                     }
                 }
-            });
+            }
+        })
+
+        .state('sudosos.increaseBalance', {
+            url: '/balance',
+            views: {
+                'admin-panel-content': {
+                    templateUrl: 'increaseBalance.html',
+                    controller: 'IncreaseBalanceCtrl'
+                }
+            }
+        })
+
+
+
+        ;
         $urlRouterProvider.otherwise('/sudosos/products');
     })
     .value("rootUrl", "http://sudosos.dev")
