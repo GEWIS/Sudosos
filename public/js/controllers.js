@@ -6,8 +6,7 @@ angular.module('sudosos.controllers', [])
         $scope.state = $state;
         $scope.stateNames = {
             "sudosos.products": "Products",
-            "sudosos.financial": "Financial",
-            "sudosos.increaseBalance" : "Increase balance"
+            "sudosos.financial": "Financial"
         };
     }])
     .controller('ProductsCtrl',['$scope', 'rootUrl', function ($scope, rootUrl) {
