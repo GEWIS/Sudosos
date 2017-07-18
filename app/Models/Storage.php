@@ -71,6 +71,7 @@ class Storage extends BaseModel
         "owner_id" => "required|string|max:36|exists:users,id"
     ];
 
+
     // Relations
     public function products(){
         return $this->belongsToMany('App\Models\Product')

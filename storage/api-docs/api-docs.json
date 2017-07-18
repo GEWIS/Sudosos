@@ -29,7 +29,7 @@
                 ],
                 "summary": "Create a new point of sale.",
                 "description": "Create a new point of sale.",
-                "operationId": "createpointofsale",
+                "operationId": "createPointOfSale",
                 "produces": [
                     "application/json"
                 ],
@@ -61,7 +61,7 @@
                 ],
                 "summary": "Returns point of sale by id.",
                 "description": "Returns a point of sale with a specified id.",
-                "operationId": "getpointofsale",
+                "operationId": "getPointOfSale",
                 "produces": [
                     "application/json"
                 ],
@@ -80,6 +80,198 @@
                     },
                     "404": {
                         "description": "Point of sale not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "POS"
+                ],
+                "summary": "Updates a point of sale by id.",
+                "description": "Updates the point of sale.",
+                "operationId": "updatePointOfSale",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "request",
+                        "in": "path",
+                        "description": "Request body in JSON, specifies a new point of sale",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/inputPointOfSale"
+                        },
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of the point of sale",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Point of sale succesfully updated"
+                    },
+                    "400": {
+                        "description": "Point of sale not valid"
+                    },
+                    "404": {
+                        "description": "Point of sale not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "POS"
+                ],
+                "summary": "Delete a point of sale by id.",
+                "description": "Delete a point of sale by id.",
+                "operationId": "deletePointOfSale",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of the point of sale",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Point of sale succesfully deleted."
+                    },
+                    "404": {
+                        "description": "Point of sale not found."
+                    }
+                }
+            }
+        },
+        "/pointsofsale/{id}/reinstate": {
+            "put": {
+                "tags": [
+                    "POS"
+                ],
+                "summary": "Reinstate a point of sale by id.",
+                "description": "Reinstate a point of sale by id.",
+                "operationId": "reinstatePointOfSale",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of the point of sale",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Point of sale succesfully reinstated"
+                    },
+                    "404": {
+                        "description": "Point of sale not found"
+                    },
+                    "409": {
+                        "description": "Point of sale already active."
+                    }
+                }
+            }
+        },
+        "/pointsofsale/{id}/{property}": {
+            "get": {
+                "tags": [
+                    "POS"
+                ],
+                "summary": "Returns a property of a point of sale by id.",
+                "description": "Returns a property of a point of sale by id.",
+                "operationId": "getPointOfSaleProperty",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of the point of sale",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "property",
+                        "in": "path",
+                        "description": "Property of the point of sale",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Point of sale not found"
+                    },
+                    "400": {
+                        "description": "Invalid property value"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "POS"
+                ],
+                "summary": "Update a property of a point of sale by id.",
+                "description": "Update a property of a  point of sale by id.",
+                "operationId": "getPointOfSaleProperty",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of the point of sale",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "property",
+                        "in": "path",
+                        "description": "Property of the point of sale.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "value",
+                        "in": "body",
+                        "description": "Request body in JSON, specifies a new property value",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/inputProperty"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Point of sale succesfully updated"
+                    },
+                    "404": {
+                        "description": "Point of sale not found"
+                    },
+                    "400": {
+                        "description": "Invalid property value"
+                    },
+                    "409": {
+                        "description": "Property is guarded"
                     }
                 }
             }
@@ -182,14 +374,14 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "id of the product",
+                        "description": "Id of the product",
                         "required": true,
                         "type": "string"
                     }
                 ],
                 "responses": {
-                    "201": {
-                        "description": "Product succesfully deleted"
+                    "200": {
+                        "description": "Product succesfully updated"
                     },
                     "400": {
                         "description": "Product not valid"
@@ -213,7 +405,7 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "id of the product",
+                        "description": "Id of the product",
                         "required": true,
                         "type": "string"
                     }
@@ -243,7 +435,7 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "id of the product",
+                        "description": "Id of the product",
                         "required": true,
                         "type": "string"
                     }
@@ -256,7 +448,7 @@
                         "description": "Product not found"
                     },
                     "409": {
-                        "description": "Product already active."
+                        "description": "Product already active"
                     }
                 }
             }
@@ -276,14 +468,14 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "id of the product",
+                        "description": "Id of the product",
                         "required": true,
                         "type": "string"
                     },
                     {
                         "name": "property",
                         "in": "path",
-                        "description": "property of the product",
+                        "description": "Property of the product",
                         "required": true,
                         "type": "string"
                     }
@@ -311,23 +503,25 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "id of the product",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "request",
-                        "in": "path",
-                        "description": "Request body in JSON.",
+                        "description": "Id of the product",
                         "required": true,
                         "type": "string"
                     },
                     {
                         "name": "property",
                         "in": "path",
-                        "description": "Property of the product.",
+                        "description": "Property of the product",
                         "required": true,
                         "type": "string"
+                    },
+                    {
+                        "name": "value",
+                        "in": "body",
+                        "description": "Request in JSON",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/inputProperty"
+                        }
                     }
                 ],
                 "responses": {
@@ -338,7 +532,10 @@
                         "description": "Product not found"
                     },
                     "400": {
-                        "description": "Invalid property value."
+                        "description": "Invalid property value"
+                    },
+                    "409": {
+                        "description": "Property is guarded"
                     }
                 }
             }
@@ -712,7 +909,7 @@
             }
         },
         "/storages/{storage_id}/stores/{product_id}": {
-            "put": {
+            "post": {
                 "tags": [
                     "storage"
                 ],
@@ -739,10 +936,58 @@
                     },
                     {
                         "name": "stock",
-                        "in": "formData",
+                        "in": "body",
                         "description": "id of the product",
                         "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/inputProperty"
+                        },
                         "type": "integer"
+                    },
+                    {
+                        "name": "request",
+                        "in": "path",
+                        "description": "Request body in JSON",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Storage or Product not found, see return message"
+                    },
+                    "400": {
+                        "description": "Invalid stock property"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "storage"
+                ],
+                "summary": "Deletes a product in a storage by id.",
+                "description": "Deletes a product in a storage by id.",
+                "operationId": "deleteStorageProduct",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "storage_id",
+                        "in": "path",
+                        "description": "id of the storage",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "product_id",
+                        "in": "path",
+                        "description": "id of the product",
+                        "required": true,
+                        "type": "string"
                     }
                 ],
                 "responses": {
@@ -757,7 +1002,7 @@
         }
     },
     "definitions": {
-        "pointofsale": {
+        "PointOfSale": {
             "required": [
                 "id",
                 "owner_id",
@@ -801,10 +1046,21 @@
             "properties": {
                 "owner_id": {
                     "description": "Id of the owner from this Point of Sale",
-                    "type": "integer"
+                    "type": "string"
                 },
                 "name": {
                     "description": "The name of the product",
+                    "type": "string"
+                }
+            }
+        },
+        "inputProperty": {
+            "required": [
+                "value"
+            ],
+            "properties": {
+                "value": {
+                    "description": "Value of the property",
                     "type": "string"
                 }
             }
