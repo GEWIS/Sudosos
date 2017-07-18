@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
-use Faker\Provider\Base;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
-//class User extends Authenticatable
+
 class User extends BaseModel implements Authenticatable
 {
     use Notifiable, HasApiTokens;
@@ -24,7 +23,6 @@ class User extends BaseModel implements Authenticatable
     protected $fillable = [
         'user_code',
         'pincode',
-        'card_id',
         'type',
     ];
 
@@ -33,10 +31,10 @@ class User extends BaseModel implements Authenticatable
     ];
 
     protected $rules = [
-        "user_code"     => "required|digits:5",
-        "pincode"    => "required|string|max:336",
-        "card_id" => "required|string|max:336",
-        "balance"    => "required|integer",
+        "user_code"     => "required|min:4|max:6",
+        "pincode"    => "string|max:336",
+        "card_id" => "string|max:336",
+        "balance"    => "integer",
         "type" => "required|digits:1|in:0,1,2,3",
     ];
 
@@ -46,15 +44,22 @@ class User extends BaseModel implements Authenticatable
      * @var array
      */
     protected $hidden = [
-        'pincode'
+        'pincode',
+        'GEWISMember',
+        'externalUserData'
     ];
 
-    //protected $appends = ['first_name', 'last_name', 'email'];
+    protected $defaults = [
+        'pincode' => '',
+        'balance' => 0,
+    ];
+
+    protected $appends = ['first_name', 'last_name', 'email'];
 
     // Relations
     public function externalUserData()
     {
-        return $this->hasOne('App\Models\ExternalUser');
+        return $this->hasOne('App\Models\ExternalUser', 'user_id', 'id');
     }
 
     public function GEWISMember()
@@ -76,8 +81,52 @@ class User extends BaseModel implements Authenticatable
 
     public function getFirstNameAttribute()
     {
-        if ($this->type === self::TYPE_GEWIS) {
+        switch ($this->type) {
+            case self::TYPE_GEWIS:
+                return $this->GEWISMember->firstName;
+            case self::TYPE_BARCODE:
+                return 'Borrelkaart'; // TODO: translate
+            default:
+                return $this->externalUserData->first_name;
+        }
+    }
 
+    public function getLastNameAttribute()
+    {
+        switch ($this->type) {
+            case self::TYPE_GEWIS:
+                $name = $this->GEWISMember->middleName;
+                if (strlen($name) > 0) {
+                    $name .= ' ';
+                }
+                $name .= $this->GEWISMember->lastName;
+                return $name;
+            case self::TYPE_BARCODE:
+                return '';
+            default:
+                return $this->externalUserData->last_name;
+        }
+    }
+
+    public function getEmailAttribute()
+    {
+        switch ($this->type) {
+            case self::TYPE_GEWIS:
+                return $this->GEWISMember->email;
+            case self::TYPE_BARCODE:
+                return 'sudosos@gewis.nl';
+            default:
+                return $this->externalUserData->email;
+        }
+    }
+
+    public function getOrganRoles()
+    {
+        $organRoles = [];
+        foreach ($this->GEWISMember->organMemberships as $om) {
+            if ($om->dischargeDate === null) {
+                $organRoles[$om->organ->abbr] = $om->function;
+            }
         }
     }
     /**
@@ -117,7 +166,7 @@ class User extends BaseModel implements Authenticatable
      */
     public function getRememberToken()
     {
-        // TODO: Implement getRememberToken() method.
+        return $this->remember_token;
     }
 
     /**
@@ -128,7 +177,7 @@ class User extends BaseModel implements Authenticatable
      */
     public function setRememberToken($value)
     {
-        // TODO: Implement setRememberToken() method.
+        $this->remember_token = $value;
     }
 
     /**
@@ -138,6 +187,6 @@ class User extends BaseModel implements Authenticatable
      */
     public function getRememberTokenName()
     {
-        // TODO: Implement getRememberTokenName() method.
+        return 'remember_token';
     }
 }

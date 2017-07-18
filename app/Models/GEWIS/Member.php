@@ -11,6 +11,6 @@ class Member extends Model
 
     public function organMemberships()
     {
-        return $this->hasOne('App\Models\GEWIS\OrganMember', 'lidnr', 'lidnr');
+        return $this->hasMany('App\Models\GEWIS\OrganMember', 'lidnr', 'lidnr');
     }
 }
