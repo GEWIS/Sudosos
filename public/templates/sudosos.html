@@ -13,7 +13,18 @@
             <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
                 <span class="sr-only">Toggle navigation</span>
             </a>
+            <div class="navbar-custom-menu">
+                <ul class="navbar nav">
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-sign-out" aria-hidden="true"></i>
+                            Sign out
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </nav>
+
     </header>
     <aside class="main-sidebar">
         <section class="sidebar">
@@ -25,6 +36,17 @@
                     <p>{{ user.name }}</p>
                     <a href="#">Balance: €{{ user.currentBalance }}</a>
                 </div>
+            </div>
+            <div class="dropdown select-committee-dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" id="selectCommitteeDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    {{ currentCommittee.committee }}
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="selectCommitteeDropDown">
+                    <li ng-repeat="committee in user.committees">
+                        <a href="" ng-click="currentCommittee.committee = committee">{{ committee}}</a>
+                    </li>
+                </ul>
             </div>
 
             <ul class="sidebar-menu tree" data-widget="tree">

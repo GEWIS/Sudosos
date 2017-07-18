@@ -5,7 +5,15 @@ angular.module('sudosos.controllers', [])
     .controller('SudososCtrl', ['$scope', '$state', function ($scope) {
         $scope.user = {
             name: "Ge Bruiker",
-            currentBalance: 42.69
+            currentBalance: 42.69,
+            committees: [
+                "BAC",
+                "GEILER",
+                "EJC17-34"
+            ]
+        };
+        $scope.currentCommittee = {
+            committee: $scope.user.committees[0]
         };
         console.log("SudoSOS running");
     }])
