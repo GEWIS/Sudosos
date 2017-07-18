@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Models\Product;
 use App\Models\storage;
 use App\Http\Controllers\Controller;
 
@@ -260,8 +261,9 @@ class StorageController extends Controller{
      *     ),
      * ),
      */
-    public function getStorageProperty($property, $id){
+    public function getStorageProperty($id, $property){
         $storage = Storage::find($id);
+
         if (!$storage) {
             return $this->response(404,"storage not found");
         }
@@ -363,7 +365,7 @@ class StorageController extends Controller{
         if (!$storage) {
             return $this->response(404, "Storage not found");
         }else{
-
+            return response()->json($storage->products,200);
         }
 
     }
@@ -371,9 +373,9 @@ class StorageController extends Controller{
     /**
      * @SWG\Get(
      *     path ="/storages/{storage_id}/stock/{product_id}",
-     *     summary = "Returns all products in a storage by id.",
+     *     summary = "Returns stock of a product in a storage by id.",
      *     tags = {"storage"},
-     *     description = "Returns all products in a storage by id.",
+     *     description = "Returns stock of a product in a storage by id.",
      *     operationId = "getStorageStockOfProducts",
      *     produces = {"application/json"},
      *     @SWG\Parameter(
@@ -390,13 +392,20 @@ class StorageController extends Controller{
      *         required=true,
      *         type="string",
      *     ),
+     *     @SWG\Parameter(
+     *         name="request",
+     *         in="path",
+     *         description="Request body in JSON.",
+     *         required=true,
+     *         type="string",
+     *     ),
      *     @SWG\Response(
      *         response=200,
      *         description="Successful operation",
      *     ),
      *     @SWG\Response(
      *         response=404,
-     *         description="Storage not found",
+     *         description="Storage or relation not found",
      *     ),
      * ),
      */
@@ -404,8 +413,10 @@ class StorageController extends Controller{
         $storage = Storage::find($storage_id);
         if (!$storage) {
             return $this->response(404, "Storage not found");
+        }else if(!$storage->products->contains($product_id)){
+                return $this->response(404, "Relation between Storage and ProductS not found");
         }else{
-
+            return response()->json($storage->products->find($product_id)->pivot->stock,200);
         }
     }
 
@@ -433,10 +444,11 @@ class StorageController extends Controller{
      *     ),
      *     @SWG\Parameter(
      *         name="stock",
-     *         in="formData",
+     *         in="body",
      *         description="id of the product",
      *         required=true,
      *         type="integer",
+     *         @SWG\Schema(ref="#/definitions/inputProperty")
      *     ),
      *     @SWG\Response(
      *         response=200,
@@ -444,21 +456,27 @@ class StorageController extends Controller{
      *     ),
      *     @SWG\Response(
      *         response=404,
-     *         description="Storage not found",
+     *         description="Storage or Product or Relation not found",
      *     ),
      * ),
      */
-    public function putStorageStockOfProduct($storage_id, $product_id, $stock){
+    public function putStorageStockOfProduct($storage_id, $product_id, Request $request){
         $storage = Storage::find($storage_id);
-        if (!$storage) {
+        $product = Product::find($product_id);
+        if(!$storage) {
             return $this->response(404, "Storage not found");
+        }else if(!$product){
+            return $this->response(404, "Product not found");
+        }else if(!$storage->products->contains($product_id)){
+            return $this->response(404, "Relation between Storage and ProductS not found");
         }else{
-
+            $storage->products()->sync([ $product_id => ["stock" => $request->value]]);
+            return response()-> json("Successful operation",201);
         }
     }
 
     /**
-     * @SWG\Put(
+     * @SWG\Post(
      *     path ="/storages/{storage_id}/stores/{product_id}",
      *     summary = "Stores a product in a storage by id.",
      *     tags = {"storage"},
@@ -481,28 +499,51 @@ class StorageController extends Controller{
      *     ),
      *     @SWG\Parameter(
      *         name="stock",
-     *         in="formData",
+     *         in="body",
      *         description="id of the product",
      *         required=true,
      *         type="integer",
+     *         @SWG\Schema(ref="#/definitions/inputProperty")
+     *     ),
+     *     @SWG\Parameter(
+     *         name="request",
+     *         in="path",
+     *         description="Request body in JSON",
+     *         required=true,
+     *         type="string",
      *     ),
      *     @SWG\Response(
-     *         response=200,
+     *         response=201,
      *         description="Successful operation",
      *     ),
      *     @SWG\Response(
      *         response=404,
-     *         description="Storage not found",
+     *         description="Storage or Product not found, see return message",
+     *     ),
+     *     @SWG\Response(
+     *         response=400,
+     *         description="Invalid stock property",
      *     ),
      * ),
      */
-    public function putStorageProduct($storage_id, $product_id, $stock){
+    public function postStorageProduct(Request $request, $storage_id, $product_id){
         $storage = Storage::find($storage_id);
+        $product = Product::find($product_id);
         if (!$storage) {
             return $this->response(404, "Storage not found");
+        }else if (!$product) {
+            return $this->response(404, "Product not found");
         }else{
+            $stock = $request->value;
+            if($stock->isValid()){
+                $storage->products()->attach($product, ["stock" => $stock]);
 
+                return response()->json("Product succesfully stored in storage.",201);
+            }else{
+                return $this->response(400, "Invalid stock property.");
+            }
         }
+
     }
 
     /**
@@ -528,21 +569,24 @@ class StorageController extends Controller{
      *         type="string",
      *     ),
      *     @SWG\Response(
-     *         response=200,
+     *         response=201,
      *         description="Successful operation",
      *     ),
      *     @SWG\Response(
      *         response=404,
-     *         description="Storage not found",
+     *         description="Storage or Relation not found",
      *     ),
      * ),
      */
     public function deleteStorageProduct($storage_id, $product_id){
         $storage = Storage::find($storage_id);
         if (!$storage) {
-            return $this->response(404, "Storage not found");
+            return $this->response(404, "Storage not found.");
+        }else if(!$storage->products->contains($product_id)){
+            return $this->response(404, "Relation between Storage and Product not found.");
         }else{
-
+            $storage->products()->detach($product_id);
+            return response()->json("Product succesfully deleted out of storage.",201);
         }
     }
 }

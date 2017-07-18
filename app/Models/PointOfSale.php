@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @SWG\Definition(
- *      definition="pointofsale",
+ *      definition="PointOfSale",
  *      required={"id","owner_id","name"},
  *      @SWG\Property(
  *             property="id",
