@@ -22,16 +22,23 @@
                     <img src="http://gewis.nl/willem" class="img-circle">
                 </div>
                 <div class="pull-left info">
-                    <p>L. Erens</p>
+                    <p>{{ user.name }}</p>
+                    <a href="#">Balance: €{{ user.currentBalance }}</a>
                 </div>
             </div>
 
             <ul class="sidebar-menu tree" data-widget="tree">
-                <li class="active">
-                    <a href="#" ui-sref="sudosos.financial">Financial</a>
+                <li ui-sref="sudosos.financial" ui-sref-active="active">
+                    <a href="#" >
+                        <i class="material-icons">&#xE227;</i>
+                        <span> Financial</span>
+                    </a>
                 </li>
-                <li>
-                    <a href="#" ui-sref="sudosos.products">Products</a>
+                <li ui-sref="sudosos.products" ui-sref-active="active">
+                    <a href="#" >
+                        <i class="fa fa-th"></i>
+                        <span>Products</span>
+                    </a>
                 </li>
             </ul>
         </section>

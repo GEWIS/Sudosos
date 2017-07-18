@@ -2,12 +2,12 @@
  * Created by s156386 on 15-7-2017.
  */
 angular.module('sudosos.controllers', [])
-    .controller('SudososCtrl', ['$scope', '$state', function ($scope, $state) {
-        $scope.state = $state;
-        $scope.stateNames = {
-            "sudosos.products": "Products",
-            "sudosos.financial": "Financial"
+    .controller('SudososCtrl', ['$scope', '$state', function ($scope) {
+        $scope.user = {
+            name: "Ge Bruiker",
+            currentBalance: 42.69
         };
+        console.log("SudoSOS running");
     }])
     .controller('ProductsCtrl',['$scope', 'rootUrl', function ($scope, rootUrl) {
         $scope.products = [
