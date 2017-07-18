@@ -10,7 +10,6 @@ gulp.task('minify', function () {
    return gulp.src('www/js/*.js')
        .pipe(minify({
            ext: {
-               src: '.js',
                min: '.min.js'
            },
            ignoreFiles: ['*.min.js']
