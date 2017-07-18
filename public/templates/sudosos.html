@@ -13,24 +13,46 @@
             <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
                 <span class="sr-only">Toggle navigation</span>
             </a>
+            <div class="navbar-custom-menu">
+                <ul class="navbar nav">
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-sign-out" aria-hidden="true"></i>
+                            Sign out
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </nav>
+
     </header>
     <aside class="main-sidebar">
         <section class="sidebar">
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="http://gewis.nl/willem" class="img-circle">
+                    <img src="img/user_avatar.svg" class="img-circle user-avatar">
                 </div>
                 <div class="pull-left info">
                     <p>{{ user.name }}</p>
                     <a href="#">Balance: €{{ user.currentBalance }}</a>
                 </div>
             </div>
+            <div class="dropdown select-committee-dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" id="selectCommitteeDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    {{ currentCommittee.committee }}
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="selectCommitteeDropDown">
+                    <li ng-repeat="committee in user.committees">
+                        <a href="" ng-click="currentCommittee.committee = committee">{{ committee}}</a>
+                    </li>
+                </ul>
+            </div>
 
             <ul class="sidebar-menu tree" data-widget="tree">
                 <li ui-sref="sudosos.financial" ui-sref-active="active">
                     <a href="#" >
-                        <i class="material-icons">&#xE227;</i>
+                        <i class="fa fa-money" aria-hidden="true"></i>
                         <span> Financial</span>
                     </a>
                 </li>
@@ -47,4 +69,13 @@
         <div ui-view="admin-panel-content">
         </div>
     </div>
+    <footer class="main-footer">
+        &copy; {{ date | date: 'yyyy' }} GEWIS
+        &bullet; <a href="http://example.com">Terms of service</a>
+        &bullet; <a href="mailto:zwartgat@gewis.nl">Complaints</a>
+        &bullet; <a href="https://github.com/GEWIS/Sudosos">Source</a>
+        <div class="pull-right hidden-xs">
+            Thanks to the awesome <a href="https://github.com/GEWIS/Sudosos/pulse">Beunteam</a>
+        </div>
+    </footer>
 </div>

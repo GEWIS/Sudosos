@@ -5,9 +5,20 @@ angular.module('sudosos.controllers', [])
     .controller('SudososCtrl', ['$scope', '$state', function ($scope) {
         $scope.user = {
             name: "Ge Bruiker",
-            currentBalance: 42.69
+            currentBalance: 42.69,
+            committees: [
+                "BAC",
+                "GEILER",
+                "EJC17-34"
+            ]
         };
-        console.log("SudoSOS running");
+
+        $scope.currentCommittee = {
+            committee: $scope.user.committees[0]
+        };
+
+        $scope.date = new Date();
+
     }])
     .controller('ProductsCtrl',['$scope', 'rootUrl', function ($scope, rootUrl) {
         $scope.products = [
