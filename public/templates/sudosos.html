@@ -1,101 +1,100 @@
-<div>
-    <header class="main-header">
-        <a href="#" class="logo">
+<header class="main-header">
+    <a href="#" class="logo">
             <span class="logo-mini">
                 <img src="img/logo.svg" class="sudosos-logo">
             </span>
-            <span class="logo-lg">
+        <span class="logo-lg">
                 <img src="img/logo.svg" class="sudosos-logo">
                 <span class="sudosos-logo-text"> SudoSOS</span>
             </span>
+    </a>
+    <nav class="navbar navbar-static-top" role="navigation">
+        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button" id="toggle-sidebar-button">
+            <span class="sr-only">Toggle navigation</span>
         </a>
-        <nav class="navbar navbar-static-top" role="navigation">
-            <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-                <span class="sr-only">Toggle navigation</span>
-            </a>
-            <div class="navbar-custom-menu">
-                <ul class="navbar nav">
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-sign-out" aria-hidden="true"></i>
-                            Sign out
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-
-    </header>
-    <aside class="main-sidebar">
-        <section class="sidebar">
-            <div class="user-panel">
-                <div class="pull-left image">
-                    <img src="img/user_avatar.svg" class="img-circle user-avatar">
-                </div>
-                <div class="pull-left info">
-                    <p>{{ user.name }}</p>
-                    <a href="#">Balance: €{{ user.currentBalance }}</a>
-                </div>
-            </div>
-            <div class="dropdown select-committee-dropdown">
-                <button class="btn btn-default dropdown-toggle" type="button" id="selectCommitteeDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    {{ currentCommittee.committee }}
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="selectCommitteeDropDown">
-                    <li ng-repeat="committee in user.committees">
-                        <a href="" ng-click="currentCommittee.committee = committee">{{ committee}}</a>
-                    </li>
-                </ul>
-            </div>
-
-            <ul class="sidebar-menu tree" data-widget="tree">
-                <li ui-sref="sudosos.financial" ui-sref-active="active">
-                    <a href="#" >
-                        <i class="fa fa-money" aria-hidden="true"></i>
-                        <span> Financial</span>
-                    </a>
-                </li>
-                <li ui-sref="sudosos.products" ui-sref-active="active">
-                    <a href="#" >
-                        <i class="fa fa-th"></i>
-                        <span>Products</span>
-                    </a>
-                </li>
-                <li class="treeview">
+        <div class="navbar-custom-menu">
+            <ul class="navbar nav">
+                <li>
                     <a href="#">
-                        <i class="fa fa-wrench"></i>
-                        <span>Manage</span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
+                        <i class="fa fa-sign-out" aria-hidden="true"></i>
+                        Sign out
                     </a>
-                    <ul class="treeview-menu">
-                        <li>
-                            <a href="#"><i class="fa fa-th"></i> Manage products</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-cubes"></i> Manage storages</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-shopping-basket"></i> Manage POS</a>
-                        </li>
-                    </ul>
                 </li>
             </ul>
-        </section>
-    </aside>
-    <div class="content-wrapper">
-        <div ui-view="admin-panel-content">
         </div>
+    </nav>
+
+</header>
+<aside class="main-sidebar">
+    <section class="sidebar">
+        <div class="user-panel">
+            <div class="pull-left image">
+                <img src="img/user_avatar.svg" class="img-circle user-avatar">
+            </div>
+            <div class="pull-left info">
+                <p>{{ user.name }}</p>
+                <a href="#">Balance: €{{ user.currentBalance }}</a>
+            </div>
+        </div>
+        <div class="dropdown select-committee-dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="selectCommitteeDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                {{ currentCommittee.committee }}
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="selectCommitteeDropDown">
+                <li ng-repeat="committee in user.committees">
+                    <a href="" ng-click="currentCommittee.committee = committee">{{ committee}}</a>
+                </li>
+            </ul>
+        </div>
+
+        <ul class="sidebar-menu tree" data-widget="tree">
+            <li ui-sref="sudosos.financial" ui-sref-active="active">
+                <a href="#" >
+                    <i class="fa fa-money" aria-hidden="true"></i>
+                    <span> Financial</span>
+                </a>
+            </li>
+            <li ui-sref="sudosos.products" ui-sref-active="active">
+                <a href="#" >
+                    <i class="fa fa-th"></i>
+                    <span>Products</span>
+                </a>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-wrench"></i>
+                    <span>Manage</span>
+                    <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li>
+                        <a href="#"><i class="fa fa-th"></i> Manage products</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-cubes"></i> Manage storages</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-shopping-basket"></i> Manage POS</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+</aside>
+<div class="content-wrapper">
+    <div ui-view="admin-panel-content">
     </div>
-    <footer class="main-footer">
-        &copy; {{ date | date: 'yyyy' }} GEWIS
-        &bullet; <a href="http://example.com">Terms of service</a>
-        &bullet; <a href="mailto:zwartgat@gewis.nl">Complaints</a>
-        &bullet; <a href="https://github.com/GEWIS/Sudosos">Source</a>
-        <div class="pull-right hidden-xs">
-            Thanks to the awesome <a href="https://github.com/GEWIS/Sudosos/pulse">Beunteam</a>
-        </div>
-    </footer>
 </div>
+<footer class="main-footer">
+    &copy; {{ date | date: 'yyyy' }} GEWIS
+    &bullet; <a href="http://example.com">Terms of service</a>
+    &bullet; <a href="mailto:zwartgat@gewis.nl">Complaints</a>
+    &bullet; <a href="https://github.com/GEWIS/Sudosos">Source</a>
+    <div class="pull-right hidden-xs">
+        Thanks to the awesome <a href="https://github.com/GEWIS/Sudosos/pulse">Beunteam</a>
+    </div>
+</footer>
+
