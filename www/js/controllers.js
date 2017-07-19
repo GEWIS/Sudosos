@@ -136,5 +136,4 @@ angular.module('sudosos.controllers', [])
 
     }])
     .run(function () {
-        console.log("Controllers loaded");
     });
