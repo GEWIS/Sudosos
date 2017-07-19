@@ -11,9 +11,8 @@
 |
 */
 
-Route::group(['namespace' => 'Web', 'middleware' => ['auth:web']], function () {
+Route::group(['namespace' => 'Web', 'middleware' => ['web']], function () {
     Route::get('/', 'IndexController@index');
-
 });
 
 Route::group(['namespace' => 'Auth', 'prefix' => 'auth', 'middleware' => ['web']], function () {
@@ -26,5 +25,6 @@ Route::group(['namespace' => 'Auth', 'prefix' => 'auth', 'middleware' => ['web']
     Route::post('register', 'RegisterController@doRegister');
 
 });
-
-Route::get('products', 'ProductController@index');
+Route::any('{catchall}', function () {
+    return Redirect::to('/');
+})->where('catchall', '.*');

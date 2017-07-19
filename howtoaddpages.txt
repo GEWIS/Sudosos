@@ -1,4 +1,5 @@
 1. Maak in de map public/templates een nieuwe template aan. Dit is een normale HTML-file
 2. Maak een nieuwe controller aan. Dit moet in public/js/controllers.js
 3. Maak een nieuwe state aan in public/js/sudosos.js
+4. Voeg in sudosos.html een menuitem toe.
 4. Start met beunen

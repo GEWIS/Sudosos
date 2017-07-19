@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SudoSOS Admin</title>
+
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="../css/material.red-indigo.min.css">
+
+    <script defer src="../js/material.min.js"></script>
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <style>
+        .mdl-layout {
+            align-items: center;
+            justify-content: center;
+        }
+        .mdl-layout__content {
+            padding: 24px;
+            /*flex: none;*/
+        }
+    </style>
+</head>
+<body ng-app="sudosos">
+<ui-view class="main-ui-view">
+    <div class="mdl-layout mdl-js-layout">
+        <main class="mdl-layout__content">
+            <div class="mdl-card mdl-shadow--6dp">
+                <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
+                    <h2 class="mdl-card__title-text">SudoSOS - Login</h2>
+                </div>
+                <div class="mdl-card__supporting-text">
+                    <form action="#">
+                        <div class="mdl-textfield mdl-js-textfield">
+                            <input class="mdl-textfield__input" type="text" id="username" />
+                            <label class="mdl-textfield__label" for="username">Username</label>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield">
+                            <input class="mdl-textfield__input" type="password" id="userpass" />
+                            <label class="mdl-textfield__label" for="userpass">Password</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="mdl-card__actions mdl-card--border">
+                    <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Log in</button>
+                </div>
+            </div>
+        </main>
+    </div>
+</ui-view>
+</body>
+</html>

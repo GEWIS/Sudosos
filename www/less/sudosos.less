@@ -1,0 +1,65 @@
+img.sudosos-logo{
+  max-height: 48px;
+  max-width: 48px;
+  padding-bottom: 4px;
+  padding-top: 4px;
+}
+
+.material-icons {
+  font-size:18px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+//Start content height fix
+ui-view{
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+ui-view > header {
+  flex: 0 1 auto;
+}
+
+ui-view > .content-wrapper {
+  flex: 1 1 auto;
+  min-height: initial;
+}
+
+ui-view > footer {
+  flex: 0 1 40px;
+}
+//end content height fix
+
+
+img.user-avatar{
+  height: 45px;
+}
+
+.nav>li>a{
+  padding: 15px;
+}
+
+.dropdown-menu>li>a{
+  color: #333 !important;
+}
+
+.select-committee-dropdown *:not(span) {
+  width: 100%;
+}
+body.sidebar-collapse * .select-committee-dropdown{
+  display: none;
+}
+
+.wrapper {
+  width: 100%;
+  min-height: 100%;
+  position: absolute;
+}
+
+.padding{
+  padding: 8px;
+}
