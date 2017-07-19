@@ -1,4 +1,4 @@
-img.sudosos-logo{
+mg.sudosos-logo{
   max-height: 48px;
   max-width: 48px;
   padding-bottom: 4px;
@@ -13,9 +13,27 @@ img.sudosos-logo{
   width: 100%;
 }
 
-ui-view > div {
-  height:100%;
+//Start content height fix
+ui-view > div{
+  display: flex;
+  flex-flow: column;
+  height: 100%;
 }
+
+ui-view > div , div > header {
+  flex: 0 1 auto;
+}
+
+ui-view > div, div > .content-wrapper {
+  flex: 1 1 auto;
+  min-height: initial;
+}
+
+ui-view > div, div > footer {
+  flex: 0 1 40px;
+}
+//end content height fix
+
 
 img.user-avatar{
   height: 45px;
