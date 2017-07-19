@@ -21,6 +21,7 @@ angular.module('sudosos.controllers', [])
 
     }])
     .controller('ProductsCtrl',['$scope', 'rootUrl', function ($scope, rootUrl) {
+        $scope.searchTerm = "";
         $scope.products = [
             {
                 "id":"18341b00-6ada-11e7-ac1c-4ffbc8896728",

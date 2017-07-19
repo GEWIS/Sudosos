@@ -1,22 +1,16 @@
-<div class="buttons-div">
-    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Add product</button>
-    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">Edit product</button>
-    <form action="#">
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-            <label class="mdl-button mdl-js-button mdl-button--icon" for="sample-expandable">
-                <i class="material-icons">search</i>
-            </label>
-            <div class="mdl-textfield__expandable-holder">
-                <input class="mdl-textfield__input" type="text" id="sample-expandable">
-                <label class="mdl-textfield__label" for="sample-expandable">Expandable Input</label>
-            </div>
-        </div>
-    </form>
+<div class="form-inline">
+    <button class="btn btn-success">Add product</button>
+    <button class="btn btn-primary">Edit product</button>
+    <div class="form-group input-group">
+        <div class="input-group-addon"><i class="fa fa-search"></i> </div>
+        <label for="searchBar" class="sr-only">Email</label>
+        <input type="text" class="form-control" id="searchBar" placeholder="Search" ng-model="searchTerm">
+    </div>
 </div>
-<table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp product-table">
+<table class="table">
     <thead>
     <tr>
-        <th class="mdl-data-table__cell--non-numeric product-table">Naam</th>
+        <th class="">Naam</th>
         <th>Prijs</th>
         <th>Afbeelding</th>
         <th>Verpakkingsgrootte</th>
@@ -24,8 +18,8 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="product in products">
-        <td class="mdl-data-table__cell--non-numeric">{{ product.name }}</td>
+    <tr ng-repeat="product in products | filter:{name:searchTerm}">
+        <td>{{ product.name }}</td>
         <td>{{ product.price }}</td>
         <td><img src="{{ product.image }}"></td>
         <td>{{ product.tray_size }}</td>
