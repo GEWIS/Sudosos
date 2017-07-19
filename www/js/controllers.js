@@ -20,17 +20,28 @@ angular.module('sudosos.controllers', [])
         $scope.date = new Date();
 
     }])
+    .controller('HomeCtrl', ['$scope', function ($scope) {
+
+    }])
+    .controller('FinancialCtrl', ['$scope', function ($scope) {
+
+    }])
     .controller('ProductsCtrl',['$scope', '$http', 'rootUrl', function ($scope, $http, rootUrl) {
         $scope.searchTerm = "";
         $scope.loadingData = $http.get(rootUrl + '/api/v1/products').then(function (response) {
             $scope.products = response.data;
         });
     }])
-    .controller('FinancialCtrl', ['$scope', function ($scope) {
-
-    }])
     .controller('IncreaseBalanceCtrl', ['$scope', function ($scope) {
-
+        $scope.user = {
+            name: "Ge Bruiker",
+            currentBalance: 42.69,
+            committees: [
+                "BAC",
+                "GEILER",
+                "EJC17-34"
+            ]
+        };
     }])
     .run(function () {
     });

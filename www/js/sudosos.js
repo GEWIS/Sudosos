@@ -6,6 +6,15 @@ angular.module('sudosos', ['sudosos.controllers', 'sudosos.filters', 'sudosos.se
             templateUrl: 'templates/sudosos.html',
             controller: 'SudososCtrl'
         })
+            .state('sudosos.home', {
+                url: '/home',
+                views: {
+                    'admin-panel-content': {
+                        templateUrl: 'templates/home.html',
+                        controller: 'HomeCtrl'
+                    }
+                }
+            })
 
             .state('sudosos.financial', {
                 url: '/financial',
@@ -37,7 +46,7 @@ angular.module('sudosos', ['sudosos.controllers', 'sudosos.filters', 'sudosos.se
                 }
             });
         ;
-        $urlRouterProvider.otherwise('/sudosos/products');
+        $urlRouterProvider.otherwise('/sudosos/home');
     }])
     .value("rootUrl", "http://sudosos.dev")
     .run(['$rootScope', '$state', function ($rootScope, $state) {
