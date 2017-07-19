@@ -48,11 +48,11 @@ class StorageController extends Controller{
      *         ),
      *     @SWG\Response(
      *         response=201,
-     *         description="successful operation",
+     *         description="Successful operation",
      *     ),
      *     @SWG\Response(
      *         response=400,
-     *         description="storage invalid.",
+     *         description="Storage invalid.",
      *     ),
      * ),
      */
@@ -63,7 +63,7 @@ class StorageController extends Controller{
         if ($storage->isValid()) {
             return response()->json($storage->id, 201);
         } else {
-            return $this->response(400,"storage invalid", $storage->getErrors());
+            return $this->response(400,"Storage invalid", $storage->getErrors());
         }
     }
 
@@ -78,17 +78,17 @@ class StorageController extends Controller{
      *     @SWG\Parameter(
      *         name="id",
      *         in="path",
-     *         description="id of the storage",
+     *         description="Id of the storage",
      *         required=true,
      *         type="string",
      *     ),
      *     @SWG\Response(
      *         response=200,
-     *         description="successful operation",
+     *         description="Successful operation",
      *     ),
      *     @SWG\Response(
      *         response=404,
-     *         description="storage not found",
+     *         description="Storage not found",
      *     ),
      * ),
      */
@@ -98,7 +98,7 @@ class StorageController extends Controller{
         if ($storage) {
             return response()->json($storage, 200);
         } else {
-            return $this->response(404,"storage not found");
+            return $this->response(404,"Storage not found");
         }
     }
     /**
@@ -119,21 +119,21 @@ class StorageController extends Controller{
      *     @SWG\Parameter(
      *         name="id",
      *         in="path",
-     *         description="id of the storage",
+     *         description="Id of the storage",
      *         required=true,
      *         type="string",
      *     ),
      *     @SWG\Response(
      *         response=201,
-     *         description="storage succesfully deleted",
+     *         description="Storage succesfully deleted",
      *     ),
      *     @SWG\Response(
      *         response=400,
-     *         description="storage not valid",
+     *         description="Storage not valid",
      *     ),
      *     @SWG\Response(
      *         response=404,
-     *         description="storage not found",
+     *         description="Storage not found",
      *     ),
      * ),
      */
@@ -143,12 +143,12 @@ class StorageController extends Controller{
         if ($storage) {
             if($storage->isValid()){
                 $storage->update($request->all());
-                return response()->json("storage succesfully updated", 200);
+                return response()->json("Storage succesfully updated", 200);
             }else{
-                return $this->response(400, "storage invalid",$storage->getErrors());
+                return $this->response(400, "Storage invalid",$storage->getErrors());
             }
         } else {
-            return $this->response(404,"storage not found");
+            return $this->response(404,"Storage not found");
         }
 
     }
@@ -163,17 +163,17 @@ class StorageController extends Controller{
      *     @SWG\Parameter(
      *         name="id",
      *         in="path",
-     *         description="id of the storage",
+     *         description="Id of the storage",
      *         required=true,
      *         type="string",
      *     ),
      *     @SWG\Response(
      *         response=200,
-     *         description="storage succesfully deleted."
+     *         description="Storage succesfully deleted."
      *     ),
      *     @SWG\Response(
      *         response=404,
-     *         description="storage not found."
+     *         description="Storage not found."
      *     ),
      * )
      */
@@ -181,9 +181,9 @@ class StorageController extends Controller{
         $storage = Storage::find($id);
         if ($storage) {
             $storage->delete();
-            return response()->json("storage succesfully deleted", 200);
+            return response()->json("Storage succesfully deleted", 200);
         } else {
-            return $this->response(404,"storage not found");
+            return $this->response(404,"Storage not found");
         }
     }
 
@@ -198,34 +198,34 @@ class StorageController extends Controller{
      *     @SWG\Parameter(
      *         name="id",
      *         in="path",
-     *         description="id of the storage",
+     *         description="Id of the storage",
      *         required=true,
      *         type="string",
      *     ),
      *     @SWG\Response(
      *         response=201,
-     *         description="storage succesfully reinstated",
+     *         description="Storage succesfully reinstated",
      *     ),
      *     @SWG\Response(
      *         response=404,
-     *         description="storage not found",
+     *         description="Storage not found",
      *     ),
      *     @SWG\Response(
      *         response=409,
-     *         description="storage already active.",
+     *         description="Storage already active.",
      *     ),
      * ),
      */
     public function reinstateStorage($id){
         if(Storage::find($id)){
-            return $this->response(409,"storage already active.");
+            return $this->response(409,"Storage already active.");
         }
         $storage = Storage::withTrashed()-> find($id);
         if($storage){
-            $storage -> restore();
-            return response() -> json("storage succesfully reinstated", 200);
+            $storage->restore();
+            return response()->json("Storage succesfully reinstated", 201);
         }else{
-            return $this->response(404,"storage not found");
+            return $this->response(404,"Storage not found");
         }
 
     }
@@ -240,14 +240,14 @@ class StorageController extends Controller{
      *     @SWG\Parameter(
      *         name="id",
      *         in="path",
-     *         description="id of the storage",
+     *         description="Id of the storage",
      *         required=true,
      *         type="string",
      *     ),
      *     @SWG\Parameter(
      *         name="property",
      *         in="path",
-     *         description="property of the storage",
+     *         description="Property of the storage",
      *         required=true,
      *         type="string",
      *     ),
@@ -257,7 +257,7 @@ class StorageController extends Controller{
      *     ),
      *     @SWG\Response(
      *         response=404,
-     *         description="storage not found",
+     *         description="Storage or Property not found, see message body",
      *     ),
      * ),
      */
@@ -265,7 +265,7 @@ class StorageController extends Controller{
         $storage = Storage::find($id);
 
         if (!$storage) {
-            return $this->response(404,"storage not found");
+            return $this->response(404,"Storage not found");
         }
         if (Schema::hasColumn($storage->getTable(), $property)) {
             return response()->json($storage->$property, 200);
@@ -284,51 +284,50 @@ class StorageController extends Controller{
      *     @SWG\Parameter(
      *         name="id",
      *         in="path",
-     *         description="id of the storage",
+     *         description="Id of the storage",
      *         required=true,
      *         type="string",
      *     ),
      *     @SWG\Parameter(
      *         name="request",
      *         in="path",
-     *         description="Request body in JSON.",
+     *         description="Request body in JSON",
      *         required=true,
      *         type="string",
      *     ),
      *         @SWG\Parameter(
      *         name="property",
      *         in="path",
-     *         description="Property of the storage.",
+     *         description="Property of the storage",
      *         required=true,
      *         type="string",
      *     ),
      *     @SWG\Response(
      *         response=201,
-     *         description="storage succesfully updated",
+     *         description="Storage succesfully updated",
      *     ),
      *     @SWG\Response(
      *         response=404,
-     *         description="storage not found",
+     *         description="Storage or Property not found, see message body",
      *     ),
      *     @SWG\Response(
      *         response=400,
-     *         description="Invalid property value.",
+     *         description="Invalid property value",
      *     ),
      * ),
      */
     public function putStorageProperty(Request $request, $id, $property){
         $storage = Storage::find($id);
         if (!$storage) {
-            return $this->response(404, "storage not found");
+            return $this->response(404, "Storage not found");
         }
         if (Schema::hasColumn($storage->getTable(), $property)) {
             $storage->$property = $request->value;
             if ($storage->isValid()) {
                 $storage->save();
-                return response()->json("Storage succesfully updated", 200);
+                return response()->json("Storage succesfully updated", 201);
             }
-            return $this->response(400, "Invalid property value", $product->getErrors());
-
+            return $this->response(400, "Invalid property value", $storage->getErrors());
         } else {
             return  $this->response(404,"Property not found");
         }
@@ -346,7 +345,7 @@ class StorageController extends Controller{
      *     @SWG\Parameter(
      *         name="id",
      *         in="path",
-     *         description="id of the storage",
+     *         description="Id of the storage",
      *         required=true,
      *         type="string",
      *     ),
@@ -381,21 +380,21 @@ class StorageController extends Controller{
      *     @SWG\Parameter(
      *         name="storage_id",
      *         in="path",
-     *         description="id of the storage",
+     *         description="Id of the storage",
      *         required=true,
      *         type="string",
      *     ),
      *     @SWG\Parameter(
      *         name="product_id",
      *         in="path",
-     *         description="id of the product",
+     *         description="Id of the product",
      *         required=true,
      *         type="string",
      *     ),
      *     @SWG\Parameter(
      *         name="request",
      *         in="path",
-     *         description="Request body in JSON.",
+     *         description="Request body in JSON",
      *         required=true,
      *         type="string",
      *     ),
@@ -405,7 +404,7 @@ class StorageController extends Controller{
      *     ),
      *     @SWG\Response(
      *         response=404,
-     *         description="Storage or relation not found",
+     *         description="Storage or relation between storage and product not found, see message body",
      *     ),
      * ),
      */
@@ -414,7 +413,7 @@ class StorageController extends Controller{
         if (!$storage) {
             return $this->response(404, "Storage not found");
         }else if(!$storage->products->contains($product_id)){
-                return $this->response(404, "Relation between Storage and ProductS not found");
+                return $this->response(404, "Relation between Storage and Product not found");
         }else{
             return response()->json($storage->products->find($product_id)->pivot->stock,200);
         }
@@ -431,21 +430,21 @@ class StorageController extends Controller{
      *     @SWG\Parameter(
      *         name="storage_id",
      *         in="path",
-     *         description="id of the storage",
+     *         description="Id of the storage",
      *         required=true,
      *         type="string",
      *     ),
      *     @SWG\Parameter(
      *         name="product_id",
      *         in="path",
-     *         description="id of the product",
+     *         description="Id of the product",
      *         required=true,
      *         type="string",
      *     ),
      *     @SWG\Parameter(
      *         name="stock",
      *         in="body",
-     *         description="id of the product",
+     *         description="Id of the product",
      *         required=true,
      *         type="integer",
      *         @SWG\Schema(ref="#/definitions/inputProperty")
@@ -456,7 +455,7 @@ class StorageController extends Controller{
      *     ),
      *     @SWG\Response(
      *         response=404,
-     *         description="Storage or Product or Relation not found",
+     *         description="Storage or Product or Relation between Storage and Product not found, see message body",
      *     ),
      * ),
      */
@@ -471,7 +470,7 @@ class StorageController extends Controller{
             return $this->response(404, "Relation between Storage and ProductS not found");
         }else{
             $storage->products()->sync([ $product_id => ["stock" => $request->value]]);
-            return response()-> json("Successful operation",201);
+            return response()-> json("Successful operation",200);
         }
     }
 
@@ -486,21 +485,21 @@ class StorageController extends Controller{
      *     @SWG\Parameter(
      *         name="storage_id",
      *         in="path",
-     *         description="id of the storage",
+     *         description="Id of the storage",
      *         required=true,
      *         type="string",
      *     ),
      *     @SWG\Parameter(
      *         name="product_id",
      *         in="path",
-     *         description="id of the product",
+     *         description="Id of the product",
      *         required=true,
      *         type="string",
      *     ),
      *     @SWG\Parameter(
      *         name="stock",
      *         in="body",
-     *         description="id of the product",
+     *         description="Id of the product",
      *         required=true,
      *         type="integer",
      *         @SWG\Schema(ref="#/definitions/inputProperty")
@@ -537,8 +536,7 @@ class StorageController extends Controller{
             $stock = $request->value;
             if($stock->isValid()){
                 $storage->products()->attach($product, ["stock" => $stock]);
-
-                return response()->json("Product succesfully stored in storage.",201);
+                return response()->json("Product successfully stored in storage.",201);
             }else{
                 return $this->response(400, "Invalid stock property.");
             }
@@ -557,36 +555,36 @@ class StorageController extends Controller{
      *     @SWG\Parameter(
      *         name="storage_id",
      *         in="path",
-     *         description="id of the storage",
+     *         description="Id of the storage",
      *         required=true,
      *         type="string",
      *     ),
      *     @SWG\Parameter(
      *         name="product_id",
      *         in="path",
-     *         description="id of the product",
+     *         description="Id of the product",
      *         required=true,
      *         type="string",
      *     ),
      *     @SWG\Response(
-     *         response=201,
+     *         response=200,
      *         description="Successful operation",
      *     ),
      *     @SWG\Response(
      *         response=404,
-     *         description="Storage or Relation not found",
+     *         description="Storage or Relation between Storage and Product not found, see message body",
      *     ),
      * ),
      */
     public function deleteStorageProduct($storage_id, $product_id){
         $storage = Storage::find($storage_id);
         if (!$storage) {
-            return $this->response(404, "Storage not found.");
+            return $this->response(404, "Storage not found");
         }else if(!$storage->products->contains($product_id)){
-            return $this->response(404, "Relation between Storage and Product not found.");
+            return $this->response(404, "Relation between Storage and Product not found");
         }else{
             $storage->products()->detach($product_id);
-            return response()->json("Product succesfully deleted out of storage.",201);
+            return response()->json("Product succesfully deleted out of storage",200);
         }
     }
 }
