@@ -45,6 +45,8 @@ Route::group(['namespace' => 'Api\v1', 'prefix' => 'v1'], function () {
     Route::put('storages/{storage_id}/stock/{product_id}','StorageController@putStorageStockOfProduct');
     Route::post('storages/{storage_id}/stores/{product_id}','StorageController@postStorageProduct');
     Route::delete('storages/{storage_id}/stores/{product_id}','StorageController@deleteStorageProduct');
+
+    Route::get('transactions', 'TransactionController@index');
 });
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
