@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @SWG\Definition(
- *      definition="pointofsale",
+ *      definition="PointOfSale",
  *      required={"id","owner_id","name"},
  *      @SWG\Property(
  *             property="id",
@@ -90,4 +90,8 @@ class PointOfSale extends BaseModel
     ];
 
     // Relations
+    public function storages(){
+        return $this->belongsToMany('App\Models\Storage','storage_pointofsale','pointofsale_id');
+    }
+
 }
