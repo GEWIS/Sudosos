@@ -7,7 +7,7 @@
 @import "../variables.less";
 @import "../mixins.less";
 
-.skin-blue {
+.GEWIS-skin {
   //Navbar
   .main-header {
     .navbar {
@@ -36,7 +36,7 @@
     }
     //Logo
     .logo {
-      .logo-variant(darken(@GEWIS-red, 5%));
+      .logo-variant(@sidebar-dark-hover-bg);
     }
 
     li.user-header {
@@ -53,6 +53,6 @@
   .skin-dark-sidebar(@GEWIS-red);
 }
 
-.skin-blue.layout-top-nav .main-header > .logo {
+.GEWIS-skin.layout-top-nav .main-header > .logo {
   .logo-variant(@GEWIS-red);
 }
