@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
-use Faker\Provider\Base;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
-//class User extends Authenticatable
+
 class User extends BaseModel implements Authenticatable
 {
     use Notifiable, HasApiTokens;
@@ -45,19 +44,22 @@ class User extends BaseModel implements Authenticatable
      * @var array
      */
     protected $hidden = [
-        'pincode'
+        'pincode',
+        'GEWISMember',
+        'externalUserData'
     ];
 
     protected $defaults = [
         'pincode' => '',
         'balance' => 0,
     ];
-    //protected $appends = ['first_name', 'last_name', 'email'];
+
+    protected $appends = ['first_name', 'last_name', 'email'];
 
     // Relations
     public function externalUserData()
     {
-        return $this->hasOne('App\Models\ExternalUser');
+        return $this->hasOne('App\Models\ExternalUser', 'user_id', 'id');
     }
 
     public function GEWISMember()
@@ -79,9 +81,54 @@ class User extends BaseModel implements Authenticatable
 
     public function getFirstNameAttribute()
     {
-        if ($this->type === self::TYPE_GEWIS) {
-
+        switch ($this->type) {
+            case self::TYPE_GEWIS:
+                return $this->GEWISMember->firstName;
+            case self::TYPE_BARCODE:
+                return 'Borrelkaart'; // TODO: translate
+            default:
+                return $this->externalUserData->first_name;
         }
+    }
+
+    public function getLastNameAttribute()
+    {
+        switch ($this->type) {
+            case self::TYPE_GEWIS:
+                $name = $this->GEWISMember->middleName;
+                if (strlen($name) > 0) {
+                    $name .= ' ';
+                }
+                $name .= $this->GEWISMember->lastName;
+                return $name;
+            case self::TYPE_BARCODE:
+                return '';
+            default:
+                return $this->externalUserData->last_name;
+        }
+    }
+
+    public function getEmailAttribute()
+    {
+        switch ($this->type) {
+            case self::TYPE_GEWIS:
+                return $this->GEWISMember->email;
+            case self::TYPE_BARCODE:
+                return 'sudosos@gewis.nl';
+            default:
+                return $this->externalUserData->email;
+        }
+    }
+
+    public function getOrganRoles()
+    {
+        $organRoles = [];
+        foreach ($this->GEWISMember->organMemberships as $om) {
+            if ($om->dischargeDate === null) {
+                $organRoles[$om->organ->abbr] = $om->function;
+            }
+        }
+        return $organRoles;
     }
     /**
      * Get the name of the unique identifier for the user.

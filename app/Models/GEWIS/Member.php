@@ -9,8 +9,10 @@ class Member extends Model
     protected $table = 'Member';
     protected $primaryKey = 'lidnr';
 
+    public $timestamps = false;
+
     public function organMemberships()
     {
-        return $this->hasOne('App\Models\GEWIS\OrganMember', 'lidnr', 'lidnr');
+        return $this->hasMany('App\Models\GEWIS\OrganMember', 'lidnr', 'lidnr');
     }
 }
