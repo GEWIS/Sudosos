@@ -22,6 +22,13 @@ angular.module('sudosos.controllers', [])
     }])
     .controller('ProductsCtrl',['$scope', '$http', 'rootUrl', function ($scope, $http, rootUrl) {
         $scope.searchTerm = "";
+        $scope.searchBy = "name";
+
+        $scope.filterProducts = function (value, index, array) {
+          if(value[$scope.searchBy].toString().toLowerCase().indexOf($scope.searchTerm.toString().toLowerCase()) != -1){
+            return true;
+          }
+        };
         $scope.loadingData = $http.get(rootUrl + '/api/v1/products').then(function (response) {
             $scope.products = response.data;
         });
