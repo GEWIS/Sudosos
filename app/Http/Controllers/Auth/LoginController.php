@@ -81,6 +81,6 @@ class LoginController extends Controller
             return redirect()->intended('/');
         }
 
-        return View('auth.external-login')->with(['error' => 'Invalid username/password']);
+        return View('auth.index')->with(['error' => 'Invalid username/password']);
     }
 }
