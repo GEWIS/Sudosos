@@ -32,7 +32,7 @@ gulp.task('AdminLTE', function () {
 });
 
 gulp.task('AdminLTE-theme', function () {
-    return gulp.src('www/less/adminLTE/skins/skin-blue.less')
+    return gulp.src('www/less/adminLTE/skins/GEWIS-skin.less')
         .pipe(less())
         .pipe(minifyCSS())
         .pipe(gulp.dest('public/css'))
