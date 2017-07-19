@@ -1,6 +1,7 @@
+<!-- The form for adding, editing and sorting products -->
 <div class="form-inline">
     <button class="btn btn-success">Add product</button>
-    <button class="btn btn-primary">Edit product</button>
+    <button class="btn btn-primary" ng-class="{'disabled': selectedIndex == -1}">Edit product</button>
     <div class="form-group input-group">
         <div class="input-group-addon"><i class="fa fa-search"></i> </div>
         <label for="searchBar" class="sr-only">Email</label>
@@ -28,7 +29,8 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="product in products | filter:filterProducts">
+        <tr ng-repeat="product in products | filter:filterProducts"
+            ng-class="{'selected': $index == selectedIndex}" ng-click="selectItem($index)">
             <td>
                 <span ng-hide="product.editing" ng-dblclick="startEditing(product)">
                     {{ product.name }}

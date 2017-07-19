@@ -21,6 +21,7 @@ angular.module('sudosos.controllers', [])
 
     }])
     .controller('ProductsCtrl',['$scope', '$http', 'rootUrl', function ($scope, $http, rootUrl) {
+        $scope.selectedIndex = -1;
         $scope.searchTerm = "";
         $scope.searchBy = "name";
 
@@ -36,6 +37,14 @@ angular.module('sudosos.controllers', [])
 
         $scope.stopEditing = function (item) {
             item.editing = false;
+        };
+
+        $scope.selectItem = function (index) {
+          if($scope.selectedIndex == index){
+              $scope.selectedIndex = -1;
+          }else{
+              $scope.selectedIndex = index;
+          }
         };
 
         $scope.loadingData = $http.get(rootUrl + '/api/v1/products').then(function (response) {
