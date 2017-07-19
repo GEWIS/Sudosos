@@ -14,22 +14,22 @@ img.sudosos-logo{
 }
 
 //Start content height fix
-ui-view > div{
+ui-view{
   display: flex;
   flex-flow: column;
   height: 100%;
 }
 
-ui-view > div , div > header {
+ui-view > header {
   flex: 0 1 auto;
 }
 
-ui-view > div, div > .content-wrapper {
+ui-view > .content-wrapper {
   flex: 1 1 auto;
   min-height: initial;
 }
 
-ui-view > div, div > footer {
+ui-view > footer {
   flex: 0 1 40px;
 }
 //end content height fix
