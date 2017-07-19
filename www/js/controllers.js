@@ -29,9 +29,22 @@ angular.module('sudosos.controllers', [])
             return true;
           }
         };
+
+        $scope.startEditing = function (item) {
+            item.editing = true;
+        };
+
+        $scope.stopEditing = function (item) {
+            item.editing = false;
+        };
+
         $scope.loadingData = $http.get(rootUrl + '/api/v1/products').then(function (response) {
             $scope.products = response.data;
+            for(var i = 0; i < $scope.products.length; i++){
+                $scope.editing = false;
+            }
         });
+
     }])
     .controller('FinancialCtrl', ['$scope', function ($scope) {
 
