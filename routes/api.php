@@ -32,7 +32,19 @@ Route::group(['namespace' => 'Api\v1', 'prefix' => 'v1'], function () {
     Route::get('pointsofsale/{id}/{property}', 'PointOfSaleController@getPointOfSaleProperty');
     Route::put('pointsofsale/{id}/{property}', 'PointOfSaleController@putPointOfSaleProperty');
 
-
+    Route::get('storages', 'StorageController@index');
+    Route::post('storages', 'StorageController@store');
+    Route::get('storages/{id}', 'StorageController@getStorage');
+    Route::put('storages/{id}', 'StorageController@putStorage');
+    Route::delete('storages/{id}', 'StorageController@deleteStorage');
+    Route::put('storages/{id}/reinstate', 'StorageController@reinstateStorage');
+    Route::get('storages/{id}/stores', 'StorageController@getStorageProducts');
+    Route::get('storages/{id}/{property}', 'StorageController@getStorageProperty');
+    Route::put('storages/{id}/{property}', 'StorageController@postStorageProperty');
+    Route::get('storages/{storage_id}/stock/{product_id}','StorageController@getStorageStockOfProduct');
+    Route::put('storages/{storage_id}/stock/{product_id}','StorageController@putStorageStockOfProduct');
+    Route::post('storages/{storage_id}/stores/{product_id}','StorageController@postStorageProduct');
+    Route::delete('storages/{storage_id}/stores/{product_id}','StorageController@deleteStorageProduct');
 });
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {

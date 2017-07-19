@@ -300,12 +300,20 @@ class ProductController extends Controller{
      *         @SWG\Schema(ref="#/definitions/inputProperty"),
      *     ),
      *     @SWG\Response(
+     *         response=201,
+     *         description="Product succesfully updated",
+     *     ),
+     *     @SWG\Response(
      *         response=404,
      *         description="Product not found",
      *     ),
      *     @SWG\Response(
      *         response=400,
      *         description="Invalid property value",
+     *     ),
+     *     @SWG\Response(
+     *         response=409,
+     *         description="Property is guarded",
      *     ),
      * ),
      */
@@ -321,8 +329,16 @@ class ProductController extends Controller{
                 return response()->json("Product succesfully updated", 200);
             }
             return $this->response(400, "Invalid property value", $product->getErrors());
+
         } else {
-            return  $this->response(404,"Property not found");
+
+            if (Schema::hasColumn($product->getTable(), $property)){
+                return @$this->response(409, "Property is guarded");
+            } else {
+                return  $this->response(404,"Property not found");
+            }
+
+
         }
     }
 }

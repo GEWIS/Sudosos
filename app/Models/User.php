@@ -128,6 +128,7 @@ class User extends BaseModel implements Authenticatable
                 $organRoles[$om->organ->abbr] = $om->function;
             }
         }
+        return $organRoles;
     }
     /**
      * Get the name of the unique identifier for the user.

@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
+
     /**
      * Run the database seeds.
      *
@@ -15,5 +16,12 @@ class DatabaseSeeder extends Seeder
          $this->call(ProductTableSeeder::class);
 //         $this->call(StorageTableSeeder::class);
 //         $this->call(PointOfSaleTableSeeder::class);
+
+
+        /**
+         * Only use when u have the gewisweb_test DB installed
+         * This is used for login in using jwt token from the Web DB
+         */
+        $this->call(GEWISTableSeeder::class);
     }
 }
