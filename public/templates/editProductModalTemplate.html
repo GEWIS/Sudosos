@@ -13,9 +13,10 @@
     <div class="form-group">
         <label for="imageInput">Image</label>
         <a href="" onclick="document.getElementById('upload').click(); return false">
-            <img src="{{ imageSrc }}" id="imageInput" class="product-image" accept="image/*">
+            <img ng-src="{{ imageSrc }}" id="imageInput" class="product-image" ng-show="imageSrc">
         </a>
-        <input type="file" id="upload" name="upload" style="visibility: hidden; width: 1px; height: 1px" multiple />
+        <input type="file" id="upload" name="upload" style="visibility: hidden; width: 1px; height: 1px" accept="image/*"
+               fileinput="file" filepreview="imageSrc"/>
     </div>
     <div class="form-group">
         <label for="packageSizeInput">Package size</label>

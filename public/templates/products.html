@@ -1,5 +1,5 @@
 <!-- The form for adding, editing and sorting products -->
-<div class="form-inline">
+<div class="form-inline edit-filter-bar">
     <button class="btn btn-success">Add product</button>
     <button class="btn btn-primary" ng-class="{'disabled': selectedIndex == -1}" ng-click="editProduct()">Edit product</button>
     <div class="form-group input-group">
@@ -22,10 +22,10 @@
         <thead>
         <tr>
             <th ts-criteria="name | lowercase " ts-default>Name</th>
-            <th ts-criteria="price | parsefloat">Price</th>
+            <th ts-criteria="price | parseFloat">Price</th>
             <th>Image</th>
             <th ts-criteria="tray_size | parseInt">Package size</th>
-            <th ts-criteria="category">Category</th>
+            <th ts-criteria="category | lowercase">Category</th>
         </tr>
         </thead>
         <tbody>
@@ -52,7 +52,7 @@
             </td>
             <td>
                 <span ng-hide="product.editing" ng-dblclick="startEditing(product)">
-                    {{ product.category }}
+                    {{ product.category | ucFirst }}
                 </span>
                 <input ng-show="product.editing" type="text" ng-model="product.category" ng-blur="stopEditing(product)" >
             </td>
