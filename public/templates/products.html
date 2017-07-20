@@ -1,7 +1,7 @@
 <!-- The form for adding, editing and sorting products -->
 <div class="form-inline">
     <button class="btn btn-success">Add product</button>
-    <button class="btn btn-primary" ng-class="{'disabled': selectedIndex == -1}">Edit product</button>
+    <button class="btn btn-primary" ng-class="{'disabled': selectedIndex == -1}" ng-click="editProduct()">Edit product</button>
     <div class="form-group input-group">
         <div class="input-group-addon"><i class="fa fa-search"></i> </div>
         <label for="searchBar" class="sr-only">Email</label>
@@ -18,19 +18,19 @@
     </div>
 </div>
 <div cg-busy="loadingData">
-    <table class="table">
+    <table class="table" ts-wrapper>
         <thead>
         <tr>
-            <th>Name</th>
-            <th>Price</th>
+            <th ts-criteria="name | lowercase " ts-default>Name</th>
+            <th ts-criteria="price | parsefloat">Price</th>
             <th>Image</th>
-            <th>Package size</th>
-            <th>Category</th>
+            <th ts-criteria="tray_size | parseInt">Package size</th>
+            <th ts-criteria="category">Category</th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="product in products | filter:filterProducts"
-            ng-class="{'selected': $index == selectedIndex}" ng-click="selectItem($index)">
+            ng-class="{'selected': $index == selectedIndex}" ng-click="selectItem($index)" ts-repeat>
             <td>
                 <span ng-hide="product.editing" ng-dblclick="startEditing(product)">
                     {{ product.name }}

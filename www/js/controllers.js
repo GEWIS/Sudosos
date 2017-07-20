@@ -20,10 +20,13 @@ angular.module('sudosos.controllers', [])
         $scope.date = new Date();
 
     }])
-    .controller('ProductsCtrl',['$scope', '$http', 'rootUrl', function ($scope, $http, rootUrl) {
+    .controller('ProductsCtrl',['$scope', '$http', '$uibModal', 'rootUrl',
+        function ($scope, $http, $uibModal, rootUrl) {
         $scope.selectedIndex = -1;
         $scope.searchTerm = "";
         $scope.searchBy = "name";
+        $scope.imageSrc = "http://gewis.nl/willem";
+        $scope.categories = ["other", "ticket", "food"];
 
         $scope.filterProducts = function (value, index, array) {
           if(value[$scope.searchBy].toString().toLowerCase().indexOf($scope.searchTerm.toString().toLowerCase()) != -1){
@@ -37,6 +40,19 @@ angular.module('sudosos.controllers', [])
 
         $scope.stopEditing = function (item) {
             item.editing = false;
+        };
+
+        $scope.editProduct = function () {
+            $scope.selectedProduct = $scope.products[$scope.selectedIndex];
+            $scope.editModal = $uibModal.open({
+                templateUrl: 'templates/editProductModalTemplate.html',
+                size: 'sm',
+                scope: $scope
+            });
+        };
+
+        $scope.closeModal = function () {
+            $scope.editModal.close();
         };
 
         $scope.selectItem = function (index) {
