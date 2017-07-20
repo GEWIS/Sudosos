@@ -20,6 +20,9 @@ angular.module('sudosos.controllers', [])
         $scope.date = new Date();
 
     }])
+    .controller('ManageCtrl', ['$scope', function ($scope) {
+        
+    }])
     .controller('ProductsCtrl',['$scope', '$http', '$uibModal', 'rootUrl',
         function ($scope, $http, $uibModal, rootUrl) {
         $scope.selectedIndex = -1;

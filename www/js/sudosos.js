@@ -27,6 +27,15 @@ angular.module('sudosos', ['sudosos.controllers', 'sudosos.filters', 'sudosos.se
                     }
                 }
             })
+            .state('sudosos.manage', {
+                url: '/manage',
+                views: {
+                    'admin-panel-content': {
+                        templateUrl: 'templates/manage.html',
+                        controller: 'ManageCtrl'
+                    }
+                }
+            })
 
             .state('sudosos.increaseBalance', {
                 url: '/increasebalance',
