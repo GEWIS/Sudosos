@@ -3,17 +3,22 @@
 @section('page-content')
     <div class="container">
         <div class="row">
-            <div class="col-md-4 col-md-offset-4 col-xs-12">
+            <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h4 class="text-center" style="font-size:20px;">SudoSOS - Login Maestro</h4>
                     </div>
                     <div class="panel-body">
                         <div class="row">
+                            <div class="col-xs-10 col-xs-offset-1 text-center margin-bottom-15 background-strikethrough">
+                                <span> Login as GEWIS member </span>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-xs-10 col-xs-offset-1 margin-bottom-15">
                                 <a href="{{ action('Auth\LoginController@showGEWISLogin') }}">
                                     <div class="btn btn-lg btn-primary full-width">
-                                        Login with GEWIS
+                                        GEWIS Login
                                     </div>
                                 </a>
                             </div>
@@ -21,7 +26,7 @@
 
                         <div class="row">
                             <div class="col-xs-10 col-xs-offset-1 text-center margin-bottom-15 background-strikethrough">
-                                <span> Or use an external account </span>
+                                <span> Or as external user </span>
                             </div>
                         </div>
 
@@ -59,16 +64,11 @@
                                 <div class="col-xs-10 col-xs-offset-1">
                                     <input type="password" class="form-control" placeholder="Password"
                                            name="password">
-                                    {{--<div class="col-md-6">--}}
-                                    {{--<input type="password" class="form-control" name="password">--}}
-
                                     {{--@if ($errors->has('password'))--}}
-                                    {{--<span class="help-block">--}}
+                                        {{--<span class="help-block">--}}
                                     {{--<strong>{{ $errors->first('password') }}</strong>--}}
                                     {{--</span>--}}
                                     {{--@endif--}}
-                                    {{--</div>--}}
-                                    {{--</div>--}}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -82,7 +82,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-xs-10 col-xs-offset-1">
-                                    <button type="submit" class="btn btn-lg btn-primary full-width">Login</button>
+                                    <button type="submit" class="btn btn-lg btn-primary full-width">External Login</button>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -102,26 +102,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            {{--<div class="form-group">--}}
-                            {{--<div class="col-md-6 col-md-offset-4">--}}
-                            {{--<div class="checkbox">--}}
-                            {{--<label>--}}
-                            {{--<input type="checkbox" name="remember"> Remember Me--}}
-                            {{--</label>--}}
-                            {{--</div>--}}
-                            {{--</div>--}}
-                            {{--</div>--}}
-
-                            {{--<div class="form-group">--}}
-                            {{--<div class="col-md-6 col-md-offset-4">--}}
-                            {{--<button type="submit" class="btn btn-primary">--}}
-                            {{--<i class="fa fa-btn fa-sign-in"></i>Login--}}
-                            {{--</button>--}}
-
-                            {{--<a class="btn btn-link" href="/todo">Forgot Your Password?</a>--}}
-                            {{--</div>--}}
-                            {{--</div>--}}
                         </form>
                     </div>
                 </div>
