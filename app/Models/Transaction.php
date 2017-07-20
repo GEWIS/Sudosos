@@ -1,7 +1,26 @@
 <?php
 
 namespace App\Models;
-
+/**    @SWG\Definition(
+ *               definition="getAllTransaction",
+ *               required={},
+ *      @SWG\Property(
+ *             property="from",
+ *             type="string",
+ *             description="The from range timestamp."
+ *         ),
+ *      @SWG\Property(
+ *             property="from",
+ *             type="string",
+ *             description="The to range timestamp."
+ *         ),
+ *      @SWG\Property(
+ *             property="amount",
+ *             type="integer",
+ *             description="The amount of transactions to be shown."
+ *         ),
+ *    )
+ */
 class Transaction extends BaseModel
 {
     protected $fillable = [
