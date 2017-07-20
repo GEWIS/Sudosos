@@ -39,6 +39,5 @@ class GEWISTableSeeder extends Seeder
 
         factory(App\Models\GEWIS\Organ::class, 10)->create();
         factory(App\Models\GEWIS\OrganMember::class,3)->create();
-
     }
 }

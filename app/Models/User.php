@@ -79,6 +79,10 @@ class User extends BaseModel implements Authenticatable
         return $this->hasMany('App\Models\PointOfSale','owner_id');
     }
 
+    public function additionalUserRoles(){
+        return $this->hasMany('App\Models\UserRole');
+    }
+
     public function getFirstNameAttribute()
     {
         switch ($this->type) {
