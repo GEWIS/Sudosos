@@ -1,4 +1,5 @@
-angular.module('sudosos', ['sudosos.controllers', 'sudosos.filters', 'sudosos.services', 'ui.router', 'cgBusy'])
+angular.module('sudosos', ['sudosos.controllers', 'sudosos.filters', 'sudosos.services', 'sudosos.directives',
+    'ui.router', 'ui.bootstrap', 'cgBusy', 'tableSort'])
     .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
         $stateProvider.state('sudosos', {
             url: '/sudosos',
@@ -23,6 +24,15 @@ angular.module('sudosos', ['sudosos.controllers', 'sudosos.filters', 'sudosos.se
                     'admin-panel-content': {
                         templateUrl: 'templates/products.html',
                         controller: 'ProductsCtrl'
+                    }
+                }
+            })
+            .state('sudosos.manage', {
+                url: '/manage',
+                views: {
+                    'admin-panel-content': {
+                        templateUrl: 'templates/manage.html',
+                        controller: 'ManageCtrl'
                     }
                 }
             })

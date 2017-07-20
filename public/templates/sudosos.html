@@ -1,4 +1,5 @@
 <header class="main-header">
+    <!-- The logo in the header bar -->
     <a href="#" class="logo">
             <span class="logo-mini">
                 <img src="img/logo.svg" class="sudosos-logo sudosos-logo-mini pull-left">
@@ -8,6 +9,7 @@
                 <span class="sudosos-logo-text"> SudoSOS</span>
             </span>
     </a>
+    <!-- The rest of the navbar -->
     <nav class="navbar navbar-static-top" role="navigation">
         <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button" id="toggle-sidebar-button">
             <span class="sr-only">Toggle navigation</span>
@@ -47,18 +49,12 @@
                 </li>
             </ul>
         </div>
-
+        <!-- The menu -->
         <ul class="sidebar-menu tree" data-widget="tree">
             <li ui-sref="sudosos.financial" ui-sref-active="active">
                 <a href="#" >
                     <i class="fa fa-bank" aria-hidden="true"></i>
                     <span> Financial</span>
-                </a>
-            </li>
-            <li ui-sref="sudosos.products" ui-sref-active="active">
-                <a href="#" >
-                    <i class="fa fa-th"></i>
-                    <span>Products</span>
                 </a>
             </li>
             <li ui-sref="sudosos.increaseBalance" ui-sref-active="active">
@@ -76,7 +72,10 @@
                         </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li>
+                    <li ui-sref="sudosos.manage">
+                        <a href="#"><i class="fa fa-columns"></i>Manage categories</a>
+                    </li>
+                    <li ui-sref="sudosos.products">
                         <a href="#"><i class="fa fa-th"></i> Manage products</a>
                     </li>
                     <li>

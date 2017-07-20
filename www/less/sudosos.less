@@ -1,3 +1,5 @@
+@import "bootstrap/variables";
+// The sudosos logo css
 img.sudosos-logo{
   max-height: 48px;
   max-width: 48px;
@@ -9,9 +11,6 @@ img.sudosos-logo{
   }
 }
 
-.material-icons {
-  font-size:18px;
-}
 
 .full-width {
   width: 100%;
@@ -38,7 +37,7 @@ ui-view > footer {
 }
 //end content height fix
 
-
+// The user avatar in the siedbar
 img.user-avatar{
   height: 45px;
 }
@@ -47,9 +46,12 @@ img.user-avatar{
   padding: 15px;
 }
 
+// Make the committee dropdown 100% width
 .select-committee-dropdown *:not(span) {
   width: 100%;
 }
+
+// Remove the committee dropdown when the sidebar is collapsed
 body.sidebar-collapse * .select-committee-dropdown{
   display: none;
 }
@@ -63,7 +65,6 @@ body.sidebar-collapse * .select-committee-dropdown{
 .padding{
   padding: 8px;
 }
-
 //sidebar specific css
 
 .user-panel, #selectCommitteeDropDown, #selectCommitteeDropDownOptions, #selectCommitteeDropDownOptions a{
@@ -91,3 +92,20 @@ body.sidebar-collapse * .select-committee-dropdown{
   border-width:1px 0px 1px 0px
 }
 //end increase balance specific css
+.selected{
+  background-color: fade(darken(@gewis-light-gray, 25%), 50%);
+}
+tr:hover{
+  background-color: fade(darken(@gewis-light-gray, 10%), 50%);
+}
+
+// The product image
+.product-image{
+  max-width: 100%;
+}
+
+// The bar to edit and filter the products/storages
+.edit-filter-bar{
+  margin-bottom: 8px;
+}
+
