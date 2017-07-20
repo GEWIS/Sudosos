@@ -58,5 +58,8 @@ angular.module('sudosos.controllers', [])
     .controller('FinancialCtrl', ['$scope', function ($scope) {
 
     }])
+    .controller('IncreaseBalanceCtrl', ['$scope', function ($scope) {
+
+    }])
     .run(function () {
     });

@@ -4,6 +4,10 @@ img.sudosos-logo{
   max-width: 48px;
   padding-bottom: 4px;
   padding-top: 4px;
+
+  &.sudosos-logo-mini{
+    margin: 0px 15px;
+  }
 }
 
 .material-icons {
@@ -44,13 +48,6 @@ img.user-avatar{
   padding: 15px;
 }
 
-.dropdown-menu>li>a{
-  color: #333 !important;
-}
-.select-committee-dropdown{
-  margin-left: 8px;
-  margin-right: 8px;
-}
 .select-committee-dropdown *:not(span) {
   width: 100%;
 }
@@ -67,6 +64,31 @@ body.sidebar-collapse * .select-committee-dropdown{
 .padding{
   padding: 8px;
 }
-.selected{
-  background-color: fade(darken(@gewis-light-gray, 25%), 50%);
+
+//sidebar specific css
+
+.user-panel, #selectCommitteeDropDown, #selectCommitteeDropDownOptions, #selectCommitteeDropDownOptions a{
+
+
+  background-color:@sidebar-dark-submenu-bg;
+  border-color:@sidebar-dark-submenu-bg;
+  color: @sidebar-dark-submenu-color;
+
+  &:hover{
+    color: @sidebar-dark-submenu-hover-color;
+  }
+  &.active{
+    background-color: darken(@sidebar-dark-submenu-bg, 2%);
+    border-color:darken(@sidebar-dark-submenu-bg, 2%);
+    color: @sidebar-dark-submenu-hover-color;
+  }
 }
+
+//end sidebar specific css
+
+
+// increase balance specific css
+.dotBetweenInputs{
+  border-width:1px 0px 1px 0px
+}
+//end increase balance specific css

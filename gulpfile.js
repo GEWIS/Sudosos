@@ -17,32 +17,11 @@ gulp.task('minify', function () {
        .pipe(gulp.dest('public/js'))
 });
 
-gulp.task('bootstrap', function () {
-    return gulp.src('www/less/bootstrap/bootstrap.less')
-        .pipe(less())
-        .pipe(minifyCSS())
-        .pipe(gulp.dest('public/css'))
-});
-
-gulp.task('AdminLTE', function () {
-    return gulp.src('www/less/adminLTE/AdminLTE.less')
-        .pipe(less())
-        .pipe(minifyCSS())
-        .pipe(gulp.dest('public/css'))
-});
-
-gulp.task('AdminLTE-theme', function () {
-    return gulp.src('www/less/adminLTE/skins/GEWIS-skin.less')
-        .pipe(less())
-        .pipe(minifyCSS())
-        .pipe(gulp.dest('public/css'))
-});
-
 gulp.task('css', function(){
-    return gulp.src('www/less/sudosos.less')
+    return gulp.src('www/less/all.less')
         .pipe(less())
         .pipe(minifyCSS())
         .pipe(gulp.dest('public/css'))
 });
 
-gulp.task('default', [ 'css', 'minify', 'bootstrap', 'AdminLTE', "AdminLTE-theme" ]);
+gulp.task('default', [ 'css', 'minify' ]);
