@@ -1,6 +1,3 @@
-@import "bootstrap/variables";
-@import "adminLTE/variables";
-
 /*
  * Global component styling
  */
@@ -50,7 +47,26 @@ body.sidebar-collapse .logo{
 img.sudosos-logo{
   height: @navbar-height;
   width: @navbar-height;
-  padding: 0px;
+  padding: 5px;
+
+  &.sudosos-logo-mini{
+    margin: 0px 15px;
+  }
+}
+
+.user-panel, #selectCommitteeDropDown, #selectCommitteeDropDownOptions, #selectCommitteeDropDownOptions a{
+  background-color:@sidebar-dark-submenu-bg;
+  border-color:@sidebar-dark-submenu-bg;
+  color: @sidebar-dark-submenu-color;
+
+  &:hover{
+    color: @sidebar-dark-submenu-hover-color;
+  }
+  &.active{
+    background-color: darken(@sidebar-dark-submenu-bg, 2%);
+    border-color:darken(@sidebar-dark-submenu-bg, 2%);
+    color: @sidebar-dark-submenu-hover-color;
+  }
 }
 
 img.user-avatar{
@@ -63,10 +79,6 @@ img.user-avatar{
   padding: 15px;
 }
 
-.dropdown-menu>li>a{
-  color: @gewis-dark-gray !important;
-}
-
 /*
  * Miscellaneous
  */
@@ -77,3 +89,9 @@ img.user-avatar{
 .padding{
   padding: 8px;
 }
+
+// increase balance specific css
+.dotBetweenInputs{
+  border-width:1px 0px 1px 0px
+}
+//end increase balance specific css

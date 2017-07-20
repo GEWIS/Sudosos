@@ -4,6 +4,13 @@
         <span class="logo-lg">
             <span class="sudosos-logo-text"> SudoSOS</span>
         </span>
+            <!--<span class="logo-mini">-->
+                <!--<img src="img/logo.svg" class="sudosos-logo sudosos-logo-mini pull-left">-->
+            <!--</span>-->
+        <!--<span class="logo-lg">-->
+                <!--<img src="img/logo.svg" class="sudosos-logo pull-left">-->
+                <!--<span class="sudosos-logo-text"> SudoSOS</span>-->
+            <!--</span>-->
     </a>
     <nav class="navbar navbar-static-top" role="navigation">
         <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button" id="toggle-sidebar-button">
@@ -37,9 +44,9 @@
             <button class="btn btn-default dropdown-toggle" type="button" id="selectCommitteeDropDown"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                 {{ currentCommittee.committee }}
-                <span class="caret"></span>
+                <span class="pull-right"><i class="fa fa-caret-down"></i></span>
             </button>
-            <ul class="dropdown-menu" aria-labelledby="selectCommitteeDropDown">
+            <ul class="dropdown-menu" id="selectCommitteeDropDownOptions" aria-labelledby="selectCommitteeDropDown">
                 <li ng-repeat="committee in user.committees">
                     <a href="" ng-click="currentCommittee.committee = committee">{{ committee}}</a>
                 </li>
