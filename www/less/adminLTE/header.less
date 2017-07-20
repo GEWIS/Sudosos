@@ -107,7 +107,7 @@
 
   //Logo bar
   .logo {
-    .transition(width @transition-speed @transition-fn);
+    .transition(width @transition-speed @transition-fn, padding @transition-speed @transition-fn);
     display: block;
     float: left;
     height: @navbar-height;
@@ -124,9 +124,6 @@
     .logo-lg {
       //should be visibile when sidebar isn't collapsed
       display: block;
-    }
-    .logo-mini {
-      display: none;
     }
   }
   //Navbar Brand. Alternative logo with layout-top-nav

@@ -36,6 +36,8 @@
 
 //Side bar and logo width
 @sidebar-width: 230px;
+//Collapsed Side bar and logo width
+@sidebar-collapsed-width: 50px;
 //Boxed layout maximum width
 @boxed-layout-max-width: 1024px;
 //When the logo should go to the top of the screen
@@ -46,7 +48,7 @@
 @link-hover-color: lighten(@link-color, 15%);
 
 //Body background (Affects main content background only)
-@body-bg: #ecf0f5;
+@body-bg: @gewis-light-gray;
 
 //SIDEBAR SKINS
 //--------------------------------------------------------
@@ -76,7 +78,8 @@
 //BOXES
 //--------------------------------------------------------
 @box-border-color: #f4f4f4;
-@box-border-radius: 3px;
+//@box-border-radius: 3px;
+@box-border-radius: 0px;
 @box-footer-bg: #fff;
 @box-boxshadow: 0 1px 1px rgba(0, 0, 0, .1);
 @box-padding: 10px;
@@ -90,9 +93,12 @@
 
 //PROGRESS BARS
 //--------------------------------------------------------
-@progress-bar-border-radius: 1px;
-@progress-bar-sm-border-radius: 1px;
-@progress-bar-xs-border-radius: 1px;
+//@progress-bar-border-radius: 1px;
+@progress-bar-border-radius: 0px;
+//@progress-bar-sm-border-radius: 1px;
+@progress-bar-sm-border-radius: 0px;
+//@progress-bar-xs-border-radius: 1px;
+@progress-bar-xs-border-radius: 0px;
 
 //FORMS
 //--------------------------------------------------------
@@ -102,7 +108,8 @@
 //--------------------------------------------------------
 
 //Border radius for non flat buttons
-@btn-border-radius: 3px;
+//@btn-border-radius: 3px;
+@btn-border-radius: 0px;
 
 //DIRECT CHAT
 //--------------------------------------------------------
@@ -113,7 +120,8 @@
 
 //CHAT WIDGET
 //--------------------------------------------------------
-@attachment-border-radius: 3px;
+//@attachment-border-radius: 3px;
+@attachment-border-radius: 0px;
 
 //TRANSITIONS SETTINGS
 //--------------------------------------------------------

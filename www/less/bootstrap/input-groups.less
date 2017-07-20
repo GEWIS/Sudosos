@@ -61,7 +61,7 @@
   display: table-cell;
 
   &:not(:first-child):not(:last-child) {
-    border-radius: 0;
+    //border-radius: 0;
   }
 }
 // Addon and addon wrapper for buttons
@@ -89,12 +89,12 @@
   &.input-sm {
     padding: @padding-small-vertical @padding-small-horizontal;
     font-size: @font-size-small;
-    border-radius: @input-border-radius-small;
+    //border-radius: @input-border-radius-small;
   }
   &.input-lg {
     padding: @padding-large-vertical @padding-large-horizontal;
     font-size: @font-size-large;
-    border-radius: @input-border-radius-large;
+    //border-radius: @input-border-radius-large;
   }
   &.input-warning {
     background-color: @brand-warning;
@@ -134,6 +134,10 @@
 }
 .input-group-addon:last-child {
   border-left: 0;
+}
+.input-group-addon:not(:first-child):not(:last-child){
+  border-left: 0;
+  border-right:0;
 }
 
 // Button input groups
