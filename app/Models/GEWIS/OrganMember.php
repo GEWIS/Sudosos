@@ -9,8 +9,10 @@ class OrganMember extends Model
     protected $table = 'OrganMember';
     protected $primaryKey = 'id';
 
+    public $timestamps = false;
+
     public function organ()
     {
-        return $this->hasOne('App\Models\GEWIS\Organ');
+        return $this->hasOne('App\Models\GEWIS\Organ','id','organ_id');
     }
 }

@@ -1,0 +1,58 @@
+/*
+ * Skin: Blue
+ * ----------
+ */
+@import "../../bootstrap/mixins.less";
+@import "../../bootstrap/variables.less";
+@import "../variables.less";
+@import "../mixins.less";
+
+.GEWIS-skin {
+  //Navbar
+  .main-header {
+    .navbar {
+      .navbar-variant(@GEWIS-red; #fff);
+      .sidebar-toggle {
+        color: #fff;
+        &:hover {
+          background-color: darken(@GEWIS-red, 5%);
+        }
+      }
+      @media (max-width: @screen-header-collapse) {
+        .dropdown-menu {
+          li {
+            &.divider {
+              background-color: rgba(255, 255, 255, 0.1);
+            }
+            a {
+              color: #fff;
+              &:hover {
+                background: darken(@GEWIS-red, 5%);
+              }
+            }
+          }
+        }
+      }
+    }
+    //Logo
+    .logo {
+      .logo-variant(@sidebar-dark-hover-bg);
+    }
+
+    li.user-header {
+      background-color: @GEWIS-red;
+    }
+  }
+
+  //Content Header
+  .content-header {
+    background: transparent;
+  }
+
+  //Create the sidebar skin
+  .skin-dark-sidebar(@GEWIS-red);
+}
+
+.GEWIS-skin.layout-top-nav .main-header > .logo {
+  .logo-variant(@GEWIS-red);
+}

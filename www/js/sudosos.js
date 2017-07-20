@@ -1,4 +1,4 @@
-angular.module('sudosos', ['sudosos.controllers', 'sudosos.filters', 'sudosos.services', 'ui.router'])
+angular.module('sudosos', ['sudosos.controllers', 'sudosos.filters', 'sudosos.services', 'ui.router', 'cgBusy'])
     .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
         $stateProvider.state('sudosos', {
             url: '/sudosos',
@@ -25,7 +25,18 @@ angular.module('sudosos', ['sudosos.controllers', 'sudosos.filters', 'sudosos.se
                         controller: 'ProductsCtrl'
                     }
                 }
+            })
+
+            .state('sudosos.increaseBalance', {
+                url: '/increasebalance',
+                views: {
+                    'admin-panel-content': {
+                        templateUrl: 'templates/increaseBalance.html',
+                        controller: 'IncreaseBalanceCtrl'
+                    }
+                }
             });
+        ;
         $urlRouterProvider.otherwise('/sudosos/products');
     }])
     .value("rootUrl", "http://sudosos.dev")

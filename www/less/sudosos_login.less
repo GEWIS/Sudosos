@@ -1,0 +1,56 @@
+@import "bootstrap/variables";
+
+
+body {
+  background: @gewis-light-gray;
+}
+
+.bg-red {
+  color: #fff;
+  background-color: @gewis-red;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.margin-bottom-15 {
+  margin-bottom: 15px;
+}
+
+/*
+ * Backside line effect
+ */
+.border-bottom-primary {
+  border-bottom: 2px solid;
+  border-color: @gewis-red;
+}
+
+.background-strikethrough {
+  position: relative;
+  z-index: 1;
+
+  &:before {
+    border-top: 2px solid @gewis-red;
+    content: "";
+    margin: 0 auto; /* this centers the line to the full width specified */
+    position: absolute; /* positioning must be absolute here, and relative positioning must be applied to the parent */
+    top: 48%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: -1;
+  }
+
+  span {
+    /* to hide the lines from behind the text, you have to set the background color the same as the container */
+    font-size: 16px;
+    background: #fff;
+    padding: 0 15px;
+  }
+}
+/*
+ * End backside line effect
+ */
+

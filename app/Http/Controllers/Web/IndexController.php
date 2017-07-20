@@ -12,8 +12,6 @@ class IndexController extends Controller
 {
 
     public function index(){
-//        return file_get_contents(public_path().'/angular.html');
-        dd(Auth::user()->toJson());
-        return View('app');
+        return file_get_contents(public_path().'/angular.html');
     }
 }

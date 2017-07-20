@@ -1,4 +1,51 @@
-@import "sudosos-var";
+@import "bootstrap/variables";
+
+/*
+ * Global component styling
+ */
+
+.wrapper {
+  width: 100%;
+  min-height: 100%;
+  position: absolute;
+}
+
+//Start content height fix
+ui-view{
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+ui-view > header {
+  flex: 0 1 auto;
+}
+
+ui-view > .content-wrapper {
+  flex: 1 1 auto;
+  min-height: initial;
+}
+
+ui-view > footer {
+  flex: 0 1 40px;
+}
+
+.material-icons {
+  font-size:18px;
+}
+//end content height fix
+
+/*
+ * End global component styling
+ */
+
+/*
+ * Sidebar classes
+ */
+
+body.sidebar-collapse * .select-committee-dropdown{
+  display: none;
+}
 
 img.sudosos-logo{
   max-height: 48px;
@@ -7,72 +54,30 @@ img.sudosos-logo{
   padding-top: 4px;
 }
 
-.material-icons {
-  font-size:18px;
-}
-
-.full-width {
-  width: 100%;
-}
-
 img.user-avatar{
-  height: 45px !important;
+  height: 45px;
 }
 
 .nav>li>a{
-  padding: 15px !important;
+  padding: 15px;
 }
 
 .dropdown-menu>li>a{
-  color: #333 !important;
+  color: @gewis-dark-gray !important;
 }
+
+/*
+ * End sidebar classes
+ */
+
+/*
+ * Miscellaneous
+ */
 
 .select-committee-dropdown *:not(span) {
   width: 100%;
 }
-body.sidebar-collapse * .select-committee-dropdown{
-  display: none;
-}
 
-.wrapper {
-  width: 100%;
-  min-height: 100%;
-  height: auto !important;
-  position: absolute;
-}
-
-.bg-red {
-  color: #fff;
-  background-color: @gewis-red;
-}
-
-.margin-bottom-15 {
-  margin-bottom: 15px;
-}
-
-.border-bottom-primary {
-  border-bottom: 2px solid;
-  border-color: @gewis-red;
-}
-
-.background-strikethrough {
-  position: relative;
-  z-index: 1;
-
-  &:before {
-    border-top: 2px solid @gewis-red;
-    content:"";
-    margin: 0 auto; /* this centers the line to the full width specified */
-    position: absolute; /* positioning must be absolute here, and relative positioning must be applied to the parent */
-    top: 48%; left: 0; right: 0; bottom: 0;
-    width: 100%;
-    z-index: -1;
-  }
-
-  span {
-    /* to hide the lines from behind the text, you have to set the background color the same as the container */
-    font-size: 16px;
-    background: #fff;
-    padding: 0 15px;
-  }
+.padding{
+  padding: 8px;
 }
