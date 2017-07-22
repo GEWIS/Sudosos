@@ -35,6 +35,7 @@ Now we can start the VM
 •	Ignore all suggestions
 •	Run “npm install”
 •	Run “gulp”
+•	Run “php artisan migrate” to initiate all databases for seeding in the next step
 •	Run “php artisan db:seed” enter “yes” and execute
 •	Do not care for potential errors
 •	Run “cp .env.example .env”
