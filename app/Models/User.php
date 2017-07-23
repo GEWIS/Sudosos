@@ -31,7 +31,7 @@ class User extends BaseModel implements Authenticatable
     ];
 
     protected $rules = [
-        "user_code"     => "required|min:4|max:6",
+        "user_code"     => "required|min:4|max:6|unique",
         "pincode"    => "string|max:336",
         "card_id" => "string|max:336",
         "balance"    => "integer",

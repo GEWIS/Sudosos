@@ -18,12 +18,13 @@ class DatabaseSeeder extends Seeder
 //        $this->call(PointOfSaleTableSeeder::class);
 //        $this->call(ExternalUserSeeder::class);
 
+
         /**
          * Only use when u have the gewisweb_test DB installed
          * This is used for login in using jwt token from the Web DB
          */
 //        $this->call(GEWISTableSeeder::class);
-//        $this->call(UserRoleSeeder::class);
+//        $this->call(RBACSeeder::class);
 
     }
 }
