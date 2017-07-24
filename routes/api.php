@@ -53,6 +53,8 @@ Route::group(['namespace' => 'Api\v1', 'prefix' => 'v1'], function () {
     Route::put('transactions/{id}', 'TransactionController@updateTransaction');
     Route::delete('transactions/{id}', 'TransactionController@getTransaction');
     Route::get('transactions/user/{id}', 'TransactionController@getTransactionOfUser');
+
+    Route::post('transactions/{transaction_id}/subtransactions','SubtransactionController@createSubtransaction');
 });
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {

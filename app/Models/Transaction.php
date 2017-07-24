@@ -75,6 +75,11 @@ namespace App\Models;
  *             type="string",
  *             description="Comment which is set to a transaction."
  *         ),
+ *     @SWG\Property(
+ *             property="subtransactions",
+ *             type="array",
+ *             description="Array containing subtransactions."
+ *         ),
  *    )
  */
 class Transaction extends BaseModel
@@ -95,7 +100,7 @@ class Transaction extends BaseModel
         "sold_to_id" => "required|exists:users,id",
         "authorized_id" => "required|exists:users,id",
         "total_price" => "required|integer|min:0|max:9999999999",
-        "activity_id" => "exists:activities",
+     //   "activity_id" => "exists:activities",
         "comment" => "required|string",
     ];
 
