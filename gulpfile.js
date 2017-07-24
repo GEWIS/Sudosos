@@ -17,11 +17,39 @@ gulp.task('minify', function () {
        .pipe(gulp.dest('public/js'))
 });
 
-gulp.task('css', function(){
-    return gulp.src('www/less/all.less')
+gulp.task('bootstrap', function(){
+    return gulp.src('www/less/bootstrap/bootstrap.less')
         .pipe(less())
         .pipe(minifyCSS())
         .pipe(gulp.dest('public/css'))
 });
 
-gulp.task('default', [ 'css', 'minify' ]);
+gulp.task('adminlte', function(){
+    return gulp.src('www/less/adminLTE/AdminLTE.less')
+        .pipe(less())
+        .pipe(minifyCSS())
+        .pipe(gulp.dest('public/css'))
+});
+
+gulp.task('adminlte_skin', function(){
+    return gulp.src('www/less/adminLTE/skins/GEWIS-skin.less')
+        .pipe(less())
+        .pipe(minifyCSS())
+        .pipe(gulp.dest('public/css'))
+});
+
+gulp.task('sudosos', function(){
+    return gulp.src('www/less/sudosos.less')
+        .pipe(less())
+        .pipe(minifyCSS())
+        .pipe(gulp.dest('public/css'))
+});
+
+gulp.task('sudosos_login', function(){
+    return gulp.src('www/less/sudosos_login.less')
+        .pipe(less())
+        .pipe(minifyCSS())
+        .pipe(gulp.dest('public/css'))
+});
+
+gulp.task('default', [ 'bootstrap', 'adminlte', 'adminlte_skin', 'sudosos', 'sudosos_login', 'minify' ]);
