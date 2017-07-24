@@ -141,8 +141,8 @@ class StorageController extends Controller{
         $storage = Storage::find($id);
 
         if ($storage) {
+            $storage->update($request->all());
             if($storage->isValid()){
-                $storage->update($request->all());
                 return response()->json("Storage succesfully updated", 200);
             }else{
                 return $this->response(400, "Storage invalid",$storage->getErrors());

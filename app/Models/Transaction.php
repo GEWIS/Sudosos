@@ -46,6 +46,37 @@ namespace App\Models;
  *         ),
  *    )
  */
+
+/**    @SWG\Definition(
+ *               definition="inputTransaction",
+ *               required={"sold_to_id", "authorized_id", "total_price", "activity_id","comment"},
+ *      @SWG\Property(
+ *             property="sold_to_id",
+ *             type="string",
+ *             description="id of the person who bought the product."
+ *         ),
+ *      @SWG\Property(
+ *             property="authorized_id",
+ *             type="string",
+ *             description="id of the person who authorized the transaction."
+ *         ),
+ *      @SWG\Property(
+ *             property="total_price",
+ *             type="int",
+ *             description="Total price of the transaction."
+ *         ),
+ *      @SWG\Property(
+ *             property="activity_id",
+ *             type="string",
+ *             description="The activity on which the transaction is made."
+ *         ),
+ *     @SWG\Property(
+ *             property="comment",
+ *             type="string",
+ *             description="Comment which is set to a transaction."
+ *         ),
+ *    )
+ */
 class Transaction extends BaseModel
 {
     protected $fillable = [
