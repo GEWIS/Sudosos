@@ -17,10 +17,10 @@ class Subtransaction extends BaseModel
     ];
 
     protected $rules = [
-        "transaction_id" => "required|exists:transactions",
-        "product_id" => "required|exists:products",
+        "transaction_id" => "required|exists:transactions,id",
+        "product_id" => "required|exists:products,id",
         "amount" => "required|integer|min:1|max:9999999999",
-        "storage_id" => "required|exists:storages",
+        "storage_id" => "required|exists:storages,id",
         "price_per_product" => "required|integer|min:0|max:9999999999",
 
     ];
