@@ -1,5 +1,5 @@
-/*! (DEPRECATED) AdminLTE app.js
- * =============================
+/*! AdminLTE app.js
+ * ================
  * Main JS application file for AdminLTE v2. This file
  * should be included in all pages. It controls some layout
  * options and implements exclusive AdminLTE plugins.
@@ -7,12 +7,10 @@
  * @Author  Almsaeed Studio
  * @Support <http://www.almsaeedstudio.com>
  * @Email   <abdullah@almsaeedstudio.com>
- * @version 2.3.12
+ * @version 2.3.8
  * @license MIT <http://opensource.org/licenses/MIT>
- * @deprecated since 2.3.11
  */
-/* jshint ignore:start */
-// jscs:disable
+
 //Make sure jQuery has been loaded before app.js
 if (typeof jQuery === "undefined") {
   throw new Error("AdminLTE requires jQuery");
@@ -42,7 +40,7 @@ $.AdminLTE.options = {
   navbarMenuSlimscrollWidth: "3px", //The width of the scroll bar
   navbarMenuHeight: "200px", //The height of the inner menu
   //General animation speed for JS animated elements such as box collapse/expand and
-  //sidebar treeview slide up/down. This option accepts an integer as milliseconds,
+  //sidebar treeview slide up/down. This options accepts an integer as milliseconds,
   //'fast', 'normal', or 'slow'
   animationSpeed: 500,
   //Sidebar push menu toggle button selector
@@ -247,45 +245,45 @@ function _init() {
   $.AdminLTE.layout = {
     activate: function () {
       var _this = this;
-      _this.fix();
+      // _this.fix();
       _this.fixSidebar();
-      $('body, html, .wrapper').css('height', 'auto');
-      $(window, ".wrapper").resize(function () {
-        _this.fix();
-        _this.fixSidebar();
-      });
+      // $('body, html, .wrapper').css('height', 'auto');
+      // $(window, ".wrapper").resize(function () {
+      //   _this.fix();
+      //   _this.fixSidebar();
+      // });
     },
-    fix: function () {
+    // fix: function () {
       // Remove overflow from .wrapper if layout-boxed exists
-      $(".layout-boxed > .wrapper").css('overflow', 'hidden');
+      // $(".layout-boxed > .wrapper").css('overflow', 'hidden');
       //Get window height and the wrapper height
-      var footer_height = $('.main-footer').outerHeight() || 0;
-      var neg = $('.main-header').outerHeight() + footer_height;
-      var window_height = $(window).height();
-      var sidebar_height = $(".sidebar").height() || 0;
+      // var footer_height = $('.main-footer').outerHeight() || 0;
+      // var neg = $('.main-header').outerHeight() + footer_height;
+      // var window_height = $(window).height();
+      // var sidebar_height = $(".sidebar").height() || 0;
       //Set the min-height of the content and sidebar based on the
       //the height of the document.
-      if ($("body").hasClass("fixed")) {
-        $(".content-wrapper, .right-side").css('min-height', window_height - footer_height);
-      } else {
-        var postSetWidth;
-        if (window_height >= sidebar_height) {
-          $(".content-wrapper, .right-side").css('min-height', window_height - neg);
-          postSetWidth = window_height - neg;
-        } else {
-          $(".content-wrapper, .right-side").css('min-height', sidebar_height);
-          postSetWidth = sidebar_height;
-        }
-
-        //Fix for the control sidebar height
-        var controlSidebar = $($.AdminLTE.options.controlSidebarOptions.selector);
-        if (typeof controlSidebar !== "undefined") {
-          if (controlSidebar.height() > postSetWidth)
-            $(".content-wrapper, .right-side").css('min-height', controlSidebar.height());
-        }
-
-      }
-    },
+      // if ($("body").hasClass("fixed")) {
+      //   $(".content-wrapper, .right-side").css('min-height', window_height - footer_height);
+      // } else {
+      //   var postSetWidth;
+      //   if (window_height >= sidebar_height) {
+      //     $(".content-wrapper, .right-side").css('min-height', window_height - neg);
+      //     postSetWidth = window_height - neg;
+      //   } else {
+      //     $(".content-wrapper, .right-side").css('min-height', sidebar_height);
+      //     postSetWidth = sidebar_height;
+      //   }
+      //
+      //   //Fix for the control sidebar height
+      //   var controlSidebar = $($.AdminLTE.options.controlSidebarOptions.selector);
+      //   if (typeof controlSidebar !== "undefined") {
+      //     if (controlSidebar.height() > postSetWidth)
+      //       $(".content-wrapper, .right-side").css('min-height', controlSidebar.height());
+      //   }
+      //
+      // }
+    // },
     fixSidebar: function () {
       //Make sure the body tag has the .fixed class
       if (!$("body").hasClass("fixed")) {
@@ -327,7 +325,6 @@ function _init() {
       //Enable sidebar toggle
       $(document).on('click', toggleBtn, function (e) {
         e.preventDefault();
-
         //Enable sidebar push menu
         if ($(window).width() > (screenSizes.sm - 1)) {
           if ($("body").hasClass('sidebar-collapse')) {
@@ -430,11 +427,12 @@ function _init() {
           checkElement.slideDown(animationSpeed, function () {
             //Add the class active to the parent li
             checkElement.addClass('menu-open');
-            parent.find('li.active').removeClass('active');
-            parent_li.addClass('active');
+            // parent_li.addClass('active');
             //Fix the layout in case the sidebar stretches over the height of the window
-            _this.layout.fix();
+            // _this.layout.fix();
           });
+          parent.find('li.active').removeClass('active');
+          checkElement.parent("li").addClass("active");
         }
         //if this isn't a link, prevent the page from being redirected
         if (checkElement.is('.treeview-menu')) {

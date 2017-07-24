@@ -6,7 +6,7 @@
         </span>
     </a>
     <nav class="navbar navbar-static-top" role="navigation">
-        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button" id="toggle-sidebar-button">
+        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button"> <!--id="toggle-sidebar-button"-->
             <span class="sr-only">Toggle navigation</span>
         </a>
         <div class="navbar-custom-menu">
@@ -25,6 +25,12 @@
 <aside class="main-sidebar">
     <section class="sidebar">
         <div class="user-panel">
+            <!--<div> &lt;!&ndash; user name &ndash;&gt;-->
+                <!--<i class="material-icons material-icons">account_box</i>-->
+            <!--</div>-->
+            <!--<div> &lt;!&ndash; balance &ndash;&gt;-->
+
+            <!--</div>-->
             <div class="pull-left image">
                 <img src="img/user_avatar.svg" class="user-avatar">
             </div>
@@ -47,22 +53,18 @@
         </div>
 
         <ul class="sidebar-menu tree" data-widget="tree">
-            <li ui-sref="sudosos.financial" ui-sref-active="active">
-                <a href="#">
-                    <i class="fa fa-bank" aria-hidden="true"></i>
-                    <span> Financial</span>
-                </a>
-            </li>
-            <li ui-sref="sudosos.products" ui-sref-active="active">
-                <a href="#">
-                    <i class="fa fa-th"></i>
-                    <span>Products</span>
-                </a>
-            </li>
+            <li class="header">User Tabs</li>
             <li ui-sref="sudosos.increaseBalance" ui-sref-active="active">
                 <a href="#">
                     <i class="fa fa-money"></i>
                     <span>Increase Balance</span>
+                </a>
+            </li>
+            <li class="header">Committee Tabs</li>
+            <li ui-sref="sudosos.financial" ui-sref-active="active">
+                <a href="#">
+                    <i class="fa fa-bank" aria-hidden="true"></i>
+                    <span> Financial</span>
                 </a>
             </li>
             <li class="treeview">
@@ -75,13 +77,13 @@
                 </a>
                 <ul class="treeview-menu">
                     <li>
-                        <a href="#"><i class="fa fa-th"></i> Manage products</a>
+                        <a href="#"><i class="fa fa-th"></i><span>Manage products</span></a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-cubes"></i> Manage storages</a>
+                        <a href="#"><i class="fa fa-cubes"></i><span>Manage storages</span></a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-shopping-basket"></i> Manage POS</a>
+                        <a href="#"><i class="fa fa-shopping-basket"></i><span>Manage POS</span></a>
                     </li>
                 </ul>
             </li>
