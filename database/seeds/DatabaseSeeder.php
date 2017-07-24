@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call(StorageTableSeeder::class);
         $this->call(PointOfSaleTableSeeder::class);
         $this->call(ExternalUserSeeder::class);
+        $this->call(PermissionTableSeeder::class);
         $this->call(RBACSeeder::class);
-
     }
 }
