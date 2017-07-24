@@ -7,17 +7,17 @@ namespace App\Models;
  *      @SWG\Property(
  *             property="from",
  *             type="string",
- *             description="The from range timestamp."
+ *             description="The timestamp of the lower bound of the requested range."
  *         ),
- *      @SWG\Property(
- *             property="from",
+ *     @SWG\Property(
+ *             property="to",
  *             type="string",
- *             description="The to range timestamp."
+ *             description="The timestamp of the upper bound of the requested range."
  *         ),
  *      @SWG\Property(
  *             property="amount",
  *             type="integer",
- *             description="The amount of transactions to be shown."
+ *             description="The number of recent transactions to be shown."
  *         ),
  *    )
  */
