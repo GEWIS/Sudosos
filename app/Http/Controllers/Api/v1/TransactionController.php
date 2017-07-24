@@ -65,39 +65,12 @@ class TransactionController extends Controller{
         if(is_null($to)) $to = date("Y-m-d H:i:s"); // default today
 
         // actually perform the request
-        if(!is_null($amount)) $transactions = Transaction::where($from < 'created_at' and 'created_at' <= $to)->take($amount);
-        else $transactions = Transaction::where($from < 'created_at' and 'created_at' <= $to);
+        if(!is_null($amount)) $transactions = Transaction::where('created_at', '<', $from)->where($to, '>=', 'created_at')->take($amount);
+        else $transactions = Transaction::where('created_at', '>', $from)->where('created_at','<', $to)->get();
 
         // return the request
         return response()->json($transactions, 200);
 
-        /*if(is_null($from)){
-            $from = date("Y-m-d H:i:s", null);
-            dd($from);
-        }else{
-            $from = strtotime($from);
-            if(!$from){
-                return  $this->response(400,"No valid timestamp in from field");
-            }
-        }
 
-        if(is_null($to)){
-            $to = date("Y-m-d H:i:s");
-        }else{
-            $to = strtotime($to);
-            if(!$to){
-                return  $this->response(400,"No valid timestamp in to field");
-            }
-        }
-
-        if(is_null($amount)){
-            $transactions = Transaction::where($from < 'created_at' and 'created_at' < $to);
-            return response()->json($transactions,200);
-        }else if($amount > 0){
-            $transactions = Transaction::where($from < 'created_at' and 'created_at' < $to)->take($amount);
-            return response()->json($transactions,200);
-        }else{
-            return  $this->response(400,"Amount is negative");
-        }*/
     }
 }
