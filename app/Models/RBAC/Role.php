@@ -11,16 +11,16 @@ class Role extends BaseModel
 
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany('App\Models\User','user_role');
     }
 
     public function permissions()
     {
-        return $this->belongsToMany(Permission::class, 'permission_role');
+        return $this->belongsToMany('App\Models\RBAC\Permission', 'permission_role');
     }
 
     public function owner()
     {
-        return $this->belongsTo(GEWIS\Organ::class);
+        return $this->belongsTo('App\Models\GEWIS\Organ');
     }
 }

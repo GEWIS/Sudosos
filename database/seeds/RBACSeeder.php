@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Models\RBAC\Permission;
 use App\Models\RBAC\Role;
-
+use App\Models\User;
 class RBACSeeder extends Seeder
 {
     /**
@@ -25,8 +25,8 @@ class RBACSeeder extends Seeder
             ->each(function($u) {
                 $u->permissions()->save(Permission::inRandomOrder()->first());
             });
-
-        Role::inRandomOrder()->first()->users()->attach(App\Models\User::all()->where('user_code','=', 6494));
+echo(User::all()->where('user_code','=', 6494));
+        Role::inRandomOrder()->first()->users()->attach(User::all()->where('user_code','=', 6494));
 
 
     }
