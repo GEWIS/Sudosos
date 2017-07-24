@@ -58,7 +58,7 @@ img.sudosos-logo{
   }
 }
 
-.user-panel, #selectCommitteeDropDown, #selectCommitteeDropDownOptions, #selectCommitteeDropDownOptions a{
+#selectCommitteeDropDown, #selectCommitteeDropDownOptions, #selectCommitteeDropDownOptions a{
   background-color:@sidebar-dark-submenu-bg;
   border-color:@sidebar-dark-submenu-bg;
   color: @sidebar-dark-submenu-color;
@@ -73,14 +73,13 @@ img.sudosos-logo{
   }
 }
 
-img.user-avatar{
-  max-width: (@sidebar-collapsed-width - 10);
-  max-height: (@sidebar-collapsed-width - 10);
-  padding:5px;
-}
-
 .nav>li>a{
   padding: 15px;
+}
+
+.user-panel-wrapper {
+  width: 100%;
+  overflow: hidden;
 }
 
 /*
@@ -88,10 +87,6 @@ img.user-avatar{
  */
 .select-committee-dropdown *:not(span) {
   width: 100%;
-}
-
-.padding{
-  padding: 8px;
 }
 
 // increase balance specific css
