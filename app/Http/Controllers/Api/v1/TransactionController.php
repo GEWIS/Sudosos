@@ -65,8 +65,8 @@ class TransactionController extends Controller{
         if(is_null($to)) $to = date("Y-m-d H:i:s"); // default today
 
         // actually perform the request
-        if(!is_null($amount)) $transactions = Transaction::where('created_at', '<', $from)->where($to, '>=', 'created_at')->take($amount);
-        else $transactions = Transaction::where('created_at', '>', $from)->where('created_at','<', $to)->get();
+        if(!is_null($amount)) $transactions = Transaction::where('created_at', '>=', $from)->where('created_at','<=', $to)->take($amount)->get();
+        else $transactions = Transaction::where('created_at', '>=', $from)->where('created_at','<=', $to)->get();
 
         // return the request
         return response()->json($transactions, 200);
