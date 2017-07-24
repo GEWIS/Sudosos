@@ -2,15 +2,13 @@
 
 namespace App\Models;
 
-
-
 /**
  * @SWG\Definition(
  *      definition="product",
  *      required={"id","name","owner_id", "price", "tray_size", "category"},
  *      @SWG\Property(
  *             property="id",
- *             type="integer",
+ *             type="string",
  *             description="The ID of the product"
  *         ),
  *      @SWG\Property(
@@ -124,7 +122,7 @@ class Product extends BaseModel
     protected $rules = [
        "name"     => "required|string|max:255",
         "price"    => "required|integer|max:9999999999|min:0",
-        "owner_id" => "required|string|max:36|exists:users,id",
+        "owner_id" => "required|integer|exists:mysql_gewisdb.Organ,id",
 //        "image"    => "image",
         "tray_size" => "required|integer|max:9999999999|min:0",
         "category" => "required|string|in:drink,food,ticket,other",
@@ -132,7 +130,7 @@ class Product extends BaseModel
 
     // Relations
     public function owner(){
-        return $this->belongsTo('App\Models\User','owner_id');
+        return $this->belongsTo('App\Models\GEWIS\Organ','owner_id');
     }
 
     public function storages(){

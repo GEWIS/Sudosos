@@ -26,8 +26,4 @@ Route::group(['namespace' => 'Auth', 'prefix' => 'auth', 'middleware' => ['guest
     Route::post('login/external', 'LoginController@doExternalLogin');
     Route::get('register', 'RegisterController@showRegister');
     Route::post('register', 'RegisterController@doRegister');
-
 });
-Route::any('{catchall}', function () {
-    return Redirect::to('/');
-})->where('catchall', '.*');

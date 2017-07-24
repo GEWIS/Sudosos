@@ -134,6 +134,22 @@ class User extends BaseModel implements Authenticatable
         }
         return $organRoles;
     }
+
+    public function roles()
+    {
+        return $this->belongsToMany('App\Models\RBAC\Role', 'user_role');
+    }
+
+    public function hasPermission($permission, $organId){
+        $organRoles = $this->roles->where('organ_id', '=', $organId);
+        forEach($organRoles as $role){
+            if($role->hasPermission($permission)){
+                 return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Get the name of the unique identifier for the user.
      *

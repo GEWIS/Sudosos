@@ -25,7 +25,6 @@ class RBACSeeder extends Seeder
             ->each(function($u) {
                 $u->permissions()->save(Permission::inRandomOrder()->first());
             });
-echo(User::all()->where('user_code','=', 6494));
         Role::inRandomOrder()->first()->users()->attach(User::all()->where('user_code','=', 6494));
 
 

@@ -93,6 +93,8 @@ class ProductController extends Controller{
     public function getProduct($id){
         $product = Product::find($id);
 
+        $this->authorize('view', $product);
+
         if ($product) {
             return response()->json($product, 200);
         } else {

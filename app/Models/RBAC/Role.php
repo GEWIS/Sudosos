@@ -19,6 +19,12 @@ class Role extends BaseModel
         return $this->belongsToMany('App\Models\RBAC\Permission', 'permission_role');
     }
 
+    public function hasPermission($permission){
+        $result = $this->permissions->where('name', $permission)
+            ->isEmpty() ? false : true;
+        return $result;
+    }
+
     public function owner()
     {
         return $this->belongsTo('App\Models\GEWIS\Organ');

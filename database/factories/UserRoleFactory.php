@@ -6,8 +6,6 @@ use App\Models\GEWIS\Organ;
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(UserRole::class, function (Faker\Generator $faker) use ($factory) {
-   echo(Organ::inRandomOrder()->first()->id);
-   echo(Organ::inRandomOrder()->first()->abbr);
     return [
         "user_id"=> User::inRandomOrder()->where([['type', User::TYPE_GEWIS],['user_code', 6494]])->first()->id,
         "abbr"=> Organ::inRandomOrder()->first()->abbr,

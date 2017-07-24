@@ -4,11 +4,15 @@ namespace App\Providers;
 
 use App\Extensions\HybridUserProvider;
 use App\Extensions\PincodeUserProvider;
+use App\Policies\ProductPolicy;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Laravel\Passport\Passport;
+
+use App\Models\Product;
+
 class AuthServiceProvider extends ServiceProvider
 {
     /**
@@ -17,8 +21,9 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Model' => 'App\Policies\ModelPolicy',
-    ];
+        Product::class => ProductPolicy::class,
+
+        ];
 
     /**
      * Register any authentication / authorization services.
