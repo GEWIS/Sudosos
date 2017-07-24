@@ -56,9 +56,9 @@ class TransactionController extends Controller{
         $transactions = null;
 
         // generate all error messages
-        if($amount < 0) $this->response(404, "Negative amount of messages requested");
-        if(!is_null($from)) if(!strtotime($from)) $this->response(404, "From field is not a valid timestamp");
-        if(!is_null($to)) if(!strtotime($to)) $this->response(404, "To field is not a valid timestamp");
+        if($amount < 0) return $this->response(400, "Negative amount of messages requested");
+        if(!is_null($from)) if(!strtotime($from)) return $this->response(400, "From field is not a valid timestamp");
+        if(!is_null($to)) if(!strtotime($to)) return $this->response(400, "To field is not a valid timestamp");
 
         // if from and to are null, generate the default values
         if(is_null($from)) $from = date("Y-m-d H:i:s", null);
@@ -70,7 +70,5 @@ class TransactionController extends Controller{
 
         // return the request
         return response()->json($transactions, 200);
-
-
     }
 }
