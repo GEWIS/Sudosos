@@ -20,6 +20,31 @@ namespace App\Models;
  *             description="The number of recent transactions to be shown."
  *         ),
  *    )
+ *
+ *      @SWG\Definition(
+ *               definition="getAllTransactionUser",
+ *               required={},
+ *     @SWG\Property(
+ *             property="userID",
+ *             type="string",
+ *             description="The ID of the user of who the transactions are requested."
+ *         ),
+ *      @SWG\Property(
+ *             property="from",
+ *             type="string",
+ *             description="The timestamp of the lower bound of the requested range."
+ *         ),
+ *     @SWG\Property(
+ *             property="to",
+ *             type="string",
+ *             description="The timestamp of the upper bound of the requested range."
+ *         ),
+ *      @SWG\Property(
+ *             property="amount",
+ *             type="integer",
+ *             description="The number of recent transactions to be shown."
+ *         ),
+ *    )
  */
 class Transaction extends BaseModel
 {

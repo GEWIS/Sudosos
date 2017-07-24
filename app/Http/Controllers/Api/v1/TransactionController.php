@@ -71,4 +71,74 @@ class TransactionController extends Controller{
         // return the request
         return response()->json($transactions, 200);
     }
+
+    /**
+     * @SWG\Get(
+     *     path ="/transactions/user",
+     *     summary = "Returns all transactions of a single user.",
+     *     tags = {"Transaction"},
+     *     description = "Returns all transactions of a single user, either within a certain range with the from and to parameter, or a certain number.",
+     *     operationId = "getAllTransactionsOfUser",
+     *     produces = {"application/json"},
+     *         @SWG\Parameter(
+     *         name="from",
+     *         in="body",
+     *         description="Request in JSON, specifies the lower bound of the range of which all transactions are returned, default unix epoch",
+     *         required=false,
+     *         @SWG\Schema(ref="#/definitions/getAllTransactionUser"),
+     *     ),
+     *         @SWG\Parameter(
+     *         name="to",
+     *         in="body",
+     *         description="Request in JSON, specifies the upper bound of the range of which all transactions are returned, default today",
+     *         required=false,
+     *         @SWG\Schema(ref="#/definitions/getAllTransactionUser"),
+     *     ),
+     *      @SWG\Parameter(
+     *         name="amount",
+     *         in="body",
+     *         description="Request in JSON, number of transactions in the range to be returned",
+     *         required=false,
+     *         @SWG\Schema(ref="#/definitions/getAllTransactionUser"),
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response=400,
+     *         description="Not a valid request, see message body",
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="UserID has not made any transaction, userID not found in table Transactions",
+     *     ),
+     * ),
+     */
+    public function getTransactionOfUser(Request $request, $id){
+        $from = $request->from;
+        $to = $request->to;
+        $amount = $request->amount;
+        $transactions = null;
+        $nrOfTransactions = Transaction::where('sold_to_id', '=', $id)->count();
+
+
+        // generate all error messages
+        if(is_null($id)) return $this->response(400, "Field userID is empty");
+        if($nrOfTransactions <= 0) return $this->response(404, "UserID has not made any transaction, userID not found in table Transactions");
+        if($amount < 0) return $this->response(400, "Negative amount of messages requested");
+        if(!is_null($from)) if(!strtotime($from)) return $this->response(400, "From field is not a valid timestamp");
+        if(!is_null($to)) if(!strtotime($to)) return $this->response(400, "To field is not a valid timestamp");
+
+                // if from and to are null, generate the default values
+        if(is_null($from)) $from = date("Y-m-d H:i:s", null);
+        if(is_null($to)) $to = date("Y-m-d H:i:s"); // default today
+
+        // actually perform the request
+        if(!is_null($amount)) $transactions = Transaction::where('sold_to_id', '=', $id)->where('created_at', '>=', $from)->where('created_at','<=', $to)->take($amount)->get();
+        else $transactions = Transaction::where('sold_to_id', '=', $id)->where('created_at', '>=', $from)->where('created_at','<=', $to)->get();
+
+        // return the request
+        return response()->json($transactions, 200);
+    }
 }

@@ -47,6 +47,7 @@ Route::group(['namespace' => 'Api\v1', 'prefix' => 'v1'], function () {
     Route::delete('storages/{storage_id}/stores/{product_id}','StorageController@deleteStorageProduct');
 
     Route::get('transactions', 'TransactionController@index');
+    Route::get('transactions/user/{id}', 'TransactionController@getTransactionOfUser');
 });
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
