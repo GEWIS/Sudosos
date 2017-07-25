@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Models\Subtransaction;
 use App\Models\Transaction;
 use App\Http\Controllers\Controller;
 
@@ -326,8 +327,10 @@ class TransactionController extends Controller{
      */
     public function deleteTransaction($id){
         $transaction = Transaction::find($id);
-        if ($transaction) {
+        $subtransaction = Subtransaction::where('transaction_id', '=', $id);
+        if ($transaction and $subtransaction) {
             $transaction->delete();
+            $subtransaction->delete();
             return response()->json("Transaction succesfully deleted", 200);
         } else {
             return $this->response(404,"Transaction not found");
