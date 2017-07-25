@@ -25,6 +25,7 @@ Resume here if you already have a private key (if it is still in pkk format load
 •	Under keys change “~/.ssh/id_rsa” to the location of your private key (do not forget to keep the dash in front of the line) (FORWARD SLASHES)
 •	Change under folders on the map line “~/Code” to the absolute path to the sudosos directory (FORWARD SLASHES)
 •	Change under sites homestead.app to sudosos.dev and under to change the path to /home/vagrant/Code/public
+•	Under the databases section add:  - gewisweb_test
 Now we can start the VM
 •	Go to the homestead folder
 •	Run “vagrant up --provision”
@@ -35,11 +36,25 @@ Now we can start the VM
 •	Ignore all suggestions
 •	Run “npm install”
 •	Run “gulp”
+•	Open the gewisweb_test DB and create the DB structure which can be obtained at one of the developers. 
 •	Run “php artisan migrate” to initiate all databases for seeding in the next step
 •	Run “php artisan db:seed” enter “yes” and execute
 •	Do not care for potential errors
 •	Run “cp .env.example .env”
-•	Run “php artisan key:generate”
+•	Add the following text to your .env file:
+         DB_CONNECTION=mysql_gewisdb
+         DB_HOST=127.0.0.1
+         DB_PORT=3306
+         DB_DATABASE=gewisweb_test
+         DB_USERNAME=homestead
+         DB_PASSWORD=secret
+         
+         GEWISWEB_JWT_SECRET=TempSecretDoNotUseInProduction
+         GEWISWEB_AUTH_URL=https://gewis.nl/token/sudosos
+        
+
+•	Run “vagrant provision” (outside the VM)
+•	Run “php artisan key:generate
 
 •	Optional: add sudosos.dev to hosts file
 •	Add “192.168.10.10       sudosos.dev” to C:\Windows\System32\drivers\etc\hosts (must be done with admin rights)

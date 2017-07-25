@@ -59,6 +59,7 @@ Route::group(['middleware'=> 'auth', 'namespace' => 'Api\v1', 'prefix' => 'v1'],
     Route::post('roles', 'RBACController@createRole');
     Route::put('roles/{id}', 'RBACController@updateRole');
     Route::delete('roles/{id}', 'RBACController@deleteRole');
+    Route::get('roles/{id}/permissions', 'RBACController@getPermissionFromRoles');
     Route::put('roles/{id}/reinstate', 'RBACController@reinstateRole');
     Route::post('roles/{role_id}/assign/{user_id}', 'RBACController@addRoleToUser');
     Route::delete('roles/{role_id}/remove/{user_id}', 'RBACController@removeRoleFromUser');

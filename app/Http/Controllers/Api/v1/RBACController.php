@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Models\RBAC\Permission;
 use App\Models\RBAC\Role;
 use App\Models\User;
+use App\Http\Controllers\Controller;
 
 class RBACController extends Controller
 {
@@ -83,11 +84,15 @@ class RBACController extends Controller
         $user = User::find($user_id)->where('type', User::TYPE_GEWIS);
 
         if (!$role) {
-            $this->response(404, 'Role not found');
+            return  $this->response(404, 'Role not found');
         }
         if (!$user) {
-            $this->response(404, 'User not found or is not a GEWIS member');
+            return $this->response(404, 'User not found or is not a GEWIS member');
         }
+        if($role->users->contains($user_id)){
+            return $this->response(409, 'Role already added to the user');
+        }
+
         $role->users()->attach($user);
         return response()->json("Role successfully added to the user", 201);
     }
@@ -105,24 +110,38 @@ class RBACController extends Controller
         }
     }
 
+    public function getPermissionFromRoles($role_id)
+    {
+        $role = Role::find($role_id);
+
+        if (!$role) {
+            return $this->response(404, 'Role not found');
+        }
+        return $role->permissions;
+    }
+
+
     /*
      * Permission part
      */
+
     public function addPermissionToRole($permission_id, $role_id)
     {
         $permission = Permission::find($permission_id);
         $role = Role::find($role_id);
 
         if (!$permission) {
-            $this->response(404, 'Permission not found');
+            return $this->response(404, 'Permission not found');
         }
 
         if (!$role) {
-            $this->response(404, 'Role not found');
+           return $this->response(404, 'Role not found');
+        }
+        if ($role->permissions->contains($permission_id)) {
+           return $this->response(409, 'Permission already added to role');
         }
         $role->permissions()->attach($permission_id);
         return response()->json("Permission successfully added to the role.", 201);
-
     }
 
     public function removePermissionFromRole($permission_id, $role_id)
@@ -137,7 +156,9 @@ class RBACController extends Controller
             return response()->json("Permission removed from the role", 200);
         }
     }
-    public function getPermissions(){
+
+    public function getPermissions()
+    {
         return Permission::all();
     }
 }
