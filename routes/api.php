@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::group(['namespace' => 'Api\v1', 'prefix' => 'v1'], function () {
+Route::group(['middleware'=> 'auth', 'namespace' => 'Api\v1', 'prefix' => 'v1'], function () {
     Route::get('products', 'ProductController@index');
     Route::post('products', 'ProductController@store');
     Route::get('products/{id}', 'ProductController@getProduct');
@@ -45,8 +45,17 @@ Route::group(['namespace' => 'Api\v1', 'prefix' => 'v1'], function () {
     Route::put('storages/{storage_id}/stock/{product_id}','StorageController@putStorageStockOfProduct');
     Route::post('storages/{storage_id}/stores/{product_id}','StorageController@postStorageProduct');
     Route::delete('storages/{storage_id}/stores/{product_id}','StorageController@deleteStorageProduct');
-});
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+    Route::get('roles', 'RBACController@getRoles');
+    Route::get('roles/{id}', 'RBACController@getRole');
+    Route::post('roles', 'RBACController@createRole');
+    Route::put('roles/{id}', 'RBACController@updateRole');
+    Route::delete('roles/{id}', 'RBACController@deleteRole');
+    Route::put('roles/{id}/reinstate', 'RBACController@reinstateRole');
+    Route::post('roles/{role_id}/assign/{user_id}', 'RBACController@addRoleToUser');
+    Route::delete('roles/{role_id}/remove/{user_id}', 'RBACController@removeRoleFromUser');
+
+    Route::get('permissions','RBACController@getPermissions');
+    Route::post('permissions/{permission_id}/assign/{role_id}', 'RBACController@addPermissionToRole');
+    Route::delete('permissions/{permission_id}/remove/{role_id}','RBACController@removePermissionFromRole');
 });

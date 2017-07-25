@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\User;
 use App\Models\Product;
+
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ProductPolicy
@@ -19,18 +20,20 @@ class ProductPolicy
      */
     public function view(User $user, Product $product)
     {
-       return $user->hasPermission('view-products', $product->owner->id);
+        return $user->hasPermission('view-products', $product->owner->id);
     }
 
     /**
      * Determine whether the user can create products.
      *
      * @param  \App\Models\User  $user
+     * @param  Integer $owner_id
      * @return mixed
      */
-    public function create(User $user)
+    public function create(User $user, $owner_id)
     {
-        //
+        return $user->hasPermission('create-products', $owner_id);
+
     }
 
     /**
@@ -42,7 +45,7 @@ class ProductPolicy
      */
     public function update(User $user, Product $product)
     {
-        //
+        return $user->hasPermission('update-products', $product->owner->id);
     }
 
     /**
@@ -54,6 +57,7 @@ class ProductPolicy
      */
     public function delete(User $user, Product $product)
     {
-        //
+        return $user->hasPermission('delete-products', $product->owner->id);
+
     }
 }

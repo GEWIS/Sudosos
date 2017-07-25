@@ -38,7 +38,7 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
         if (Auth::check()) {
-            return redirect();
+            return redirect()->intended();
         }
     }
 

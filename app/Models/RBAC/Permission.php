@@ -9,4 +9,8 @@ class Permission extends BaseModel
 
     protected $guarded=['id'];
 
+    public function roles()
+    {
+        return $this->belongsToMany('App\Models\RBAC\Role', 'permission_role');
+    }
 }
