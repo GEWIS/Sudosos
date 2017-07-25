@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 use function GuzzleHttp\Promise\is_fulfilled;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Schema;
 
 class TransactionController extends Controller{
@@ -14,7 +15,7 @@ class TransactionController extends Controller{
      * @SWG\Get(
      *     path ="/transactions",
      *     summary = "Returns all transactions.",
-     *     tags = {"Transaction"},
+     *     tags = {"transaction"},
      *     description = "Returns all transactions, either within a certain range with the from and to parameter, or a certain number.",
      *     operationId = "getAllTransactions",
      *     produces = {"application/json"},
@@ -76,7 +77,7 @@ class TransactionController extends Controller{
      * @SWG\Get(
      *     path ="/transactions/user",
      *     summary = "Returns all transactions of a single user.",
-     *     tags = {"Transaction"},
+     *     tags = {"transaction"},
      *     description = "Returns all transactions of a single user, either within a certain range with the from and to parameter, or a certain number.",
      *     operationId = "getAllTransactionsOfUser",
      *     produces = {"application/json"},
@@ -239,9 +240,17 @@ class TransactionController extends Controller{
      * ),
      */
     public function createTransaction(Request $request){
+        // put subtransactions in documentation!
+
+        $subtransactions = $request->subtransaction;
+
         $transaction = Transaction::create($request->all());
-        
         if ($transaction->isValid()) {
+            for($i =0; $i < sizeof($subtransactions); $i++){
+                $sub = app('App\Http\Controllers\Api\v1\SubtransactionController')
+                    ->createSubtransaction($subtransactions[$i], $transaction->id);
+                if(!$sub->isValid())  return $this->response(400,"Subtransaction invalid", $sub->getErrors());
+            }
             return response()->json($transaction->id, 201);
         }else{
             return $this->response(400,"Transaction invalid", $transaction->getErrors());

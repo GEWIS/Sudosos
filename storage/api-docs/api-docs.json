@@ -580,10 +580,10 @@
                 ],
                 "responses": {
                     "201": {
-                        "description": "successful operation"
+                        "description": "Successful operation"
                     },
                     "400": {
-                        "description": "storage invalid."
+                        "description": "Storage invalid."
                     }
                 }
             }
@@ -603,17 +603,17 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "id of the storage",
+                        "description": "Id of the storage",
                         "required": true,
                         "type": "string"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "successful operation"
+                        "description": "Successful operation"
                     },
                     "404": {
-                        "description": "storage not found"
+                        "description": "Storage not found"
                     }
                 }
             },
@@ -638,20 +638,20 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "id of the storage",
+                        "description": "Id of the storage",
                         "required": true,
                         "type": "string"
                     }
                 ],
                 "responses": {
                     "201": {
-                        "description": "storage succesfully deleted"
+                        "description": "Storage succesfully deleted"
                     },
                     "400": {
-                        "description": "storage not valid"
+                        "description": "Storage not valid"
                     },
                     "404": {
-                        "description": "storage not found"
+                        "description": "Storage not found"
                     }
                 }
             },
@@ -669,17 +669,17 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "id of the storage",
+                        "description": "Id of the storage",
                         "required": true,
                         "type": "string"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "storage succesfully deleted."
+                        "description": "Storage succesfully deleted."
                     },
                     "404": {
-                        "description": "storage not found."
+                        "description": "Storage not found."
                     }
                 }
             }
@@ -699,20 +699,20 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "id of the storage",
+                        "description": "Id of the storage",
                         "required": true,
                         "type": "string"
                     }
                 ],
                 "responses": {
                     "201": {
-                        "description": "storage succesfully reinstated"
+                        "description": "Storage succesfully reinstated"
                     },
                     "404": {
-                        "description": "storage not found"
+                        "description": "Storage not found"
                     },
                     "409": {
-                        "description": "storage already active."
+                        "description": "Storage already active."
                     }
                 }
             }
@@ -732,14 +732,14 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "id of the storage",
+                        "description": "Id of the storage",
                         "required": true,
                         "type": "string"
                     },
                     {
                         "name": "property",
                         "in": "path",
-                        "description": "property of the storage",
+                        "description": "Property of the storage",
                         "required": true,
                         "type": "string"
                     }
@@ -749,7 +749,7 @@
                         "description": "Successful operation"
                     },
                     "404": {
-                        "description": "storage not found"
+                        "description": "Storage or Property not found, see message body"
                     }
                 }
             },
@@ -767,34 +767,34 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "id of the storage",
+                        "description": "Id of the storage",
                         "required": true,
                         "type": "string"
                     },
                     {
                         "name": "request",
                         "in": "path",
-                        "description": "Request body in JSON.",
+                        "description": "Request body in JSON",
                         "required": true,
                         "type": "string"
                     },
                     {
                         "name": "property",
                         "in": "path",
-                        "description": "Property of the storage.",
+                        "description": "Property of the storage",
                         "required": true,
                         "type": "string"
                     }
                 ],
                 "responses": {
                     "201": {
-                        "description": "storage succesfully updated"
+                        "description": "Storage succesfully updated"
                     },
                     "404": {
-                        "description": "storage not found"
+                        "description": "Storage or Property not found, see message body"
                     },
                     "400": {
-                        "description": "Invalid property value."
+                        "description": "Invalid property value"
                     }
                 }
             }
@@ -814,7 +814,7 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "id of the storage",
+                        "description": "Id of the storage",
                         "required": true,
                         "type": "string"
                     }
@@ -834,8 +834,8 @@
                 "tags": [
                     "storage"
                 ],
-                "summary": "Returns all products in a storage by id.",
-                "description": "Returns all products in a storage by id.",
+                "summary": "Returns stock of a product in a storage by id.",
+                "description": "Returns stock of a product in a storage by id.",
                 "operationId": "getStorageStockOfProducts",
                 "produces": [
                     "application/json"
@@ -844,14 +844,21 @@
                     {
                         "name": "storage_id",
                         "in": "path",
-                        "description": "id of the storage",
+                        "description": "Id of the storage",
                         "required": true,
                         "type": "string"
                     },
                     {
                         "name": "product_id",
                         "in": "path",
-                        "description": "id of the product",
+                        "description": "Id of the product",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "request",
+                        "in": "path",
+                        "description": "Request body in JSON",
                         "required": true,
                         "type": "string"
                     }
@@ -861,7 +868,7 @@
                         "description": "Successful operation"
                     },
                     "404": {
-                        "description": "Storage not found"
+                        "description": "Storage or relation between storage and product not found, see message body"
                     }
                 }
             },
@@ -879,22 +886,25 @@
                     {
                         "name": "storage_id",
                         "in": "path",
-                        "description": "id of the storage",
+                        "description": "Id of the storage",
                         "required": true,
                         "type": "string"
                     },
                     {
                         "name": "product_id",
                         "in": "path",
-                        "description": "id of the product",
+                        "description": "Id of the product",
                         "required": true,
                         "type": "string"
                     },
                     {
                         "name": "stock",
-                        "in": "formData",
-                        "description": "id of the product",
+                        "in": "body",
+                        "description": "Id of the product",
                         "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/inputProperty"
+                        },
                         "type": "integer"
                     }
                 ],
@@ -903,7 +913,7 @@
                         "description": "Successful operation"
                     },
                     "404": {
-                        "description": "Storage not found"
+                        "description": "Storage or Product or Relation between Storage and Product not found, see message body"
                     }
                 }
             }
@@ -923,21 +933,21 @@
                     {
                         "name": "storage_id",
                         "in": "path",
-                        "description": "id of the storage",
+                        "description": "Id of the storage",
                         "required": true,
                         "type": "string"
                     },
                     {
                         "name": "product_id",
                         "in": "path",
-                        "description": "id of the product",
+                        "description": "Id of the product",
                         "required": true,
                         "type": "string"
                     },
                     {
                         "name": "stock",
                         "in": "body",
-                        "description": "id of the product",
+                        "description": "Id of the product",
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/inputProperty"
@@ -978,14 +988,14 @@
                     {
                         "name": "storage_id",
                         "in": "path",
-                        "description": "id of the storage",
+                        "description": "Id of the storage",
                         "required": true,
                         "type": "string"
                     },
                     {
                         "name": "product_id",
                         "in": "path",
-                        "description": "id of the product",
+                        "description": "Id of the product",
                         "required": true,
                         "type": "string"
                     }
@@ -995,7 +1005,266 @@
                         "description": "Successful operation"
                     },
                     "404": {
-                        "description": "Storage not found"
+                        "description": "Storage or Relation between Storage and Product not found, see message body"
+                    }
+                }
+            }
+        },
+        "/transactions": {
+            "get": {
+                "tags": [
+                    "Transaction"
+                ],
+                "summary": "Returns all transactions.",
+                "description": "Returns all transactions, either within a certain range with the from and to parameter, or a certain number.",
+                "operationId": "getAllTransactions",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "from",
+                        "in": "body",
+                        "description": "Request in JSON, specifies the lower bound of the range of which all transactions are returned, default unix epoch",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/getAllTransaction"
+                        }
+                    },
+                    {
+                        "name": "to",
+                        "in": "body",
+                        "description": "Request in JSON, specifies the upper bound of the range of which all transactions are returned, default today",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/getAllTransaction"
+                        }
+                    },
+                    {
+                        "name": "amount",
+                        "in": "body",
+                        "description": "Request in JSON, number of transactions in the range to be returned",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/getAllTransaction"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Not a valid request, see message body"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "transaction"
+                ],
+                "summary": "Create a new transaction.",
+                "description": "Create a new transaction.",
+                "operationId": "createTransaction",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "transaction",
+                        "in": "body",
+                        "description": "Model of the transaction to store",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/inputTransaction"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Transaction invalid."
+                    }
+                }
+            }
+        },
+        "/transactions/user": {
+            "get": {
+                "tags": [
+                    "Transaction"
+                ],
+                "summary": "Returns all transactions of a single user.",
+                "description": "Returns all transactions of a single user, either within a certain range with the from and to parameter, or a certain number.",
+                "operationId": "getAllTransactionsOfUser",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "from",
+                        "in": "body",
+                        "description": "Request in JSON, specifies the lower bound of the range of which all transactions are returned, default unix epoch",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/getAllTransactionUser"
+                        }
+                    },
+                    {
+                        "name": "to",
+                        "in": "body",
+                        "description": "Request in JSON, specifies the upper bound of the range of which all transactions are returned, default today",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/getAllTransactionUser"
+                        }
+                    },
+                    {
+                        "name": "amount",
+                        "in": "body",
+                        "description": "Request in JSON, number of transactions in the range to be returned",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/getAllTransactionUser"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Not a valid request, see message body"
+                    },
+                    "404": {
+                        "description": "UserID has not made any transaction, userID not found in table Transactions"
+                    }
+                }
+            }
+        },
+        "/transactions/{id}": {
+            "get": {
+                "tags": [
+                    "transaction"
+                ],
+                "summary": "Returns transaction by id.",
+                "description": "Returns a transaction with a specified id.",
+                "operationId": "getTransaction",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of the transaction",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Transaction not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "transaction"
+                ],
+                "summary": "Updates a transaction by id.",
+                "description": "Updates the transaction.",
+                "operationId": "updateTransaction",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "request",
+                        "in": "path",
+                        "description": "Request body in JSON.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of the transaction",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Transaction succesfully deleted"
+                    },
+                    "400": {
+                        "description": "Transaction not valid"
+                    },
+                    "404": {
+                        "description": "Transaction not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "transaction"
+                ],
+                "summary": "Delete a transaction by id.",
+                "description": "Delete a transaction by id.",
+                "operationId": "deleteTransaction",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of the transaction",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Transaction succesfully deleted."
+                    },
+                    "404": {
+                        "description": "Transaction not found."
+                    }
+                }
+            }
+        },
+        "/transactions/activity/{id}": {
+            "get": {
+                "tags": [
+                    "transaction"
+                ],
+                "summary": "Returns transaction by activity id.",
+                "description": "Returns transactions with a specified activity id.",
+                "operationId": "getByActivity",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of the activity",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Activity not found"
                     }
                 }
             }
@@ -1217,6 +1486,80 @@
                 "owner_id": {
                     "description": "ID of the owner from this storage",
                     "type": "string"
+                }
+            }
+        },
+        "getAllTransaction": {
+            "required": [],
+            "properties": {
+                "from": {
+                    "description": "The timestamp of the lower bound of the requested range.",
+                    "type": "string"
+                },
+                "to": {
+                    "description": "The timestamp of the upper bound of the requested range.",
+                    "type": "string"
+                },
+                "amount": {
+                    "description": "The number of recent transactions to be shown.",
+                    "type": "integer"
+                }
+            }
+        },
+        "getAllTransactionUser": {
+            "required": [],
+            "properties": {
+                "userID": {
+                    "description": "The ID of the user of who the transactions are requested.",
+                    "type": "string"
+                },
+                "from": {
+                    "description": "The timestamp of the lower bound of the requested range.",
+                    "type": "string"
+                },
+                "to": {
+                    "description": "The timestamp of the upper bound of the requested range.",
+                    "type": "string"
+                },
+                "amount": {
+                    "description": "The number of recent transactions to be shown.",
+                    "type": "integer"
+                }
+            }
+        },
+        "inputTransaction": {
+            "required": [
+                "sold_to_id",
+                "authorized_id",
+                "total_price",
+                "activity_id",
+                "comment",
+                "subtransaction"
+            ],
+            "properties": {
+                "sold_to_id": {
+                    "description": "id of the person who bought the product.",
+                    "type": "string"
+                },
+                "authorized_id": {
+                    "description": "id of the person who authorized the transaction.",
+                    "type": "string"
+                },
+                "total_price": {
+                    "description": "Total price of the transaction.",
+                    "type": "int"
+                },
+                "activity_id": {
+                    "description": "The activity on which the transaction is made.",
+                    "type": "string"
+                },
+                "comment": {
+                    "description": "Comment which is set to a transaction.",
+                    "type": "string"
+                },
+                "subtransaction": {
+                    "description": "JSON array containing (multiple) subtransactions.",
+                    "type": "array"
                 }
             }
         }

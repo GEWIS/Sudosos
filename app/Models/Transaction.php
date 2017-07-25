@@ -49,7 +49,7 @@ namespace App\Models;
 
 /**    @SWG\Definition(
  *               definition="inputTransaction",
- *               required={"sold_to_id", "authorized_id", "total_price", "activity_id","comment"},
+ *               required={"sold_to_id", "authorized_id", "total_price", "activity_id","comment", "subtransaction"},
  *      @SWG\Property(
  *             property="sold_to_id",
  *             type="string",
@@ -76,9 +76,9 @@ namespace App\Models;
  *             description="Comment which is set to a transaction."
  *         ),
  *     @SWG\Property(
- *             property="subtransactions",
+ *             property="subtransaction",
  *             type="array",
- *             description="Array containing subtransactions."
+ *             description="JSON array containing (multiple) subtransactions."
  *         ),
  *    )
  */
