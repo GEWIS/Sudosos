@@ -38,7 +38,7 @@ class AddMissingUserFields extends Migration
         });
 
         Schema::table('external_users', function (Blueprint $table) {
-            $table->dropForeign('user_id');
+            $table->dropForeign('external_users_user_id_foreign');
             $table->dropColumn('user_id');
         });
     }

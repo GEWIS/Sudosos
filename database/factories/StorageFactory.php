@@ -4,6 +4,6 @@
 $factory->define(App\Models\Storage::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
-        'owner_id' => factory(App\Models\User::class)->create()->id,
+        'owner_id' => App\Models\GEWIS\Organ::inRandomOrder()->first()->id,
     ];
 });

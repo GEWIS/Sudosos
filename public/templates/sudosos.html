@@ -1,15 +1,12 @@
 <header class="main-header">
     <a href="#" class="logo">
-            <span class="logo-mini">
-                <img src="img/logo.svg" class="sudosos-logo sudosos-logo-mini pull-left">
-            </span>
+        <img src="img/logo.svg" class="sudosos-logo pull-left">
         <span class="logo-lg">
-                <img src="img/logo.svg" class="sudosos-logo pull-left">
-                <span class="sudosos-logo-text"> SudoSOS</span>
-            </span>
+            <span class="sudosos-logo-text"> SudoSOS</span>
+        </span>
     </a>
     <nav class="navbar navbar-static-top" role="navigation">
-        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button" id="toggle-sidebar-button">
+        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button"> <!--id="toggle-sidebar-button"-->
             <span class="sr-only">Toggle navigation</span>
         </a>
         <div class="navbar-custom-menu">
@@ -27,50 +24,62 @@
 </header>
 <aside class="main-sidebar">
     <section class="sidebar">
+        <div class="user-panel-wrapper">
         <div class="user-panel">
-            <div class="pull-left image">
-                <img src="img/user_avatar.svg" class="img-circle user-avatar">
+            <div class="image">
+                <img src="img/user_avatar.svg" class="user-avatar">
             </div>
-            <div class="pull-left info">
+            <div class="info">
                 <p>{{ user.name }}</p>
-                <a href="#">Balance: €{{ user.currentBalance }}</a>
+                <span><a href="#">Balance: €{{ user.currentBalance }}</a></span>
             </div>
         </div>
-        <div class="dropdown select-committee-dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="selectCommitteeDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                {{ currentCommittee.committee }}
-                <span class="pull-right"><i class="fa fa-caret-down"></i></span>
-            </button>
-            <ul class="dropdown-menu" id="selectCommitteeDropDownOptions" aria-labelledby="selectCommitteeDropDown">
-                <li ng-repeat="committee in user.committees">
-                    <a href="" ng-click="currentCommittee.committee = committee">{{ committee}}</a>
-                </li>
-            </ul>
         </div>
+        <!--<div class="dropdown select-committee-dropdown">-->
+            <!--<button class="btn btn-default dropdown-toggle" type="button" id="selectCommitteeDropDown"-->
+                    <!--data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">-->
+                <!--{{ currentCommittee.committee }}-->
+                <!--<span class="pull-right"><i class="fa fa-caret-down"></i></span>-->
+            <!--</button>-->
+            <!--<ul class="dropdown-menu" id="selectCommitteeDropDownOptions" aria-labelledby="selectCommitteeDropDown">-->
+                <!--<li ng-repeat="committee in user.committees">-->
+                    <!--<a href="" ng-click="currentCommittee.committee = committee">{{ committee}}</a>-->
+                <!--</li>-->
+            <!--</ul>-->
+        <!--</div>-->
+        <!--<ul class="sidebar-menu tree" data-widget="tree">-->
 
+        <!--</ul>-->
         <ul class="sidebar-menu tree" data-widget="tree">
-            <li ui-sref="sudosos.home" ui-sref-active="active">
-                <a href="#" >
-                    <i class="fa fa-home" aria-hidden="true"></i>
-                    <span> Home</span>
+            <!-- Committee dropdown -->
+            <li class="treeview">
+                <a href="#">
+                    <span>{{ currentCommittee.committee }}</span>
+                    <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                    </span>
                 </a>
+                <ul class="treeview-menu">
+                    <li ng-repeat="committee in user.committees">
+                        <a href="#" ng-click="currentCommittee.committee = committee"><span>{{ committee}}</span></a>
+                    </li>
+                    <li>
+                        <a href="#"><span>Other...</span></a>
+                    </li>
+                </ul>
             </li>
-            <li ui-sref="sudosos.financial" ui-sref-active="active">
-                <a href="#" >
-                    <i class="fa fa-bank" aria-hidden="true"></i>
-                    <span> Financial</span>
-                </a>
-            </li>
-            <li ui-sref="sudosos.products" ui-sref-active="active">
-                <a href="#" >
-                    <i class="fa fa-th"></i>
-                    <span>Products</span>
-                </a>
-            </li>
+            <li class="header">User Tabs</li>
             <li ui-sref="sudosos.increaseBalance" ui-sref-active="active">
-                <a href="#" >
+                <a href="#">
                     <i class="fa fa-money"></i>
                     <span>Increase Balance</span>
+                </a>
+            </li>
+            <li class="header">Committee Tabs</li>
+            <li ui-sref="sudosos.financial" ui-sref-active="active">
+                <a href="#">
+                    <i class="fa fa-bank" aria-hidden="true"></i>
+                    <span> Financial</span>
                 </a>
             </li>
             <li class="treeview">
@@ -79,17 +88,17 @@
                     <span>Manage</span>
                     <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
-                        </span>
+                    </span>
                 </a>
                 <ul class="treeview-menu">
                     <li>
-                        <a href="#"><i class="fa fa-th"></i> Manage products</a>
+                        <a href="#"><i class="fa fa-th"></i><span>Manage products</span></a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-cubes"></i> Manage storages</a>
+                        <a href="#"><i class="fa fa-cubes"></i><span>Manage storages</span></a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-shopping-basket"></i> Manage POS</a>
+                        <a href="#"><i class="fa fa-shopping-basket"></i><span>Manage POS</span></a>
                     </li>
                 </ul>
             </li>
@@ -97,9 +106,7 @@
     </section>
 </aside>
 <div class="content-wrapper">
-    <div class="padding">
-        <div ui-view="admin-panel-content">
-        </div>
+    <div ui-view="admin-panel-content">
     </div>
 </div>
 <footer class="main-footer">

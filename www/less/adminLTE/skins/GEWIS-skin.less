@@ -1,5 +1,5 @@
 /*
- * Skin: Blue
+ * Skin: GEWIS
  * ----------
  */
 @import "../../bootstrap/mixins.less";
@@ -11,11 +11,11 @@
   //Navbar
   .main-header {
     .navbar {
-      .navbar-variant(@GEWIS-red; #fff);
+      .navbar-variant(@gewis-red; #fff);
       .sidebar-toggle {
         color: #fff;
         &:hover {
-          background-color: darken(@GEWIS-red, 5%);
+          background-color: darken(@gewis-red, 5%);
         }
       }
       @media (max-width: @screen-header-collapse) {
@@ -27,7 +27,7 @@
             a {
               color: #fff;
               &:hover {
-                background: darken(@GEWIS-red, 5%);
+                background: darken(@gewis-red, 5%);
               }
             }
           }
@@ -40,7 +40,7 @@
     }
 
     li.user-header {
-      background-color: @GEWIS-red;
+      background-color: @gewis-red;
     }
   }
 
@@ -50,9 +50,9 @@
   }
 
   //Create the sidebar skin
-  .skin-dark-sidebar(@GEWIS-red);
+  .skin-dark-sidebar(@gewis-red);
 }
 
 .GEWIS-skin.layout-top-nav .main-header > .logo {
-  .logo-variant(@GEWIS-red);
+  .logo-variant(@gewis-red);
 }

@@ -10,7 +10,7 @@
   margin-bottom: @line-height-computed;
   line-height: @line-height-base;
   background-color: @thumbnail-bg;
-  border: 1px solid @thumbnail-border;
+  border: 2px solid @thumbnail-border;
   border-radius: @thumbnail-border-radius;
   .transition(border .2s ease-in-out);
 
@@ -25,7 +25,7 @@
   a&:hover,
   a&:focus,
   a&.active {
-    border-color: @link-color;
+    border-color: blue;
   }
 
   // Image captions
@@ -33,4 +33,13 @@
     padding: @thumbnail-caption-padding;
     color: @thumbnail-caption-color;
   }
+
+  &.thumbnail-gewis {
+    padding: 15px;
+
+    a > &:hover {
+      background: rgba(0.2, 0.2, 0.2, 0.4);
+    }
+  }
+
 }

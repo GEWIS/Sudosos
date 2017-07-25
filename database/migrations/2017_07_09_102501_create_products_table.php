@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Query\Expression;
 
 class CreateProductsTable extends Migration
 {
@@ -15,7 +16,7 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->uuid('id');
-            $table->uuid('owner_id');
+            $table->integer('owner_id');
             $table->string('name');
             $table->unsignedInteger('price');
             $table->binary('image')->nullable();
@@ -24,7 +25,9 @@ class CreateProductsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('owner_id')->references('id')->on('users');
+            $databaseName = DB::connection('mysql_gewisdb')->getDatabaseName();
+
+            $table->foreign('owner_id')->references('id')->on(new Expression($databaseName . '.Organ'));
             $table->primary('id');
         });
     }

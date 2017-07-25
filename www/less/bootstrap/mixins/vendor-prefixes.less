@@ -192,6 +192,11 @@
        -o-transition: @transition;
           transition: @transition;
 }
+.transition(@transition1, @transition2) {
+  -webkit-transition: @transition1, @transition2;
+  -o-transition: @transition1, @transition2;
+  transition: @transition1, @transition2;
+}
 .transition-property(@transition-property) {
   -webkit-transition-property: @transition-property;
           transition-property: @transition-property;

@@ -15,9 +15,9 @@ class GEWISTableSeeder extends Seeder
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         App\Models\GEWIS\Member::truncate();
-        App\Models\GEWIS\Organ::truncate();
         App\Models\GEWIS\OrganMember::truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
 
         App\Models\GEWIS\Member::create([
             'lidnr' => 6494,
@@ -39,6 +39,5 @@ class GEWISTableSeeder extends Seeder
 
         factory(App\Models\GEWIS\Organ::class, 10)->create();
         factory(App\Models\GEWIS\OrganMember::class,3)->create();
-
     }
 }

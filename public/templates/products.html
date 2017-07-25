@@ -1,10 +1,10 @@
-<div class="form-inline">
+<div class="form-inline" style="margin-bottom:15px;">
     <button class="btn btn-success">Add product</button>
-    <button class="btn btn-primary">Edit product</button>
-    <div class="form-group input-group">
-        <div class="input-group-addon"><i class="fa fa-search"></i> </div>
-        <label for="searchBar" class="sr-only">Email</label>
+    <button class="btn btn-info">Edit product</button>
+    <div class="form-group input-group pull-right">
+        <label for="searchBar" class="sr-only">Search</label>
         <input type="text" class="form-control" id="searchBar" placeholder="Search" ng-model="searchTerm">
+        <div class="input-group-addon"><i class="fa fa-search"></i> </div>
     </div>
 </div>
 <div cg-busy="loadingData">

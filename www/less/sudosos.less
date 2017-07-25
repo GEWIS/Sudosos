@@ -1,20 +1,13 @@
-img.sudosos-logo{
-  max-height: 48px;
-  max-width: 48px;
-  padding-bottom: 4px;
-  padding-top: 4px;
+@import "bootstrap/variables";
+@import "adminLTE/variables";
 
-  &.sudosos-logo-mini{
-    margin: 0px 15px;
-  }
-}
-
-.material-icons {
-  font-size:18px;
-}
-
-.full-width {
+/*
+ * Global component styling
+ */
+.wrapper {
   width: 100%;
+  min-height: 100%;
+  position: absolute;
 }
 
 //Start content height fix
@@ -31,44 +24,41 @@ ui-view > header {
 ui-view > .content-wrapper {
   flex: 1 1 auto;
   min-height: initial;
+  padding: 15px;
 }
 
 ui-view > footer {
   flex: 0 1 40px;
 }
+
+//.material-icons {
+//  font-size:18px;
+//}
 //end content height fix
 
-
-img.user-avatar{
-  height: 45px;
-}
-
-.nav>li>a{
-  padding: 15px;
-}
-
-.select-committee-dropdown *:not(span) {
-  width: 100%;
-}
+/*
+ * Sidebar classes
+ */
 body.sidebar-collapse * .select-committee-dropdown{
   display: none;
 }
 
-.wrapper {
-  width: 100%;
-  min-height: 100%;
-  position: absolute;
+body.sidebar-collapse .logo{
+  padding-left:0px;
+  padding-right:0px;
 }
 
-.padding{
-  padding: 8px;
+img.sudosos-logo{
+  height: @navbar-height;
+  width: @navbar-height;
+  padding: 5px;
+
+  &.sudosos-logo-mini{
+    margin: 0px 15px;
+  }
 }
 
-//sidebar specific css
-
-.user-panel, #selectCommitteeDropDown, #selectCommitteeDropDownOptions, #selectCommitteeDropDownOptions a{
-
-
+#selectCommitteeDropDown, #selectCommitteeDropDownOptions, #selectCommitteeDropDownOptions a{
   background-color:@sidebar-dark-submenu-bg;
   border-color:@sidebar-dark-submenu-bg;
   color: @sidebar-dark-submenu-color;
@@ -83,8 +73,21 @@ body.sidebar-collapse * .select-committee-dropdown{
   }
 }
 
-//end sidebar specific css
+.nav>li>a{
+  padding: 15px;
+}
 
+.user-panel-wrapper {
+  width: 100%;
+  overflow: hidden;
+}
+
+/*
+ * Miscellaneous
+ */
+.select-committee-dropdown *:not(span) {
+  width: 100%;
+}
 
 // increase balance specific css
 .dotBetweenInputs{
