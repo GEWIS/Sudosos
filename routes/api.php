@@ -51,7 +51,7 @@ Route::group(['namespace' => 'Api\v1', 'prefix' => 'v1'], function () {
     Route::get('transactions/activity/{id}', 'TransactionController@getByActivity');
     Route::post('transactions', 'TransactionController@createTransaction');
     Route::put('transactions/{id}', 'TransactionController@updateTransaction');
-    Route::delete('transactions/{id}', 'TransactionController@getTransaction');
+    Route::delete('transactions/{id}', 'TransactionController@deleteTransaction');
     Route::get('transactions/user/{id}', 'TransactionController@getTransactionOfUser');
 
     Route::post('transactions/{transaction_id}/subtransactions','SubtransactionController@createSubtransaction');

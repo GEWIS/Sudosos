@@ -67,8 +67,9 @@ class TransactionController extends Controller{
         if(is_null($to)) $to = date("Y-m-d H:i:s"); // default today
 
         // actually perform the request
-        if(!is_null($amount)) $transactions = Transaction::where('created_at', '>', $from)->where('created_at','<=', $to)->take($amount)->get();
-        else $transactions = Transaction::where('created_at', '>', $from)->where('created_at','<=', $to)->get();
+        if(!is_null($amount)) {
+            $transactions = Transaction::with('subtransactions')->where('created_at', '>', $from)->where('created_at', '<=', $to)->take($amount)->get();
+        }else $transactions = Transaction::with('subtransactions')->where('created_at', '>', $from)->where('created_at','<=', $to)->get();
 
         // return the request
         return response()->json($transactions, 200);
@@ -137,8 +138,8 @@ class TransactionController extends Controller{
         if(is_null($to)) $to = date("Y-m-d H:i:s"); // default today
 
         // actually perform the request
-        if(!is_null($amount)) $transactions = Transaction::where('sold_to_id', '=', $id)->where('created_at', '>=', $from)->where('created_at','<=', $to)->take($amount)->get();
-        else $transactions = Transaction::where('sold_to_id', '=', $id)->where('created_at', '>=', $from)->where('created_at','<=', $to)->get();
+        if(!is_null($amount)) $transactions = Transaction::with('subtransactions')->where('sold_to_id', '=', $id)->where('created_at', '>=', $from)->where('created_at','<=', $to)->take($amount)->get();
+        else $transactions = Transaction::with('subtransactions')->where('sold_to_id', '=', $id)->where('created_at', '>=', $from)->where('created_at','<=', $to)->get();
 
         // return the request
         return response()->json($transactions, 200);
@@ -171,7 +172,7 @@ class TransactionController extends Controller{
      * ),
      */
     public function getTransaction($id){
-        $transaction = Transaction::find($id);
+        $transaction = Transaction::with('subtransactions')->find($id);
 
         if ($transaction) {
             return response()->json($transaction, 200);
@@ -206,7 +207,7 @@ class TransactionController extends Controller{
      * ),
      */
     public function getByActivity($id){
-        $transaction = Transaction::where('activity_id', '=', $id)->get();
+        $transaction = Transaction::with('subtransactions')->where('activity_id', '=', $id)->get();
 
         if ($transaction) {
             return response()->json($transaction, 200);
@@ -258,55 +259,55 @@ class TransactionController extends Controller{
         }
     }
     
-    /**
-     * @SWG\Put(
-     *     path ="/transactions/{id}",
-     *     summary = "Updates a transaction by id.",
-     *     tags = {"transaction"},
-     *     description = "Updates the transaction.",
-     *     operationId = "updateTransaction",
-     *     produces = {"application/json"},
-     *     @SWG\Parameter(
-     *         name="request",
-     *         in="path",
-     *         description="Request body in JSON.",
-     *         required=true,
-     *         type="string",
-     *     ),
-     *     @SWG\Parameter(
-     *         name="id",
-     *         in="path",
-     *         description="Id of the transaction",
-     *         required=true,
-     *         type="string",
-     *     ),
-     *     @SWG\Response(
-     *         response=201,
-     *         description="Transaction succesfully deleted",
-     *     ),
-     *     @SWG\Response(
-     *         response=400,
-     *         description="Transaction not valid",
-     *     ),
-     *     @SWG\Response(
-     *         response=404,
-     *         description="Transaction not found",
-     *     ),
-     * ),
-     */
-    public function updateTransaction(Request $request, $id){
-        $transaction = Transaction::find($id);
-
-        if ($transaction) {
-            $transaction->update($request->all());
-            if($transaction->isValid()){
-                return response()->json("Transaction succesfully updated", 200);
-            }else{
-                return $this->response(400, "Transaction invalid",$transaction->getErrors());
-            }
-        } else {
-            return $this->response(404,"Transaction not found");
-        }
+//    /**
+//     * @SWG\Put(
+//     *     path ="/transactions/{id}",
+//     *     summary = "Updates a transaction by id.",
+//     *     tags = {"transaction"},
+//     *     description = "Updates the transaction.",
+//     *     operationId = "updateTransaction",
+//     *     produces = {"application/json"},
+//     *     @SWG\Parameter(
+//     *         name="request",
+//     *         in="path",
+//     *         description="Request body in JSON.",
+//     *         required=true,
+//     *         type="string",
+//     *     ),
+//     *     @SWG\Parameter(
+//     *         name="id",
+//     *         in="path",
+//     *         description="Id of the transaction",
+//     *         required=true,
+//     *         type="string",
+//     *     ),
+//     *     @SWG\Response(
+//     *         response=201,
+//     *         description="Transaction succesfully deleted",
+//     *     ),
+//     *     @SWG\Response(
+//     *         response=400,
+//     *         description="Transaction not valid",
+//     *     ),
+//     *     @SWG\Response(
+//     *         response=404,
+//     *         description="Transaction not found",
+//     *     ),
+//     * ),
+//     */
+//    public function updateTransaction(Request $request, $id){
+//        $transaction = Transaction::find($id);
+//
+//        if ($transaction) {
+//            $transaction->update($request->all());
+//            if($transaction->isValid()){
+//                return response()->json("Transaction succesfully updated", 200);
+//            }else{
+//                return $this->response(400, "Transaction invalid",$transaction->getErrors());
+//            }
+//        } else {
+//            return $this->response(404,"Transaction not found");
+//        }
 
     }
     /**
@@ -336,10 +337,15 @@ class TransactionController extends Controller{
      */
     public function deleteTransaction($id){
         $transaction = Transaction::find($id);
-        $subtransaction = Subtransaction::where('transaction_id', '=', $id);
-        if ($transaction and $subtransaction) {
+        $subtransaction = Subtransaction::where('transaction_id', $id)->get();
+        if ($transaction) {
+            for($i = 0; $i < sizeof($subtransaction);$i++){
+                if(!$subtransaction[$i]){
+                    return $this->response(404,"SubTransaction not found");
+                }
+                $subtransaction[$i]->delete();
+            }
             $transaction->delete();
-            $subtransaction->delete();
             return response()->json("Transaction succesfully deleted", 200);
         } else {
             return $this->response(404,"Transaction not found");

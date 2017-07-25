@@ -44,6 +44,11 @@ namespace App\Models;
  *             type="integer",
  *             description="The number of recent transactions to be shown."
  *         ),
+ *      @SWG\Property(
+ *             property="subtransaction",
+ *             type="array",
+ *             description="JSON array containing (multiple) subtransactions."
+ *         ),
  *    )
  */
 
@@ -106,6 +111,6 @@ class Transaction extends BaseModel
 
     // Relations
     public function subtransactions(){
-        return $this->belongsToMany('App\Models\Subtransaction');
+        return $this->hasMany('App\Models\Subtransaction');
     }
 }
