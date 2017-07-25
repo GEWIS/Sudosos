@@ -1,8 +1,10 @@
 @import "bootstrap/variables";
+@import "adminLTE/variables";
 
 
 body {
-  background: @gewis-light-gray;
+  //background: @gewis-light-gray;
+  background: @sidebar-dark-bg;
 }
 
 .bg-red {
@@ -45,9 +47,12 @@ body {
 
   span {
     /* to hide the lines from behind the text, you have to set the background color the same as the container */
-    font-size: 16px;
+    font-size: @font-size-base;
     background: #fff;
     padding: 0 15px;
+    margin: 0px auto;
+    display: block;
+    width:85%;
   }
 }
 /*

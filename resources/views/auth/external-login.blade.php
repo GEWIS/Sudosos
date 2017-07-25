@@ -1,3 +1,4 @@
+{{--Deprecated--}}
 @extends('master')
 @section('page-content')
     <div class="container">
