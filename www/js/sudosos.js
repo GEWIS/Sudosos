@@ -1,5 +1,5 @@
 angular.module('sudosos', ['sudosos.controllers', 'sudosos.filters', 'sudosos.services', 'sudosos.directives',
-    'ui.router', 'ui.bootstrap', 'cgBusy', 'tableSort'])
+    'ui.router', 'ui.bootstrap', 'cgBusy', 'tableSort', 'ngDraggable'])
     .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
         $stateProvider.state('sudosos', {
             url: '/sudosos',

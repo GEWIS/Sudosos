@@ -109,3 +109,45 @@ tr:hover{
   margin-bottom: 8px;
 }
 
+// The div that contains all items/storages/POS
+.items-div{
+  border: @gewis-light-gray 2px solid;
+  width: 100%;
+  background-color: darken(@body-bg, 2%);
+}
+
+// The style for an item in an items-div
+.item-div{
+  border: @gewis-light-gray 1px solid;
+  background-color: darken(@body-bg, 3%);
+  margin: 4px;
+  padding: 4px;
+}
+
+//The div that contains the products in a storage
+.products-div{
+  border: @gewis-light-gray 1px solid;
+  background-color: @body-bg;
+  height: 100px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding: 4px;
+}
+
+//Hide the scrollbar of the .products-div, but keep scrolling enabled
+.products-div::-webkit-scrollbar{
+  display: none;
+}
+
+// The number input for the amount of products that should be transferred
+#amountSelector{
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+// The label for #amountSelector
+#amountSelectorLabel{
+  text-align: center;
+  width: 100%;
+}
+

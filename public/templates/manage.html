@@ -1,5 +1,53 @@
-<div class="hidden-xs">
+<div class="hidden-xs manage-panel-container">
     <div class="row">
+        <div cg-busy="loadingProducts" class="col-lg-3 col-md-3 col-sm-3 col-lg-offset-1 col-md-offset-1 col-sm-offset-1">
+            <h2 align="center">Products</h2>
+            <div class="items-div">
+                <div class="item-div" ng-repeat="product in products" ng-drag="true" ng-drag-data="product">
+                    <h4>{{ product.name }}</h4>
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4 col-lg-4">
+                            <img src="{{ product.image }}">
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-lg-8">
+                            <h6>Price: {{ product.price }}</h6>
+                            <p>Tray size: {{ product.tray_size }}</p>
+                            <p>Amount: {{ product.amount }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div cg-busy="loadingStorages" class="col-lg-3 col-md-3 col-sm-3 col-lg-offset-1 col-md-offset-1 col-sm-offset-1">
+            <h2 align="center">Storages</h2>
+            <div class="items-div">
+                <div class="item-div" ng-repeat="storage in storages" ng-drag="true" ng-drag-data="storage">
+                    <h4>{{ storage.name }}</h4>
+                    <p>Products: </p>
+                    <div class="products-div" ng-drop="true"
+                         ng-drop-success="dropProduct($data, $event)">
+                        <p ng-repeat="item in storage.items">
+                            {{ item.amount }} {{ item.name }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div cg-busy="loadingPOS" class="col-lg-3 col-md-3 col-sm-3 col-lg-offset-1 col-md-offset-1 col-sm-offset-1">
+            <h2 align="center">Points Of Sale</h2>
+            <div class="items-div">
+                <div class="item-div" ng-repeat="pointOfSale in pointsOfSale">
+                    <h4>{{ pointOfSale.name }}</h4>
+                    <p>Storages: </p>
+                    <div class="products-div" ng-drop="true"
+                         ng-drop-success="dropStorage($data, $event)">
+                        <p ng-repeat="storage in pointOfSale.storages">
+                            {{ storage.name }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <div class="visible-xs">
