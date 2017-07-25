@@ -31,7 +31,7 @@ class User extends BaseModel implements Authenticatable
     ];
 
     protected $rules = [
-        "user_code"     => "required|min:4|max:6",
+        "user_code"     => "required|min:4|max:6|unique",
         "pincode"    => "string|max:336",
         "card_id" => "string|max:336",
         "balance"    => "integer",
@@ -77,6 +77,10 @@ class User extends BaseModel implements Authenticatable
 
     public function pointsOfSale(){
         return $this->hasMany('App\Models\PointOfSale','owner_id');
+    }
+
+    public function additionalUserRoles(){
+        return $this->hasMany('App\Models\UserRole');
     }
 
     public function getFirstNameAttribute()
@@ -130,6 +134,22 @@ class User extends BaseModel implements Authenticatable
         }
         return $organRoles;
     }
+
+    public function roles()
+    {
+        return $this->belongsToMany('App\Models\RBAC\Role', 'user_role');
+    }
+
+    public function hasPermission($permission, $organId){
+        $organRoles = $this->roles->where('organ_id', '=', $organId);
+        forEach($organRoles as $role){
+            if($role->hasPermission($permission)){
+                 return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Get the name of the unique identifier for the user.
      *

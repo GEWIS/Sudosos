@@ -34,15 +34,15 @@ class CreateForeignkeysTransactionsSubtransactions extends Migration
     public function down()
     {
         Schema::table('transactions', function($table) {
-            $table->dropForeign('sold_to_id');
-            $table->dropForeign('authorized_id');
+            $table->dropForeign('transactions_sold_to_id_foreign');
+            $table->dropForeign('transactions_authorized_id_foreign');
 //            $table->dropForeign('activity_id');
         });
 
         Schema::table('subtransactions', function($table) {
-            $table->dropForeign('transaction_id');
-            $table->dropForeign('product_id');
-            $table->dropForeign('storage_id');
+            $table->dropForeign('subtransactions_transaction_id_foreign');
+            $table->dropForeign('subtransactions_product_id_foreign');
+            $table->dropForeign('subtransactions_storage_id_foreign');
         });
     }
 }

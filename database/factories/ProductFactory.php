@@ -4,7 +4,7 @@
 $factory->define(App\Models\Product::class, function (Faker\Generator $faker) use ($factory) {
     return [
         'name' => $faker->name,
-        'owner_id' => factory(App\Models\User::class)->create()->id,
+        'owner_id' => App\Models\GEWIS\Organ::inRandomOrder()->first()->id,
         'price' => $faker->numberBetween($min = 1, $max = 2000),
         'image' => $faker->image(),
         'tray_size' => $faker->numberBetween($min = 1, $max = 24),
