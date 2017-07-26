@@ -55,7 +55,7 @@ Route::group(['middleware'=> 'auth', 'namespace' => 'Api\v1', 'prefix' => 'v1'],
     Route::delete('transactions/{id}', 'TransactionController@getTransaction');
     Route::get('transactions/user/{id}', 'TransactionController@getTransactionOfUser');
 
-    Route::get('roles', 'RBACController@getRoles');
+    Route::get('roles/owner/{owner_id}', 'RBACController@getRoles');
     Route::get('roles/{id}', 'RBACController@getRole');
     Route::post('roles', 'RBACController@createRole');
     Route::put('roles/{id}', 'RBACController@updateRole');

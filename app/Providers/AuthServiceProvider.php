@@ -8,14 +8,17 @@ use App\Extensions\PincodeUserProvider;
 use App\Models\Product;
 use App\Models\Storage;
 use App\Models\PointOfSale;
-
 use App\Models\Transaction;
+use App\Models\RBAC\Role;
+use App\Models\RBAC\Permission;
+
 use App\Policies\ProductPolicy;
+use App\Policies\RolePolicy;
 use App\Policies\StoragePolicy;
 use App\Policies\PointOfSalePolicy;
-
 use App\Policies\TransactionPolicy;
 use Carbon\Carbon;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Laravel\Passport\Passport;
@@ -32,6 +35,8 @@ class AuthServiceProvider extends ServiceProvider
         Storage::class => StoragePolicy::class,
         PointOfSale::class => PointOfSalePolicy::class,
         Transaction::class => TransactionPolicy::class,
+        Role::class => RolePolicy::class,
+        Permission::class => PermissionPolicy::class,
         ];
 
     /**
