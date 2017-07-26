@@ -38,15 +38,15 @@ angular.module('sudosos', ['sudosos.controllers', 'sudosos.filters', 'sudosos.se
             })
 
             .state('sudosos.increaseBalance', {
-                url: '/increasebalance',
-                views: {
-                    'admin-panel-content': {
-                        templateUrl: 'templates/increaseBalance.html',
-                        controller: 'IncreaseBalanceCtrl'
+                    url: '/increasebalance',
+                    views: {
+                        'admin-panel-content': {
+                            templateUrl: 'templates/increaseBalance.html',
+                            controller: 'IncreaseBalanceCtrl'
+                        }
                     }
                 }
-            });
-        ;
+            );
         $urlRouterProvider.otherwise('/sudosos/products');
     }])
     .value("rootUrl", "http://sudosos.dev")
