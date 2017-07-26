@@ -17,8 +17,8 @@ class StorageController extends Controller
      * @SWG\Get(
      *     path ="/storages/owner/{owner_id}",
      *     summary = "Returns all storages for an organ.",
-     *     tags = {"storage"},
      *     description = "Returns all storages for an organ.",
+     *     tags = {"Storage"},
      *     operationId = "getAllStorages",
      *     produces = {"application/json"},
      *      @SWG\Parameter(
@@ -57,7 +57,7 @@ class StorageController extends Controller
      * @SWG\Post(
      *     path ="/storages",
      *     summary = "Create a new storage.",
-     *     tags = {"storage"},
+     *     tags = {"Storage"},
      *     description = "Create a new storage.",
      *     operationId = "createStorage",
      *     produces = {"application/json"},
@@ -101,7 +101,7 @@ class StorageController extends Controller
      * @SWG\Get(
      *     path ="/storages/{id}",
      *     summary = "Returns storage by id.",
-     *     tags = {"storage"},
+     *     tags = {"Storage"},
      *     description = "Returns a storage with a specified id.",
      *     operationId = "getStorage",
      *     produces = {"application/json"},
@@ -139,7 +139,7 @@ class StorageController extends Controller
      * @SWG\Put(
      *     path ="/storages/{id}",
      *     summary = "Updates a storage by id.",
-     *     tags = {"storage"},
+     *     tags = {"Storage"},
      *     description = "Updates the storage.",
      *     operationId = "updateStorage",
      *     produces = {"application/json"},
@@ -197,7 +197,7 @@ class StorageController extends Controller
      *     description="Delete a storage by id.",
      *     operationId="deleteStorage",
      *     produces={"application/json"},
-     *     tags={"storage"},
+     *     tags={"Storage"},
      *     @SWG\Parameter(
      *         name="id",
      *         in="path",
@@ -233,7 +233,7 @@ class StorageController extends Controller
      * @SWG\Put(
      *     path ="/storages/{id}/reinstate",
      *     summary = "Reinstate a storage by id.",
-     *     tags = {"storage"},
+     *     tags = {"Storage"},
      *     description = "Reinstate a storage by id.",
      *     operationId = "reinstateStorage",
      *     produces = {"application/json"},
@@ -280,7 +280,7 @@ class StorageController extends Controller
      * @SWG\Get(
      *     path ="/storages/{id}/{property}",
      *     summary = "Returns a property of a storage by id.",
-     *     tags = {"storage"},
+     *     tags = {"Storage"},
      *     description = "Returns a property of a storage by id.",
      *     operationId = "getStorageProperty",
      *     produces = {"application/json"},
@@ -328,7 +328,7 @@ class StorageController extends Controller
      * @SWG\Put(
      *     path ="/storages/{id}/{property}",
      *     summary = "Update a property of a storage by id.",
-     *     tags = {"storage"},
+     *     tags = {"Storage"},
      *     description = "Update a property of a storage by id.",
      *     operationId = "getStorageProperty",
      *     produces = {"application/json"},
@@ -392,7 +392,7 @@ class StorageController extends Controller
      * @SWG\Get(
      *     path ="/storages/{id}/stores",
      *     summary = "Returns all products in a storage by id.",
-     *     tags = {"storage"},
+     *     tags = {"Storage"},
      *     description = "Returns all products in a storage by id.",
      *     operationId = "getStorageProducts",
      *     produces = {"application/json"},
@@ -429,7 +429,7 @@ class StorageController extends Controller
      * @SWG\Get(
      *     path ="/storages/{storage_id}/stock/{product_id}",
      *     summary = "Returns stock of a product in a storage by id.",
-     *     tags = {"storage"},
+     *     tags = {"Storage"},
      *     description = "Returns stock of a product in a storage by id.",
      *     operationId = "getStorageStockOfProducts",
      *     produces = {"application/json"},
@@ -484,7 +484,7 @@ class StorageController extends Controller
      * @SWG\Put(
      *     path ="/storages/{storage_id}/stock/{product_id}",
      *     summary = "Sets the stock of a product in a storage by id.",
-     *     tags = {"storage"},
+     *     tags = {"Storage"},
      *     description = "Sets the stock of a product in a storage by id.",
      *     operationId = "putStorageStockOfProducts",
      *     produces = {"application/json"},
@@ -544,7 +544,7 @@ class StorageController extends Controller
      * @SWG\Post(
      *     path ="/storages/{storage_id}/stores/{product_id}",
      *     summary = "Stores a product in a storage by id.",
-     *     tags = {"storage"},
+     *     tags = {"Storage"},
      *     description = "Stores a product in a storage by id.",
      *     operationId = "putStorageStockOfProducts",
      *     produces = {"application/json"},
@@ -612,7 +612,7 @@ class StorageController extends Controller
      * @SWG\Delete(
      *     path ="/storages/{storage_id}/stores/{product_id}",
      *     summary = "Deletes a product in a storage by id.",
-     *     tags = {"storage"},
+     *     tags = {"Storage"},
      *     description = "Deletes a product in a storage by id.",
      *     operationId = "deleteStorageProduct",
      *     produces = {"application/json"},

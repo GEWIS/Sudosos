@@ -37,6 +37,24 @@ class GEWISTableSeeder extends Seeder
             'iban' => 'NL58RABO0106414704',
         ]);
 
+        App\Models\GEWIS\Member::create([
+            'lidnr' => 7088,
+            'email' => 'l.leroy.visser@gmail.com',
+            'lastName' => 'Visser',
+            'middleName' => '',
+            'initials' => 'L.',
+            'firstName' => 'Leroy',
+            'gender' => 'M',
+            'generation' => 2011,
+            'type' => 'lid',
+            'changedOn' => '2017-07-18',
+            'birth' => '2017-03-04',
+            'expiration' => '2019-07-18',
+            'paid' => 1,
+            'supremum' => 'test',
+            'iban' => 'NL58RABO0106414704',
+        ]);
+
         factory(App\Models\GEWIS\Organ::class, 10)->create();
         factory(App\Models\GEWIS\OrganMember::class,3)->create();
     }

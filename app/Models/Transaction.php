@@ -44,12 +44,18 @@ namespace App\Models;
  *             type="integer",
  *             description="The number of recent transactions to be shown."
  *         ),
+ *     @SWG\Property(
+ *             property="subtransaction",
+ *             type="array",
+ *             items = @SWG\Schema(ref="#/definitions/inputSubtransaction"),
+ *             description="JSON array containing (multiple) subtransactions.",
+ *         ),
  *    )
  */
 
 /**    @SWG\Definition(
  *               definition="inputTransaction",
- *               required={"sold_to_id", "authorized_id", "total_price", "activity_id","comment"},
+ *               required={"sold_to_id", "authorized_id", "total_price", "activity_id","comment", "subtransaction"},
  *      @SWG\Property(
  *             property="sold_to_id",
  *             type="string",
@@ -62,7 +68,7 @@ namespace App\Models;
  *         ),
  *      @SWG\Property(
  *             property="total_price",
- *             type="int",
+ *             type="integer",
  *             description="Total price of the transaction."
  *         ),
  *      @SWG\Property(
@@ -74,6 +80,13 @@ namespace App\Models;
  *             property="comment",
  *             type="string",
  *             description="Comment which is set to a transaction."
+ *         ),
+ *     @SWG\Property(
+ *             property="subtransaction",
+ *             type="array",
+ *             items = @SWG\Schema(ref="#/definitions/inputSubtransaction"),
+ *             description="JSON array containing (multiple) subtransactions.",
+ *
  *         ),
  *    )
  */
@@ -95,12 +108,12 @@ class Transaction extends BaseModel
         "sold_to_id" => "required|exists:users,id",
         "authorized_id" => "required|exists:users,id",
         "total_price" => "required|integer|min:0|max:9999999999",
-        "activity_id" => "exists:activities",
+     //   "activity_id" => "exists:activities",
         "comment" => "required|string",
     ];
 
     // Relations
     public function subtransactions(){
-        return $this->belongsToMany('App\Models\Subtransaction');
+        return $this->hasMany('App\Models\Subtransaction');
     }
 }

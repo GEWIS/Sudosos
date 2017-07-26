@@ -2,6 +2,31 @@
 
 namespace App\Models;
 
+/**    @SWG\Definition(
+ *               definition="inputSubtransaction",
+ *               required={"product_id", "storage_id", "amount","price_per_product"},
+ *      @SWG\Property(
+ *             property="product_id",
+ *             type="string",
+ *             description="id of the product."
+ *         ),
+ *      @SWG\Property(
+ *             property="storage_id",
+ *             type="string",
+ *             description="id of the storage."
+ *         ),
+ *      @SWG\Property(
+ *             property="amount",
+ *             type="integer",
+ *             description="The amount of products bought."
+ *         ),
+ *     @SWG\Property(
+ *             property="price_per_product",
+ *             type="integer",
+ *             description="The price of a single product."
+ *         ),
+ *    )
+ */
 class Subtransaction extends BaseModel
 {
     protected $fillable = [

@@ -26,9 +26,13 @@
     <!--<link href="css/all.css" rel="stylesheet" type="text/css">-->
 
     <!--Import angular stuff, this should be replaced by a webpack script in production -->
-    <script src="js/angular.min.js"></script>
-    <script src="js/angular-ui-router.min.js"></script>
-    <script src="js/angular-busy.min.js"></script>
+    <script src="js/lib/angular.min.js"></script>
+    <script src="js/lib/angular-ui-router.min.js"></script>
+    <script src="js/lib/angular-busy.min.js"></script>
+
+    <script src="js/lib/ui-bootstrap-custom-tpls-2.5.0.min.js"></script>
+    <script src="js/angular-tablesort.min.js"></script>
+    <script src="js/ngDraggable.min.js"></script>
 
     <!-- Import JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -38,7 +42,7 @@
 
     <!-- Import AdminLTE js -->
     <script src="js/adminLTE/adminlte.min.js"></script>
-    <script src="js/jquery.slimscroll.min.js"></script>
+    <script src="js/lib/jquery.slimscroll.min.js"></script>
 
     <!-- The sidebar script -->
     <!--<script src="js/sidebar.min.js"></script>-->
@@ -48,12 +52,13 @@
     <script src="js/angular/controllers.min.js"></script>
     <script src="js/angular/services.min.js"></script>
     <script src="js/angular/filters.min.js"></script>
+    <script src="js/angular/directives.min.js"></script>
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body ng-app="sudosos" class="GEWIS-skin sidebar-mini">
 <div class="wrapper" style="height: 100%; min-height: 100%">
-    <ui-view class="main-ui-view">
+    <ui-view clvass="main-ui-view">
 
     </ui-view>
 </div>

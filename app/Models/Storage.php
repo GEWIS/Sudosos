@@ -50,7 +50,7 @@ namespace App\Models;
  *         ),
  *      @SWG\Property(
  *             property="owner_id",
- *             type="string",
+ *             type="integer",
  *             description="ID of the owner from this storage"
  *         ),
  *    )

@@ -51,11 +51,11 @@ Route::group(['middleware'=> 'auth', 'namespace' => 'Api\v1', 'prefix' => 'v1'],
     Route::get('transactions/{id}', 'TransactionController@getTransaction');
     Route::get('transactions/activity/{id}', 'TransactionController@getByActivity');
     Route::post('transactions', 'TransactionController@createTransaction');
-    Route::put('transactions/{id}', 'TransactionController@updateTransaction');
-    Route::delete('transactions/{id}', 'TransactionController@getTransaction');
+    Route::delete('transactions/{id}', 'TransactionController@deleteTransaction');
     Route::get('transactions/user/{id}', 'TransactionController@getTransactionOfUser');
+    Route::post('transactions/{transaction_id}/subtransactions','SubtransactionController@createSubtransaction');
 
-    Route::get('roles/owner/{owner_id}', 'RBACController@getRoles');
+    Route::get('roles', 'RBACController@getRoles');
     Route::get('roles/{id}', 'RBACController@getRole');
     Route::post('roles', 'RBACController@createRole');
     Route::put('roles/{id}', 'RBACController@updateRole');
@@ -65,6 +65,7 @@ Route::group(['middleware'=> 'auth', 'namespace' => 'Api\v1', 'prefix' => 'v1'],
     Route::post('roles/{role_id}/assign/{user_id}', 'RBACController@addRoleToUser');
     Route::delete('roles/{role_id}/remove/{user_id}', 'RBACController@removeRoleFromUser');
 
+    Route::get('roles/owner/{owner_id}', 'RBACController@getRoles');
     Route::get('permissions','RBACController@getPermissions');
     Route::post('permissions/{permission_id}/assign/{role_id}', 'RBACController@addPermissionToRole');
     Route::delete('permissions/{permission_id}/remove/{role_id}','RBACController@removePermissionFromRole');

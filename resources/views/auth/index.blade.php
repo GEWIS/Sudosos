@@ -96,7 +96,7 @@
                                         <div class="col-xs-6 text-right">
                                             <a class="btn btn-link"
                                                style="padding:0px; white-space:pre-line; text-align:right;"
-                                               href="/todo">Request External
+                                               href="{{ action('Auth\RegisterController@showRegister') }}">Request External
                                                 Account</a>
                                         </div>
                                     </div>
