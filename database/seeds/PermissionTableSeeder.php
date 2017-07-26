@@ -12,7 +12,7 @@ class PermissionTableSeeder extends Seeder
      */
     public function run()
     {
-        $models = ['products', 'storages','pointsOfSale'];
+        $models = ['products', 'storages','pointsOfSale','roles','permissions'];
         $functions = ['view', 'create', 'update', 'delete'];
 
         forEach($models as $model){
