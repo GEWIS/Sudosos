@@ -170,6 +170,8 @@ GitHub.sublime-settings
 /public/css/*
 !/public/css/angular-busy.min.css
 
-/public/js/*
-!/public/js/lib/*
-!/public/js/app.js
+!public/js/
+
+public/js/*
+!public/js/lib/
+!public/js/app.js
