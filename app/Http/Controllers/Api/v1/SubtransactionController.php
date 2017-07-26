@@ -16,7 +16,7 @@ class SubtransactionController extends Controller{
      * @SWG\Post(
      *     path ="/transactions/{transaction_id}/subtransactions",
      *     summary = "Create a new subtransaction.",
-     *     tags = {"transaction"},
+     *     tags = {"Transaction"},
      *     description = "Create a new subtransaction.",
      *     operationId = "createSubtransaction",
      *     produces = {"application/json"},
@@ -55,7 +55,7 @@ class SubtransactionController extends Controller{
      * @SWG\Get(
      *     path ="/transactions/{transaction_id}/subtransactions/{subtransaction_id}",
      *     summary = "Returns subtransaction by subtransaction id.",
-     *     tags = {"transaction"},
+     *     tags = {"Transaction"},
      *     description = "Returns subtransactions with a specified subtransaction_id.",
      *     operationId = "getSubtransaction",
      *     produces = {"application/json"},
@@ -103,7 +103,7 @@ class SubtransactionController extends Controller{
      * @SWG\Delete(
      *     path ="/transactions/{transaction_id}/subtransactions/{subtransaction_id}",
      *     summary = "Deletes subtransaction by subtransaction id.",
-     *     tags = {"transaction"},
+     *     tags = {"Transaction"},
      *     description = "Deletes subtransactions with a specified subtransaction_id.",
      *     operationId = "deleteSubtransaction",
      *     produces = {"application/json"},

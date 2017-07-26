@@ -55,7 +55,6 @@ Route::group(['middleware'=> 'auth', 'namespace' => 'Api\v1', 'prefix' => 'v1'],
     Route::get('transactions/user/{id}', 'TransactionController@getTransactionOfUser');
 
     Route::post('transactions/{transaction_id}/subtransactions','SubtransactionController@createSubtransaction');
-});
 
     Route::get('roles', 'RBACController@getRoles');
     Route::get('roles/{id}', 'RBACController@getRole');

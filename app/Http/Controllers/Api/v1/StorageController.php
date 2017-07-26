@@ -159,7 +159,7 @@ class StorageController extends Controller{
      *     description="Delete a storage by id.",
      *     operationId="deleteStorage",
      *     produces={"application/json"},
-     *     tags={"storage"},
+     *     tags={"Storage"},
      *     @SWG\Parameter(
      *         name="id",
      *         in="path",

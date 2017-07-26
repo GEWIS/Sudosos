@@ -245,7 +245,7 @@ class TransactionController extends Controller{
      *     description="Delete a transaction by id.",
      *     operationId="deleteTransaction",
      *     produces={"application/json"},
-     *     tags={"transaction"},
+     *     tags={"Transaction"},
      *     @SWG\Parameter(
      *         name="id",
      *         in="path",
