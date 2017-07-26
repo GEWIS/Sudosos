@@ -20,7 +20,7 @@ class ProductController extends Controller{
 
      *     @SWG\Response(
      *         response=200,
-     *         description="successful operation",
+     *         description="Successful operation",
      *     ),
      * ),
      */
@@ -46,7 +46,7 @@ class ProductController extends Controller{
      *         ),
      *     @SWG\Response(
      *         response=201,
-     *         description="successful operation",
+     *         description="Successful operation",
      *     ),
      *     @SWG\Response(
      *         response=400,
@@ -76,13 +76,13 @@ class ProductController extends Controller{
      *     @SWG\Parameter(
      *         name="id",
      *         in="path",
-     *         description="id of the product",
+     *         description="Id of the product",
      *         required=true,
      *         type="string",
      *     ),
      *     @SWG\Response(
      *         response=200,
-     *         description="successful operation",
+     *         description="Successful operation",
      *     ),
      *     @SWG\Response(
      *         response=404,

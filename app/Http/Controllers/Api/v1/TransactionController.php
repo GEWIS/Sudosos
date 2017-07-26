@@ -16,7 +16,7 @@ class TransactionController extends Controller{
      * @SWG\Get(
      *     path ="/transactions",
      *     summary = "Returns all transactions.",
-     *     tags = {"transaction"},
+     *     tags = {"Transaction"},
      *     description = "Returns all transactions, either within a certain range with the from and to parameter, or a certain number.",
      *     operationId = "getAllTransactions",
      *     produces = {"application/json"},
@@ -65,7 +65,7 @@ class TransactionController extends Controller{
      * @SWG\Get(
      *     path ="/transactions/user",
      *     summary = "Returns all transactions of a single user.",
-     *     tags = {"transaction"},
+     *     tags = {"Transaction"},
      *     description = "Returns all transactions of a single user, either within a certain range with the from and to parameter, or a certain number.",
      *     operationId = "getAllTransactionsOfUser",
      *     produces = {"application/json"},
@@ -129,7 +129,7 @@ class TransactionController extends Controller{
      * @SWG\Get(
      *     path ="/transactions/{id}",
      *     summary = "Returns transaction by id.",
-     *     tags = {"transaction"},
+     *     tags = {"Transaction"},
      *     description = "Returns a transaction with a specified id.",
      *     operationId = "getTransaction",
      *     produces = {"application/json"},
@@ -164,7 +164,7 @@ class TransactionController extends Controller{
      * @SWG\Get(
      *     path ="/transactions/activity/{id}",
      *     summary = "Returns transaction by activity id.",
-     *     tags = {"transaction"},
+     *     tags = {"Transaction"},
      *     description = "Returns transactions with a specified activity id.",
      *     operationId = "getByActivity",
      *     produces = {"application/json"},
@@ -199,7 +199,7 @@ class TransactionController extends Controller{
      * @SWG\Post(
      *     path ="/transactions",
      *     summary = "Create a new transaction.",
-     *     tags = {"transaction"},
+     *     tags = {"Transaction"},
      *     description = "Create a new transaction.",
      *     operationId = "createTransaction",
      *     produces = {"application/json"},
