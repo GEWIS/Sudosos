@@ -46,6 +46,16 @@ angular.module('sudosos', ['sudosos.controllers', 'sudosos.filters', 'sudosos.se
                         }
                     }
                 }
+            )
+            .state('sudosos.manageRoles', {
+                    url: '/manageRoles',
+                    views: {
+                        'admin-panel-content': {
+                            templateUrl: 'templates/manageRoles.html',
+                            controller: 'ManageRolesCtrl'
+                        }
+                    }
+                }
             );
         $urlRouterProvider.otherwise('/sudosos/products');
     }])
