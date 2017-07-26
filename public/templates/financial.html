@@ -1,1 +1,68 @@
-Kaas
+<!-- The form for adding, editing and sorting transactions -->
+<div class="form-inline edit-filter-bar">
+    <button class="btn btn-success">Add transaction</button>
+    <div class="form-group input-group">
+        <label for="searchBar" class="sr-only">Email</label>
+        <input type="text" class="form-control" id="searchBar" placeholder="Search" ng-model="searchTerm">
+        <div class="input-group-addon"><i class="fa fa-search"></i> </div>
+    </div>
+    <div class="form-group">
+        <div class="input-group">
+            <input type="text" class="form-control pull-right" id="reservationtime">
+            <div class="input-group-addon">
+                <i class="fa fa-clock-o"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div cg-busy="loadingData">
+    <table class="table" ts-wrapper>
+        <thead>
+        <tr>
+            <th ts-criteria="id | lowercase " ts-default>ID</th>
+            <th ts-criteria="# | lowercase">Sold to</th>
+            <th ts-criteria="# | lowercase">Authorized by</th>
+            <th ts-criteria="# | parseInt">Total price</th>
+            <th ts-criteria="# | lowercase">Tag</th>
+            <th ts-criteria="# | lowercase">Comments</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="transaction in transactions | filter:filterTransactions"
+            ng-class="{'selected': $index == selectedIndex}" ng-click="selectItem($index)" ts-repeat>
+            <td>
+                <span ng-hide=".editing" ng-dblclick="startEditing(transaction)">
+                    {{ transaction.id }}
+                </span>
+                <input ng-show="transaction.editing" type="text" ng-model="transaction.name" ng-blur="stopEditing(transaction)" >
+            </td>
+            <td>
+                <span ng-hide="transaction.editing" ng-dblclick="startEditing(transaction)">
+                    {{ transaction.price }}
+                </span>
+                <input ng-show="transaction.editing" type="text" ng-model="transaction.price" ng-blur="stopEditing(transaction)" >
+            </td>
+            <td><img src="{{ transaction.image }}"></td>
+            <td>
+                <span ng-hide="transaction.editing" ng-dblclick="startEditing(transaction)">
+                    {{ transaction.tray_size }}
+                </span>
+                <input ng-show="transaction.editing" type="text" ng-model="transaction.tray_size" ng-blur="stopEditing(transaction)" >
+            </td>
+            <td>
+                <span ng-hide="transaction.editing" ng-dblclick="startEditing(transaction)">
+                    {{ transaction.category | ucFirst }}
+                </span>
+                <input ng-show="transaction.editing" type="text" ng-model="transaction.category" ng-blur="stopEditing(transaction)" >
+            </td>
+            <td>
+                <span ng-hide="transaction.editing" ng-dblclick="startEditing(transaction)">
+                    {{ transaction.category | ucFirst }}
+                </span>
+                <input ng-show="transaction.editing" type="text" ng-model="transaction.category" ng-blur="stopEditing(transaction)" >
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
