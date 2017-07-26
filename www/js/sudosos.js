@@ -17,6 +17,15 @@ angular.module('sudosos', ['sudosos.controllers', 'sudosos.filters', 'sudosos.se
                     }
                 }
             })
+            .state('sudosos.manage', {
+                url: '/manage',
+                views: {
+                    'admin-panel-content': {
+                        templateUrl: 'templates/manage.html',
+                        controller: 'ManageCtrl'
+                    }
+                }
+            })
 
             .state('sudosos.products', {
                 url: '/products',
@@ -27,12 +36,13 @@ angular.module('sudosos', ['sudosos.controllers', 'sudosos.filters', 'sudosos.se
                     }
                 }
             })
-            .state('sudosos.manage', {
-                url: '/manage',
+
+            .state('sudosos.pos', {
+                url: '/pos',
                 views: {
                     'admin-panel-content': {
-                        templateUrl: 'templates/manage.html',
-                        controller: 'ManageCtrl'
+                        templateUrl: 'templates/pos.html',
+                        controller: 'POSCtrl'
                     }
                 }
             })

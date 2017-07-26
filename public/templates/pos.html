@@ -1,0 +1,36 @@
+<!-- The form for adding, editing and sorting products -->
+<div class="form-inline edit-filter-bar">
+    <button class="btn btn-success" ng-click="addPOS()">Add POS</button>
+    <button class="btn btn-primary" ng-class="{'disabled': selectedIndex == -1}" ng-click="editPOS()">Edit POS</button>
+    <div class="form-group input-group">
+        <div class="input-group-addon"><i class="fa fa-search"></i> </div>
+        <label for="searchBar" class="sr-only">Email</label>
+        <input type="text" class="form-control" id="searchBar" placeholder="Search" ng-model="searchTerm">
+    </div>
+    <div class="form-group">
+        <label for="searchTypeSelect">Search by </label>
+        <select class="form-control" id="searchTypeSelect" ng-model="searchBy">
+            <option value="name" selected="selected">Name</option>
+        </select>
+    </div>
+</div>
+<div cg-busy="loadingData">
+    <table class="table" ts-wrapper>
+        <thead>
+        <tr>
+            <th ts-criteria="name | lowercase " ts-default>Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="product in products | filter:filterProducts"
+            ng-class="{'selected': $index == selectedIndex}" ng-click="selectItem($index)" ts-repeat>
+            <td>
+                <span ng-hide="product.editing" ng-dblclick="startEditing(product)">
+                    {{ product.name }}
+                </span>
+                <input ng-show="product.editing" type="text" ng-model="product.name" ng-blur="stopEditing(product)" >
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
