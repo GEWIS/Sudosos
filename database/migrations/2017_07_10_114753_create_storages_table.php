@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Query\Expression;
 
 class CreateStoragesTable extends Migration
 {
@@ -15,14 +16,15 @@ class CreateStoragesTable extends Migration
     {
         Schema::create('storages', function (Blueprint $table) {
             $table->uuid('id');
-            $table->uuid('owner_id');
+            $table->integer('owner_id');
             $table->string('name');
             $table->timestamps();
             $table->softDeletes();
 
             $table->primary('id');
 
-            $table->foreign('owner_id')->references('id')->on('users');
+            $databaseName = DB::connection('mysql_gewisdb')->getDatabaseName();
+            $table->foreign('owner_id')->references('id')->on(new Expression($databaseName . '.Organ'));
         });
     }
 

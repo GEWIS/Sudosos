@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  *         ),
  *      @SWG\Property(
  *             property="owner_id",
- *             type="string",
+ *             type="integer",
  *             description="Id of the owner from this Point of Sale"
  *         ),
  *     @SWG\Property(
@@ -86,12 +86,16 @@ class PointOfSale extends BaseModel
 
     protected $rules = [
         "name"     => "required|string|max:255",
-        "owner_id" => "required|string|max:36|exists:users,id"
+        "owner_id" => "required|integer|exists:mysql_gewisdb.Organ,id",
     ];
 
     // Relations
     public function storages(){
         return $this->belongsToMany('App\Models\Storage','storage_pointofsale','pointofsale_id');
+    }
+
+    public function owner(){
+        return $this->belongsTo('App\Models\GEWIS\Organ','owner_id');
     }
 
 }

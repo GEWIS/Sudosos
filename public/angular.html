@@ -1,20 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>SudoSOS Admin</title>
 
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
     <!-- Import fontawesome -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- Import the angular-busy CSS -->
     <link href="css/angular-busy.min.css" rel="stylesheet" type="text/css">
 
-    <!--Import the dashboard CSS -->
-    <link href="css/all.css" rel="stylesheet" type="text/css">
+    <!-- Import CSS classes seperately, this should be merged in production -->
+    <!-- Import the Bootstrap CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+    <!-- Import the AdminLTE CSS -->
+    <link href="css/AdminLTE.css" rel="stylesheet" type="text/css">
+    <!-- Import the customized AdminLTE GEWIS skin CSS -->
+    <link href="css/GEWIS-skin.css" rel="stylesheet" type="text/css">
+    <!-- Import custom CSS -->
+    <link href="css/sudosos.css" rel="stylesheet" type="text/css">
+
+    <!--&lt;!&ndash;Import the dashboard CSS &ndash;&gt;-->
+    <!--<link href="css/all.css" rel="stylesheet" type="text/css">-->
 
     <!--Import angular stuff, this should be replaced by a webpack script in production -->
     <script src="js/angular.min.js"></script>
@@ -31,18 +40,17 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <!-- Import AdminLTE js -->
-    <script src="js/adminlte.min.js"></script>
+    <script src="js/adminLTE/adminlte.min.js"></script>
+    <script src="js/jquery.slimscroll.min.js"></script>
 
     <!-- The sidebar script -->
-    <script src="js/sidebar.min.js"></script>
+    <!--<script src="js/sidebar.min.js"></script>-->
 
     <!--The SudoSOS javascript files -->
     <script src="js/sudosos.min.js"></script>
-    <script src="js/controllers.min.js"></script>
-    <script src="js/services.min.js"></script>
-    <script src="js/filters.min.js"></script>
-    <script src="js/directives.min.js"></script>
-
+    <script src="js/angular/controllers.min.js"></script>
+    <script src="js/angular/services.min.js"></script>
+    <script src="js/angular/filters.min.js"></script>
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>

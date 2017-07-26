@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Middleware;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,20 +11,19 @@
 |
 */
 
-Route::group(['namespace' => 'Web', 'middleware' => ['web']], function () {
+// All routes when logged in to the adminpanel
+Route::group(['namespace' => 'Web', 'middleware' => ['auth:web']], function () {
     Route::get('/', 'IndexController@index');
 });
-
-Route::group(['namespace' => 'Auth', 'prefix' => 'auth', 'middleware' => ['web']], function () {
+/**
+ * Alle routes for guests
+ */
+Route::group(['namespace' => 'Auth', 'prefix' => 'auth', 'middleware' => ['guest']], function () {
     Route::get('login', ['as' => 'login', 'uses' => 'LoginController@index']);
+    Route::post('login', 'LoginController@doExternalLogin');
     Route::get('login/gewis', 'LoginController@showGEWISLogin');
     Route::get('login/gewis-done', 'LoginController@doGEWISLogin');
-    Route::get('login/external', 'LoginController@showExternalLogin');
-    Route::post('login/external', 'LoginController@doExternalLogin');
+
     Route::get('register', 'RegisterController@showRegister');
     Route::post('register', 'RegisterController@doRegister');
-
 });
-Route::any('{catchall}', function () {
-    return Redirect::to('/');
-})->where('catchall', '.*');

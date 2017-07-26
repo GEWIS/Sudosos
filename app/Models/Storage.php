@@ -7,7 +7,7 @@ namespace App\Models;
  *      required={"id","name"},
  *      @SWG\Property(
  *             property="id",
- *             type="integer",
+ *             type="string",
  *             description="The ID of the storage"
  *         ),
  *      @SWG\Property(
@@ -68,7 +68,7 @@ class Storage extends BaseModel
 
     protected $rules = [
         "name"     => "required|string|max:255",
-        "owner_id" => "required|string|max:36|exists:users,id"
+        "owner_id" => "required|int|max:11|exists:mysql_gewisdb.Organ,id"
     ];
 
 
@@ -76,6 +76,10 @@ class Storage extends BaseModel
     public function products(){
         return $this->belongsToMany('App\Models\Product')
             ->withPivot('stock');
+    }
+
+    public function owner(){
+        return $this->belongsTo('App\Models\GEWIS\Organ','owner_id');
     }
 
     public function pointsOfSale(){

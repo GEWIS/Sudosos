@@ -37,6 +37,9 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+        if (Auth::check()) {
+            return redirect()->intended();
+        }
     }
 
     public function index()
@@ -81,6 +84,6 @@ class LoginController extends Controller
             return redirect()->intended('/');
         }
 
-        return View('auth.external-login')->with(['error' => 'Invalid username/password']);
+        return View('auth.index')->with(['error' => 'Invalid username/password']);
     }
 }

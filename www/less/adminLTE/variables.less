@@ -29,24 +29,25 @@
 @maroon: #D81B60;
 @black: #111;
 @gray-lte: #d2d6de;
-@GEWIS-red: #d40000;
 
 //LAYOUT
 //--------------------------------------------------------
 
 //Side bar and logo width
 @sidebar-width: 230px;
+//Collapsed Side bar and logo width
+@sidebar-collapsed-width: 50px;
 //Boxed layout maximum width
 @boxed-layout-max-width: 1024px;
 //When the logo should go to the top of the screen
 @screen-header-collapse: @screen-xs-max;
 
 //Link colors (Aka: <a> tags)
-@link-color: @light-blue;
-@link-hover-color: lighten(@link-color, 15%);
+//@link-color: @light-blue;
+//@link-hover-color: lighten(@link-color, 15%);
 
 //Body background (Affects main content background only)
-@body-bg: #ecf0f5;
+@body-bg: @gewis-light-gray;
 
 //SIDEBAR SKINS
 //--------------------------------------------------------
@@ -60,14 +61,14 @@
 @sidebar-dark-submenu-color: lighten(@sidebar-dark-submenu-bg, 40%);
 @sidebar-dark-submenu-hover-color: #fff;
 
-//Light sidebar
-@sidebar-light-bg: #f9fafc;
-@sidebar-light-hover-bg: lighten(#f0f0f1, 1.5%);
-@sidebar-light-color: #444;
-@sidebar-light-hover-color: #000;
-@sidebar-light-submenu-bg: @sidebar-light-hover-bg;
-@sidebar-light-submenu-color: #777;
-@sidebar-light-submenu-hover-color: #000;
+//Light sidebar TO BE DELETED
+//@sidebar-light-bg: #f9fafc;
+//@sidebar-light-hover-bg: lighten(#f0f0f1, 1.5%);
+//@sidebar-light-color: #444;
+//@sidebar-light-hover-color: #000;
+//@sidebar-light-submenu-bg: @sidebar-light-hover-bg;
+//@sidebar-light-submenu-color: #777;
+//@sidebar-light-submenu-hover-color: #000;
 
 //CONTROL SIDEBAR
 //--------------------------------------------------------
@@ -76,7 +77,8 @@
 //BOXES
 //--------------------------------------------------------
 @box-border-color: #f4f4f4;
-@box-border-radius: 3px;
+//@box-border-radius: 3px;
+@box-border-radius: 0px;
 @box-footer-bg: #fff;
 @box-boxshadow: 0 1px 1px rgba(0, 0, 0, .1);
 @box-padding: 10px;
@@ -90,9 +92,12 @@
 
 //PROGRESS BARS
 //--------------------------------------------------------
-@progress-bar-border-radius: 1px;
-@progress-bar-sm-border-radius: 1px;
-@progress-bar-xs-border-radius: 1px;
+//@progress-bar-border-radius: 1px;
+@progress-bar-border-radius: 0px;
+//@progress-bar-sm-border-radius: 1px;
+@progress-bar-sm-border-radius: 0px;
+//@progress-bar-xs-border-radius: 1px;
+@progress-bar-xs-border-radius: 0px;
 
 //FORMS
 //--------------------------------------------------------
@@ -102,7 +107,8 @@
 //--------------------------------------------------------
 
 //Border radius for non flat buttons
-@btn-border-radius: 3px;
+//@btn-border-radius: 3px;
+@btn-border-radius: 0px;
 
 //DIRECT CHAT
 //--------------------------------------------------------
@@ -113,7 +119,8 @@
 
 //CHAT WIDGET
 //--------------------------------------------------------
-@attachment-border-radius: 3px;
+//@attachment-border-radius: 3px;
+@attachment-border-radius: 0px;
 
 //TRANSITIONS SETTINGS
 //--------------------------------------------------------
