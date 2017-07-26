@@ -1,5 +1,5 @@
 /**
- * Created by s156386 on 15-7-2017.
+ * Created by Rick Wouters on 15-7-2017.
  */
 angular.module('sudosos.controllers', [])
     .controller('SudososCtrl', ['$scope', '$state', function ($scope) {
@@ -151,6 +151,9 @@ angular.module('sudosos.controllers', [])
 
     }])
     .controller('IncreaseBalanceCtrl', ['$scope', function ($scope) {
+
+    }])
+    .controller('ManageRolesCtrl', ['$scope', function ($scope) {
 
     }])
     .run(function () {

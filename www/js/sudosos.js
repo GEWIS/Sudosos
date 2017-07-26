@@ -27,6 +27,17 @@ angular.module('sudosos', ['sudosos.controllers', 'sudosos.filters', 'sudosos.se
                     }
                 }
             })
+
+            .state('sudosos.personalHome', {
+                url: '/personalHome',
+                views: {
+                    'admin-panel-content': {
+                        templateUrl: 'templates/personalHome.html',
+                        controller: 'personalHomeCtrl'
+                    }
+                }
+            })
+
             .state('sudosos.manage', {
                 url: '/manage',
                 views: {
@@ -43,6 +54,16 @@ angular.module('sudosos', ['sudosos.controllers', 'sudosos.filters', 'sudosos.se
                         'admin-panel-content': {
                             templateUrl: 'templates/increaseBalance.html',
                             controller: 'IncreaseBalanceCtrl'
+                        }
+                    }
+                }
+            )
+            .state('sudosos.manageRoles', {
+                    url: '/manageRoles',
+                    views: {
+                        'admin-panel-content': {
+                            templateUrl: 'templates/manageRoles.html',
+                            controller: 'ManageRolesCtrl'
                         }
                     }
                 }

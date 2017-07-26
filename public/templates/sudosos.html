@@ -33,25 +33,10 @@
             </div>
             <div class="info">
                 <p>{{ user.name }}</p>
-                <span><a href="#">Balance: €{{ user.currentBalance }}</a></span>
+                <span><a href="#">Balance: {{ user.currentBalance | currency : "€" }}</a></span>
             </div>
         </div>
         </div>
-        <!--<div class="dropdown select-committee-dropdown">-->
-            <!--<button class="btn btn-default dropdown-toggle" type="button" id="selectCommitteeDropDown"-->
-                    <!--data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">-->
-                <!--{{ currentCommittee.committee }}-->
-                <!--<span class="pull-right"><i class="fa fa-caret-down"></i></span>-->
-            <!--</button>-->
-            <!--<ul class="dropdown-menu" id="selectCommitteeDropDownOptions" aria-labelledby="selectCommitteeDropDown">-->
-                <!--<li ng-repeat="committee in user.committees">-->
-                    <!--<a href="" ng-click="currentCommittee.committee = committee">{{ committee}}</a>-->
-                <!--</li>-->
-            <!--</ul>-->
-        <!--</div>-->
-        <!--<ul class="sidebar-menu tree" data-widget="tree">-->
-
-        <!--</ul>-->
         <ul class="sidebar-menu tree" data-widget="tree">
             <!-- Committee dropdown -->
             <li class="treeview">
@@ -68,11 +53,17 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#"><span>Other...</span></a>
+                        <a href="#"><span>More...</span></a>
                     </li>
                 </ul>
             </li>
-            <li class="header">User Tabs</li>
+            <li class="header">Personal Tabs</li>
+            <li ui-sref="sudosos.personalHome" ui-sref-active="active">
+                <a href="#">
+                    <i class="fa fa-home"></i>
+                    <span>Personal Homepage</span>
+                </a>
+            </li>
             <li ui-sref="sudosos.increaseBalance" ui-sref-active="active">
                 <a href="#">
                     <i class="fa fa-money"></i>
@@ -96,24 +87,27 @@
                 </a>
                 <ul class="treeview-menu">
                     <li ui-sref="sudosos.manage">
-                        <a href="#"><i class="fa fa-columns"></i>Manage categories</a>
+                        <a href="#"><i class="fa fa-columns"></i>Manage Categories</a>
                     </li>
                     <li ui-sref="sudosos.products">
-                        <a href="#"><i class="fa fa-th"></i> Manage products</a>
+                        <a href="#"><i class="fa fa-th"></i>Manage Products</a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-cubes"></i><span>Manage storages</span></a>
+                        <a href="#"><i class="fa fa-cubes"></i><span>Manage Storages</span></a>
                     </li>
                     <li>
                         <a href="#"><i class="fa fa-shopping-basket"></i><span>Manage POS</span></a>
+                    </li>
+                    <li ui-sref="sudosos.manageRoles">
+                        <a href="#"><i class="fa fa-gear"></i><span>Manage roles</span></a>
                     </li>
                 </ul>
             </li>
         </ul>
     </section>
 </aside>
-<div class="content-wrapper">
-    <div ui-view="admin-panel-content">
+<div class="content-wrapper flexchain">
+    <div ui-view="admin-panel-content" class="flexchain">
     </div>
 </div>
 <footer class="main-footer">
