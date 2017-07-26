@@ -145,5 +145,8 @@ angular.module('sudosos.controllers', [])
     .controller('IncreaseBalanceCtrl', ['$scope', function ($scope) {
 
     }])
+    .controller('ManageRolesCtrl', ['$scope', function ($scope) {
+
+    }])
     .run(function () {
     });

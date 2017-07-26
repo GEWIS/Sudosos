@@ -97,13 +97,16 @@
                     <li>
                         <a href="#"><i class="fa fa-shopping-basket"></i><span>Manage POS</span></a>
                     </li>
+                    <li ui-sref="sudosos.manageRoles">
+                        <a href="#"><i class="fa fa-gear"></i><span>Manage roles</span></a>
+                    </li>
                 </ul>
             </li>
         </ul>
     </section>
 </aside>
-<div class="content-wrapper">
-    <div ui-view="admin-panel-content">
+<div class="content-wrapper flexchain">
+    <div ui-view="admin-panel-content" class="flexchain">
     </div>
 </div>
 <footer class="main-footer">
