@@ -86,7 +86,7 @@ class PointOfSale extends BaseModel
 
     protected $rules = [
         "name"     => "required|string|max:255",
-        "owner_id" => "required|string|max:36|exists:mysql_gewisdb.Organ,id"
+        "owner_id" => "required|integer|exists:mysql_gewisdb.Organ,id",
     ];
 
     // Relations

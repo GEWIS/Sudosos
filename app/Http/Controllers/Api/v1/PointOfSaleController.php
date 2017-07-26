@@ -12,22 +12,43 @@ use Illuminate\Support\Facades\Schema;
 class PointOfSaleController extends Controller{
     /**
      * @SWG\Get(
-     *     path ="/pointsofsale",
-     *     summary = "Returns all points of sale.",
+     *     path ="/pointsofsale/owner/{owner_id}",
+     *     summary = "Returns all points of sale of an organ.",
      *     tags = {"POS"},
-     *     description = "Returns all points of sale.",
+     *     description = "Returns all points of sale of an organ.",
      *     operationId = "getAllPointsOfSale",
      *     produces = {"application/json"},
-
+     *      @SWG\Parameter(
+     *         name="owner_id",
+     *         in="path",
+     *         description="Id of the owner",
+     *         required=true,
+     *         type="integer",
+     *         ),
      *     @SWG\Response(
      *         response=200,
      *         description="Successful operation",
      *     ),
+     *      @SWG\Response(
+     *         response=404,
+     *         description="Owner not found",
+     *     ),
+     *
      * ),
      */
-    public function index(){
-        $data = PointOfSale::all();
-        return response()->json($data,200);
+    public function index($owner_id){
+        $organ = Organ::find($owner_id);
+
+        if (!$organ) {
+            $this->response(404, "Owner not found");
+        }
+
+        $points  = PointOfSale::where('owner_id', $owner_id)->get();
+        if(isEmpty($points)){
+            return $points;
+        }
+        $this->authorize('view', $points->first());
+        return $points;
     }
 
     /**
@@ -53,9 +74,20 @@ class PointOfSaleController extends Controller{
      *         response=400,
      *         description="Invalid request",
      *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Owner not found",
+     *     ),
      * ),
      */
     public function store(Request $request){
+        $owner = Organ::find($request->owner_id);
+
+        if (!$owner) {
+            return $this->response(404, 'Owner not found');
+        }
+
+        $this->authorize('create', [PointOfSale::class, $owner->id]);
 
         $pos = PointOfSale::create($request->all());
 
@@ -95,6 +127,7 @@ class PointOfSaleController extends Controller{
         $pos = PointOfSale::find($id);
 
         if ($pos) {
+            $this->authorize('view', $pos);
             return response()->json($pos, 200);
         } else {
             return $this->response(404, "Point of sale not found");
@@ -142,6 +175,7 @@ class PointOfSaleController extends Controller{
     public function putPointOfSale(Request $request, $id){
         $pos = PointOfSale::find($id);
         if ($pos) {
+            $this->authorize('update', $pos);
             $pos->update($request->all());
             if (!$pos->isValid()) {
                 return $this->response(400,"Point of sale is invalid" ,$pos->getErrors());
@@ -181,6 +215,7 @@ class PointOfSaleController extends Controller{
     public function deletePointOfSale($id){
         $pos = PointOfSale::find($id);
         if ($pos) {
+            $this->authorize('delete', $pos);
             $pos->delete();
             return response()->json("Point of sale succesfully deleted", 200);
         } else {
@@ -223,6 +258,7 @@ class PointOfSaleController extends Controller{
         }
         $pos = PointOfSale::withTrashed()->find($id);
         if($pos){
+            $this->authorize('update', $pos);
             $pos->restore();
             return response()->json("Point of Sale succesfully reinstated", 200);
         }else{
@@ -271,6 +307,8 @@ class PointOfSaleController extends Controller{
         if (!$pos) {
             return $this->response(404,"Point of sale not found");
         }
+        $this->authorize('view', $pos);
+
         if(Schema::hasColumn($pos->getTable(), $property)){
             return response()->json($pos->$property, 200);
         } else {
@@ -330,6 +368,7 @@ class PointOfSaleController extends Controller{
         if (!$pos) {
             return $this->response(404,"Point of sale not found");
         }
+        $this->authorize('update', $pos);
         if (Schema::hasColumn($pos->getTable(), $property)  && !(in_array($property,$pos->getGuarded()))) {
             $pos->$property = $request->value;
             if($pos->isValid()){

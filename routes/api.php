@@ -14,7 +14,8 @@ use Illuminate\Http\Request;
 */
 
 Route::group(['middleware'=> 'auth', 'namespace' => 'Api\v1', 'prefix' => 'v1'], function () {
-    Route::get('products', 'ProductController@index');
+
+    Route::get('products/owner/{owner_id}', 'ProductController@index');
     Route::post('products', 'ProductController@store');
     Route::get('products/{id}', 'ProductController@getProduct');
     Route::put('products/{id}', 'ProductController@putProduct');
@@ -22,9 +23,9 @@ Route::group(['middleware'=> 'auth', 'namespace' => 'Api\v1', 'prefix' => 'v1'],
     Route::put('products/{id}/reinstate', 'ProductController@reinstateProduct');
     Route::get('products/{id}/{property}', 'ProductController@getProductProperty');
     Route::put('products/{id}/{property}', 'ProductController@putProductProperty');
-    
-    Route::get('pointsofsale', 'PointOfSaleController@index');
-    Route::post('pointsofsale', 'PointOfSaleController@store');
+
+    Route::get('pointsofsale/owner/{owner_id}', 'PointOfSaleController@index');
+    Route::post('pointsofsale/owner', 'PointOfSaleController@store');
     Route::get('pointsofsale/{id}', 'PointOfSaleController@getPointOfSale');
     Route::put('pointsofsale/{id}', 'PointOfSaleController@putPointOfSale');
     Route::delete('pointsofsale/{id}', 'PointOfSaleController@deletePointOfSale');
@@ -32,7 +33,7 @@ Route::group(['middleware'=> 'auth', 'namespace' => 'Api\v1', 'prefix' => 'v1'],
     Route::get('pointsofsale/{id}/{property}', 'PointOfSaleController@getPointOfSaleProperty');
     Route::put('pointsofsale/{id}/{property}', 'PointOfSaleController@putPointOfSaleProperty');
 
-    Route::get('storages', 'StorageController@index');
+    Route::get('storages/owner/{owner_id}', 'StorageController@index');
     Route::post('storages', 'StorageController@store');
     Route::get('storages/{id}', 'StorageController@getStorage');
     Route::put('storages/{id}', 'StorageController@putStorage');
