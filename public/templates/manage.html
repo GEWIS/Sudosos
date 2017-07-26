@@ -4,14 +4,16 @@
             <h2 align="center">Products</h2>
             <div class="items-div">
                 <div class="item-div" ng-repeat="product in products" ng-drag="true" ng-drag-data="product">
-                    <h4>{{ product.name }}</h4>
                     <div class="row">
-                        <div class="col-sm-4 col-md-4 col-lg-4">
-                            <img src="{{ product.image }}">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <h4>{{ product.name }}</h4>
                         </div>
-                        <div class="col-sm-8 col-md-8 col-lg-8">
-                            <h6>Price: {{ product.price }}</h6>
-                            <p>Tray size: {{ product.tray_size }}</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            <p>Price: €{{ product.price   }}</p>
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-6">
                             <p>Amount: {{ product.amount }}</p>
                         </div>
                     </div>
