@@ -1,6 +1,6 @@
 <header class="main-header">
     <!-- The logo in the header bar -->
-    <a href="#" class="logo">
+    <a href="" class="logo">
         <img src="img/logo.svg" class="sudosos-logo pull-left">
         <span class="logo-lg">
             <span class="sudosos-logo-text"> SudoSOS</span>
@@ -56,14 +56,16 @@
             <!-- Committee dropdown -->
             <li class="treeview">
                 <a href="#">
-                    <span>{{ currentCommittee.committee }}</span>
+                    <span>{{ currentCommittee.committee.name }}</span>
                     <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                     </span>
                 </a>
                 <ul class="treeview-menu">
                     <li ng-repeat="committee in user.committees">
-                        <a href="#" ng-click="currentCommittee.committee = committee"><span>{{ committee}}</span></a>
+                        <a href="#" ng-click="currentCommittee.committee = committee">
+                            <span>{{ committee.name }}</span>
+                        </a>
                     </li>
                     <li>
                         <a href="#"><span>Other...</span></a>
