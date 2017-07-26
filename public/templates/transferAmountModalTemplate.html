@@ -1,0 +1,17 @@
+<div class="modal-header">
+    <h4 class="modal-title"><b>Transfer</b> {{ currentProduct.name }}</h4>
+</div>
+<div class="modal-body">
+    <h2 align="center">
+        Transfer {{ currentProduct.name }} to {{ currentStorage.name }}
+    </h2>
+    <div class="row">
+        <div class="col-sm-8 col-md-8 col-lg-8 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+            <label for="amountSelector" id="amountSelectorLabel">Amount</label>
+            <input ng-model="transferAmount.amount" type="number" min="0" max="{{ currentProduct.amount }}" id="amountSelector">
+        </div>
+    </div>
+    <button class="btn btn-primary btn-block" ng-click="transferItems()">
+        Transfer
+    </button>
+</div>
