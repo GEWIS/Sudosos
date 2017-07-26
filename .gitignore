@@ -171,7 +171,7 @@ GitHub.sublime-settings
 !/public/css/angular-busy.min.css
 
 /public/js/*
-!/public/js/angular.min.js
-!/public/js/angular-ui-router.min.js
+!/public/js/angular/angular.min.js
+!/public/js/angular/angular-ui-router.min.js
 !/public/js/app.js
 !/public/js/angular-busy.min.js
