@@ -44,10 +44,11 @@ namespace App\Models;
  *             type="integer",
  *             description="The number of recent transactions to be shown."
  *         ),
- *      @SWG\Property(
+ *     @SWG\Property(
  *             property="subtransaction",
  *             type="array",
- *             description="JSON array containing (multiple) subtransactions."
+ *             items = @SWG\Schema(ref="#/definitions/inputSubtransaction"),
+ *             description="JSON array containing (multiple) subtransactions.",
  *         ),
  *    )
  */
@@ -67,7 +68,7 @@ namespace App\Models;
  *         ),
  *      @SWG\Property(
  *             property="total_price",
- *             type="int",
+ *             type="integer",
  *             description="Total price of the transaction."
  *         ),
  *      @SWG\Property(

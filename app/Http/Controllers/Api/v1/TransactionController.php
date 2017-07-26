@@ -16,7 +16,7 @@ class TransactionController extends Controller{
      * @SWG\Get(
      *     path ="/transactions",
      *     summary = "Returns all transactions.",
-     *     tags = {"transaction"},
+     *     tags = {"Transaction"},
      *     description = "Returns all transactions, either within a certain range with the from and to parameter, or a certain number.",
      *     operationId = "getAllTransactions",
      *     produces = {"application/json"},
@@ -63,9 +63,9 @@ class TransactionController extends Controller{
 
     /**
      * @SWG\Get(
-     *     path ="/transactions/user",
+     *     path ="/transactions/user/{id}",
      *     summary = "Returns all transactions of a single user.",
-     *     tags = {"transaction"},
+     *     tags = {"Transaction"},
      *     description = "Returns all transactions of a single user, either within a certain range with the from and to parameter, or a certain number.",
      *     operationId = "getAllTransactionsOfUser",
      *     produces = {"application/json"},
@@ -129,7 +129,7 @@ class TransactionController extends Controller{
      * @SWG\Get(
      *     path ="/transactions/{id}",
      *     summary = "Returns transaction by id.",
-     *     tags = {"transaction"},
+     *     tags = {"Transaction"},
      *     description = "Returns a transaction with a specified id.",
      *     operationId = "getTransaction",
      *     produces = {"application/json"},
@@ -164,7 +164,7 @@ class TransactionController extends Controller{
      * @SWG\Get(
      *     path ="/transactions/activity/{id}",
      *     summary = "Returns transaction by activity id.",
-     *     tags = {"transaction"},
+     *     tags = {"Transaction"},
      *     description = "Returns transactions with a specified activity id.",
      *     operationId = "getByActivity",
      *     produces = {"application/json"},
@@ -199,7 +199,7 @@ class TransactionController extends Controller{
      * @SWG\Post(
      *     path ="/transactions",
      *     summary = "Create a new transaction.",
-     *     tags = {"transaction"},
+     *     tags = {"Transaction"},
      *     description = "Create a new transaction.",
      *     operationId = "createTransaction",
      *     produces = {"application/json"},
@@ -221,10 +221,7 @@ class TransactionController extends Controller{
      * ),
      */
     public function createTransaction(Request $request){
-        // put subtransactions in documentation!
-
         $subtransactions = $request->subtransaction;
-        //dd($subtransactions[1]);
         $transaction = Transaction::create($request->all());
         if ($transaction->isValid()) {
             for($i =0; $i < sizeof($subtransactions); $i++){
@@ -245,7 +242,7 @@ class TransactionController extends Controller{
      *     description="Delete a transaction by id.",
      *     operationId="deleteTransaction",
      *     produces={"application/json"},
-     *     tags={"transaction"},
+     *     tags={"Transaction"},
      *     @SWG\Parameter(
      *         name="id",
      *         in="path",

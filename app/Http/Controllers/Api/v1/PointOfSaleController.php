@@ -115,7 +115,7 @@ class PointOfSaleController extends Controller{
      *     ),
      *     @SWG\Response(
      *         response=200,
-     *         description="successful operation",
+     *         description="Successful operation",
      *     ),
      *     @SWG\Response(
      *         response=404,
