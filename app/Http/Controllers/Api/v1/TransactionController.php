@@ -27,26 +27,12 @@ class TransactionController extends Controller{
      *         required=false,
      *         @SWG\Schema(ref="#/definitions/getAllTransaction"),
      *     ),
-     *         @SWG\Parameter(
-     *         name="to",
-     *         in="body",
-     *         description="Request in JSON, specifies the upper bound of the range of which all transactions are returned, default today",
-     *         required=false,
-     *         @SWG\Schema(ref="#/definitions/getAllTransaction"),
-     *     ),
-     *      @SWG\Parameter(
-     *         name="amount",
-     *         in="body",
-     *         description="Request in JSON, number of transactions in the range to be returned",
-     *         required=false,
-     *         @SWG\Schema(ref="#/definitions/getAllTransaction"),
-     *     ),
      *     @SWG\Response(
      *         response=200,
      *         description="Successful operation",
      *     ),
      *     @SWG\Response(
-     *         response=400,
+     *         response=404,
      *         description="Not a valid request, see message body",
      *     ),
      * ),
@@ -84,24 +70,17 @@ class TransactionController extends Controller{
      *     operationId = "getAllTransactionsOfUser",
      *     produces = {"application/json"},
      *         @SWG\Parameter(
-     *         name="from",
+     *         name="request",
      *         in="body",
      *         description="Request in JSON, specifies the lower bound of the range of which all transactions are returned, default unix epoch",
      *         required=false,
      *         @SWG\Schema(ref="#/definitions/getAllTransactionUser"),
      *     ),
      *         @SWG\Parameter(
-     *         name="to",
+     *         name="id",
      *         in="body",
-     *         description="Request in JSON, specifies the upper bound of the range of which all transactions are returned, default today",
-     *         required=false,
-     *         @SWG\Schema(ref="#/definitions/getAllTransactionUser"),
-     *     ),
-     *      @SWG\Parameter(
-     *         name="amount",
-     *         in="body",
-     *         description="Request in JSON, number of transactions in the range to be returned",
-     *         required=false,
+     *         description="Id of the user",
+     *         required=true,
      *         @SWG\Schema(ref="#/definitions/getAllTransactionUser"),
      *     ),
      *     @SWG\Response(
@@ -237,7 +216,7 @@ class TransactionController extends Controller{
      *     ),
      *     @SWG\Response(
      *         response=400,
-     *         description="Transaction invalid.",
+     *         description="Transaction or subtransaction invalid.",
      *     ),
      * ),
      */
