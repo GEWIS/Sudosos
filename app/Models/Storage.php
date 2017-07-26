@@ -50,7 +50,7 @@ namespace App\Models;
  *         ),
  *      @SWG\Property(
  *             property="owner_id",
- *             type="string",
+ *             type="integer",
  *             description="ID of the owner from this storage"
  *         ),
  *    )
@@ -68,7 +68,7 @@ class Storage extends BaseModel
 
     protected $rules = [
         "name"     => "required|string|max:255",
-        "owner_id" => "required|string|max:36|exists:mysql_gewisdb.Organ,id"
+        "owner_id" => "required|int|max:11|exists:mysql_gewisdb.Organ,id"
     ];
 
 

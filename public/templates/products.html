@@ -1,30 +1,62 @@
-<div class="form-inline" style="margin-bottom:15px;">
+<!-- The form for adding, editing and sorting products -->
+<div class="form-inline edit-filter-bar">
     <button class="btn btn-success">Add product</button>
-    <button class="btn btn-info">Edit product</button>
-    <div class="form-group input-group pull-right">
-        <label for="searchBar" class="sr-only">Search</label>
+    <button class="btn btn-primary" ng-class="{'disabled': selectedIndex == -1}" ng-click="editProduct()">Edit product</button>
+    <div class="form-group input-group">
+        <div class="input-group-addon"><i class="fa fa-search"></i> </div>
+        <label for="searchBar" class="sr-only">Email</label>
         <input type="text" class="form-control" id="searchBar" placeholder="Search" ng-model="searchTerm">
         <div class="input-group-addon"><i class="fa fa-search"></i> </div>
     </div>
+    <div class="form-group">
+        <label for="searchTypeSelect">Search by </label>
+        <select class="form-control" id="searchTypeSelect" ng-model="searchBy">
+            <option value="name" selected="selected">Name</option>
+            <option value="price">Price</option>
+            <option value="tray_size">Package size</option>
+            <option value="category">Category</option>
+        </select>
+    </div>
 </div>
 <div cg-busy="loadingData">
-    <table class="table">
+    <table class="table" ts-wrapper>
         <thead>
         <tr>
-            <th class="">Naam</th>
-            <th>Prijs</th>
-            <th>Afbeelding</th>
-            <th>Verpakkingsgrootte</th>
-            <th>Categorie</th>
+            <th ts-criteria="name | lowercase " ts-default>Name</th>
+            <th ts-criteria="price | parseFloat">Price</th>
+            <th>Image</th>
+            <th ts-criteria="tray_size | parseInt">Package size</th>
+            <th ts-criteria="category | lowercase">Category</th>
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="product in products | filter:{'name':searchTerm}">
-            <td>{{ product.name }}</td>
-            <td>{{ product.price }}</td>
+        <tr ng-repeat="product in products | filter:filterProducts"
+            ng-class="{'selected': $index == selectedIndex}" ng-click="selectItem($index)" ts-repeat>
+            <td>
+                <span ng-hide="product.editing" ng-dblclick="startEditing(product)">
+                    {{ product.name }}
+                </span>
+                <input ng-show="product.editing" type="text" ng-model="product.name" ng-blur="stopEditing(product)" >
+            </td>
+            <td>
+                <span ng-hide="product.editing" ng-dblclick="startEditing(product)">
+                    {{ product.price }}
+                </span>
+                <input ng-show="product.editing" type="text" ng-model="product.price" ng-blur="stopEditing(product)" >
+            </td>
             <td><img src="{{ product.image }}"></td>
-            <td>{{ product.tray_size }}</td>
-            <td>{{ product.category }}</td>
+            <td>
+                <span ng-hide="product.editing" ng-dblclick="startEditing(product)">
+                    {{ product.tray_size }}
+                </span>
+                <input ng-show="product.editing" type="text" ng-model="product.tray_size" ng-blur="stopEditing(product)" >
+            </td>
+            <td>
+                <span ng-hide="product.editing" ng-dblclick="startEditing(product)">
+                    {{ product.category | ucFirst }}
+                </span>
+                <input ng-show="product.editing" type="text" ng-model="product.category" ng-blur="stopEditing(product)" >
+            </td>
         </tr>
         </tbody>
     </table>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Models\Product;
+use App\Models\GEWIS\Organ;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
@@ -11,22 +12,42 @@ use Illuminate\Support\Facades\Schema;
 class ProductController extends Controller{
     /**
      * @SWG\Get(
-     *     path ="/products",
-     *     summary = "Returns all products.",
+     *     path ="/products/owner/{owner_id}",
+     *     summary = "Returns all products for an organ.",
      *     tags = {"Product"},
-     *     description = "Returns all products.",
+     *     description = "Returns all products for an organ.",
      *     operationId = "getAllProducts",
      *     produces = {"application/json"},
-
+     *      @SWG\Parameter(
+     *         name="owner_id",
+     *         in="path",
+     *         description="Id of the owner",
+     *         required=true,
+     *         type="integer",
+     *         ),
      *     @SWG\Response(
      *         response=200,
      *         description="Successful operation",
      *     ),
+     *      @SWG\Response(
+     *         response=404,
+     *         description="Owner not found",
+     *     ),
      * ),
      */
-    public function index(){
-        $data = Product::all();
-        return response()->json($data,200);
+    public function index($owner_id){
+        $organ = Organ::find($owner_id);
+
+        if(!$organ){
+            $this->response(404, "Owner not found");
+        }
+
+        $products = Product::where('owner_id', $owner_id)->get();
+        if($products->isEmpty()){
+            return $products;
+        }
+        $this->authorize('view', $products->first());
+        return $products;
     }
 
     /**
@@ -52,12 +73,22 @@ class ProductController extends Controller{
      *         response=400,
      *         description="Product invalid.",
      *     ),
+     *    @SWG\Response(
+     *         response=404,
+     *         description="Owner not found",
+     *     ),
      * ),
      */
     public function store(Request $request){
+        $owner = Organ::find($request->owner_id);
+
+        if(!$owner){
+            return $this->response(404, 'Owner not found');
+        }
+
+        $this->authorize('create', [Product::class,$owner->id]);
 
         $product = Product::create($request->all());
-
         if ($product->isValid()) {
             return response()->json($product->id, 201);
         } else {
@@ -141,7 +172,10 @@ class ProductController extends Controller{
         $product = Product::find($id);
 
         if ($product) {
-                $product->update($request->all());
+
+            $this->authorize('update', $product);
+
+            $product->update($request->all());
                 if($product->isValid()){
                     return response()->json("Product succesfully updated", 200);
                 }else{
@@ -180,6 +214,9 @@ class ProductController extends Controller{
     public function deleteProduct($id){
         $product = Product::find($id);
         if ($product) {
+            $this->authorize('delete', $product);
+
+
             $product->delete();
             return response()->json("Product succesfully deleted", 200);
         } else {
@@ -220,6 +257,8 @@ class ProductController extends Controller{
         if(Product::find($id)){
             return $this->response(409,"Product already active.");
         }
+        $this->authorize('update', $product);
+
         $product = Product::withTrashed()-> find($id);
         if($product){
             $product -> restore();
@@ -266,6 +305,8 @@ class ProductController extends Controller{
         if (!$product) {
             return $this->response(404,"Product not found");
         }
+        $this->authorize('view', $product);
+
         if (Schema::hasColumn($product->getTable(), $property)) {
             return response()->json($product->$property, 200);
         } else {
@@ -324,6 +365,9 @@ class ProductController extends Controller{
         if (!$product) {
             return $this->response(404, "Product not found");
         }
+
+        $this->authorize('update', $product);
+
         if (Schema::hasColumn($product->getTable(), $property) && !(in_array($property,$product->getGuarded()))){
             $product->$property = $request->value;
             if ($product->isValid()) {

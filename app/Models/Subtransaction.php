@@ -17,12 +17,12 @@ namespace App\Models;
  *         ),
  *      @SWG\Property(
  *             property="amount",
- *             type="int",
+ *             type="integer",
  *             description="The amount of products bought."
  *         ),
  *     @SWG\Property(
  *             property="price_per_product",
- *             type="int",
+ *             type="integer",
  *             description="The price of a single product."
  *         ),
  *    )

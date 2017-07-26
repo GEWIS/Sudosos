@@ -6,23 +6,37 @@
     },
     "basePath": "/api/v1",
     "paths": {
-        "/pointsofsale": {
+        "/pointsofsale/owner/{owner_id}": {
             "get": {
                 "tags": [
                     "POS"
                 ],
-                "summary": "Returns all points of sale.",
-                "description": "Returns all points of sale.",
+                "summary": "Returns all points of sale of an organ.",
+                "description": "Returns all points of sale of an organ.",
                 "operationId": "getAllPointsOfSale",
                 "produces": [
                     "application/json"
                 ],
+                "parameters": [
+                    {
+                        "name": "owner_id",
+                        "in": "path",
+                        "description": "Id of the owner",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Owner not found"
                     }
                 }
-            },
+            }
+        },
+        "/pointsofsale": {
             "post": {
                 "tags": [
                     "POS"
@@ -50,6 +64,9 @@
                     },
                     "400": {
                         "description": "Invalid request"
+                    },
+                    "404": {
+                        "description": "Owner not found"
                     }
                 }
             }
@@ -276,23 +293,37 @@
                 }
             }
         },
-        "/products": {
+        "/products/owner/{owner_id}": {
             "get": {
                 "tags": [
                     "Product"
                 ],
-                "summary": "Returns all products.",
-                "description": "Returns all products.",
+                "summary": "Returns all products for an organ.",
+                "description": "Returns all products for an organ.",
                 "operationId": "getAllProducts",
                 "produces": [
                     "application/json"
                 ],
+                "parameters": [
+                    {
+                        "name": "owner_id",
+                        "in": "path",
+                        "description": "Id of the owner",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful operation"
+                    },
+                    "404": {
+                        "description": "Owner not found"
                     }
                 }
-            },
+            }
+        },
+        "/products": {
             "post": {
                 "tags": [
                     "Product"
@@ -320,6 +351,9 @@
                     },
                     "400": {
                         "description": "Product invalid."
+                    },
+                    "404": {
+                        "description": "Owner not found"
                     }
                 }
             }
@@ -540,23 +574,37 @@
                 }
             }
         },
-        "/storages": {
+        "/storages/owner/{owner_id}": {
             "get": {
                 "tags": [
                     "storage"
                 ],
-                "summary": "Returns all storages.",
-                "description": "Returns all storages.",
+                "summary": "Returns all storages for an organ.",
+                "description": "Returns all storages for an organ.",
                 "operationId": "getAllStorages",
                 "produces": [
                     "application/json"
                 ],
+                "parameters": [
+                    {
+                        "name": "owner_id",
+                        "in": "path",
+                        "description": "Id of the owner",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful operation"
+                    },
+                    "404": {
+                        "description": "Owner not found"
                     }
                 }
-            },
+            }
+        },
+        "/storages": {
             "post": {
                 "tags": [
                     "storage"
@@ -953,13 +1001,6 @@
                             "$ref": "#/definitions/inputProperty"
                         },
                         "type": "integer"
-                    },
-                    {
-                        "name": "request",
-                        "in": "path",
-                        "description": "Request body in JSON",
-                        "required": true,
-                        "type": "string"
                     }
                 ],
                 "responses": {
@@ -1010,10 +1051,114 @@
                 }
             }
         },
+        "/transactions/{transaction_id}/subtransactions": {
+            "post": {
+                "tags": [
+                    "transaction"
+                ],
+                "summary": "Create a new subtransaction.",
+                "description": "Create a new subtransaction.",
+                "operationId": "createSubtransaction",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "subtransaction",
+                        "in": "body",
+                        "description": "Model of the transaction to store",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/inputSubtransaction"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Subtransaction invalid."
+                    }
+                }
+            }
+        },
+        "/transactions/{transaction_id}/subtransactions/{subtransaction_id}": {
+            "get": {
+                "tags": [
+                    "transaction"
+                ],
+                "summary": "Returns subtransaction by subtransaction id.",
+                "description": "Returns subtransactions with a specified subtransaction_id.",
+                "operationId": "getSubtransaction",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "transaction_id",
+                        "in": "path",
+                        "description": "Id of the transaction",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "subtransaction_id",
+                        "in": "path",
+                        "description": "Id of the subtransaction",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Subtransaction not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "transaction"
+                ],
+                "summary": "Deletes subtransaction by subtransaction id.",
+                "description": "Deletes subtransactions with a specified subtransaction_id.",
+                "operationId": "deleteSubtransaction",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "transaction_id",
+                        "in": "path",
+                        "description": "Id of the transaction",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "subtransaction_id",
+                        "in": "path",
+                        "description": "Id of the subtransaction",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Subtransaction not found"
+                    }
+                }
+            }
+        },
         "/transactions": {
             "get": {
                 "tags": [
-                    "Transaction"
+                    "transaction"
                 ],
                 "summary": "Returns all transactions.",
                 "description": "Returns all transactions, either within a certain range with the from and to parameter, or a certain number.",
@@ -1030,31 +1175,13 @@
                         "schema": {
                             "$ref": "#/definitions/getAllTransaction"
                         }
-                    },
-                    {
-                        "name": "to",
-                        "in": "body",
-                        "description": "Request in JSON, specifies the upper bound of the range of which all transactions are returned, default today",
-                        "required": false,
-                        "schema": {
-                            "$ref": "#/definitions/getAllTransaction"
-                        }
-                    },
-                    {
-                        "name": "amount",
-                        "in": "body",
-                        "description": "Request in JSON, number of transactions in the range to be returned",
-                        "required": false,
-                        "schema": {
-                            "$ref": "#/definitions/getAllTransaction"
-                        }
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "Successful operation"
                     },
-                    "400": {
+                    "404": {
                         "description": "Not a valid request, see message body"
                     }
                 }
@@ -1085,7 +1212,7 @@
                         "description": "Successful operation"
                     },
                     "400": {
-                        "description": "Transaction invalid."
+                        "description": "(Sub)transaction invalid, see message body."
                     }
                 }
             }
@@ -1093,7 +1220,7 @@
         "/transactions/user": {
             "get": {
                 "tags": [
-                    "Transaction"
+                    "transaction"
                 ],
                 "summary": "Returns all transactions of a single user.",
                 "description": "Returns all transactions of a single user, either within a certain range with the from and to parameter, or a certain number.",
@@ -1103,7 +1230,7 @@
                 ],
                 "parameters": [
                     {
-                        "name": "from",
+                        "name": "request",
                         "in": "body",
                         "description": "Request in JSON, specifies the lower bound of the range of which all transactions are returned, default unix epoch",
                         "required": false,
@@ -1112,19 +1239,10 @@
                         }
                     },
                     {
-                        "name": "to",
+                        "name": "id",
                         "in": "body",
-                        "description": "Request in JSON, specifies the upper bound of the range of which all transactions are returned, default today",
-                        "required": false,
-                        "schema": {
-                            "$ref": "#/definitions/getAllTransactionUser"
-                        }
-                    },
-                    {
-                        "name": "amount",
-                        "in": "body",
-                        "description": "Request in JSON, number of transactions in the range to be returned",
-                        "required": false,
+                        "description": "Id of the user",
+                        "required": true,
                         "schema": {
                             "$ref": "#/definitions/getAllTransactionUser"
                         }
@@ -1166,44 +1284,6 @@
                 "responses": {
                     "200": {
                         "description": "Successful operation"
-                    },
-                    "404": {
-                        "description": "Transaction not found"
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "transaction"
-                ],
-                "summary": "Updates a transaction by id.",
-                "description": "Updates the transaction.",
-                "operationId": "updateTransaction",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "request",
-                        "in": "path",
-                        "description": "Request body in JSON.",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "Id of the transaction",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Transaction succesfully deleted"
-                    },
-                    "400": {
-                        "description": "Transaction not valid"
                     },
                     "404": {
                         "description": "Transaction not found"
@@ -1284,7 +1364,7 @@
                 },
                 "owner_id": {
                     "description": "Id of the owner from this Point of Sale",
-                    "type": "string"
+                    "type": "integer"
                 },
                 "name": {
                     "description": "The name of the product",
@@ -1346,7 +1426,7 @@
             "properties": {
                 "id": {
                     "description": "The ID of the product",
-                    "type": "integer"
+                    "type": "string"
                 },
                 "name": {
                     "description": "The name of the product",
@@ -1446,7 +1526,7 @@
             "properties": {
                 "id": {
                     "description": "The ID of the storage",
-                    "type": "integer"
+                    "type": "string"
                 },
                 "name": {
                     "description": "The name of the storage",
@@ -1489,6 +1569,32 @@
                 }
             }
         },
+        "inputSubtransaction": {
+            "required": [
+                "product_id",
+                "storage_id",
+                "amount",
+                "price_per_product"
+            ],
+            "properties": {
+                "product_id": {
+                    "description": "id of the product.",
+                    "type": "string"
+                },
+                "storage_id": {
+                    "description": "id of the storage.",
+                    "type": "string"
+                },
+                "amount": {
+                    "description": "The amount of products bought.",
+                    "type": "int"
+                },
+                "price_per_product": {
+                    "description": "The price of a single product.",
+                    "type": "int"
+                }
+            }
+        },
         "getAllTransaction": {
             "required": [],
             "properties": {
@@ -1524,6 +1630,10 @@
                 "amount": {
                     "description": "The number of recent transactions to be shown.",
                     "type": "integer"
+                },
+                "subtransaction": {
+                    "description": "JSON array containing (multiple) subtransactions.",
+                    "type": "array"
                 }
             }
         },
@@ -1559,7 +1669,10 @@
                 },
                 "subtransaction": {
                     "description": "JSON array containing (multiple) subtransactions.",
-                    "type": "array"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/inputSubtransaction"
+                    }
                 }
             }
         }

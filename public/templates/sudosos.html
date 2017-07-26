@@ -1,10 +1,12 @@
 <header class="main-header">
+    <!-- The logo in the header bar -->
     <a href="#" class="logo">
         <img src="img/logo.svg" class="sudosos-logo pull-left">
         <span class="logo-lg">
             <span class="sudosos-logo-text"> SudoSOS</span>
         </span>
     </a>
+    <!-- The rest of the navbar -->
     <nav class="navbar navbar-static-top" role="navigation">
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button"> <!--id="toggle-sidebar-button"-->
             <span class="sr-only">Toggle navigation</span>
@@ -91,8 +93,11 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li>
-                        <a href="#"><i class="fa fa-th"></i><span>Manage products</span></a>
+                    <li ui-sref="sudosos.manage">
+                        <a href="#"><i class="fa fa-columns"></i>Manage categories</a>
+                    </li>
+                    <li ui-sref="sudosos.products">
+                        <a href="#"><i class="fa fa-th"></i> Manage products</a>
                     </li>
                     <li>
                         <a href="#"><i class="fa fa-cubes"></i><span>Manage storages</span></a>

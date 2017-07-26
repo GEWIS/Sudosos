@@ -63,7 +63,7 @@ class TransactionController extends Controller{
 
     /**
      * @SWG\Get(
-     *     path ="/transactions/user",
+     *     path ="/transactions/user/{id}",
      *     summary = "Returns all transactions of a single user.",
      *     tags = {"Transaction"},
      *     description = "Returns all transactions of a single user, either within a certain range with the from and to parameter, or a certain number.",
@@ -221,10 +221,7 @@ class TransactionController extends Controller{
      * ),
      */
     public function createTransaction(Request $request){
-        // put subtransactions in documentation!
-
         $subtransactions = $request->subtransaction;
-        //dd($subtransactions[1]);
         $transaction = Transaction::create($request->all());
         if ($transaction->isValid()) {
             for($i =0; $i < sizeof($subtransactions); $i++){

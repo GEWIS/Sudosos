@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @SWG\Definition(
- *      definition="PointOfSale",
+ *      definition="pointOfSale",
  *      required={"id","owner_id","name"},
  *      @SWG\Property(
  *             property="id",
@@ -49,7 +49,7 @@ use Illuminate\Database\Eloquent\Model;
  *               required={"owner_id", "name"},
  *      @SWG\Property(
  *             property="owner_id",
- *             type="string",
+ *             type="integer",
  *             description="Id of the owner from this Point of Sale"
  *         ),
  *      @SWG\Property(
@@ -86,7 +86,7 @@ class PointOfSale extends BaseModel
 
     protected $rules = [
         "name"     => "required|string|max:255",
-        "owner_id" => "required|string|max:36|exists:mysql_gewisdb.Organ,id"
+        "owner_id" => "required|integer|exists:mysql_gewisdb.Organ,id",
     ];
 
     // Relations

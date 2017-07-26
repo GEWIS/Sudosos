@@ -33,7 +33,6 @@ class ProductPolicy
     public function create(User $user, $owner_id)
     {
         return $user->hasPermission('create-products', $owner_id);
-
     }
 
     /**

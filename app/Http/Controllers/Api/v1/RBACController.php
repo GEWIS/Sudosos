@@ -4,21 +4,35 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Models\RBAC\Permission;
 use App\Models\RBAC\Role;
+
+use App\Models\GEWIS\Organ;
+
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class RBACController extends Controller
 {
-    public function getRoles()
+    public function getRoles($owner_id)
     {
-        return Role::all();
+        $organ = Organ::find($owner_id);
+        if (!$organ) {
+            $this->response(404, "Owner not found");
+        }
+
+        $roles = Role::where('organ_id', $owner_id)->get();
+        if ($roles->isEmpty()) {
+            return $roles;
+        }
+        $this->authorize('view', $roles->first());
+        return $roles;
     }
 
     public function getRole($id)
     {
         $role = Role::find($id);
-
         if ($role) {
+            $this->authorize('view', $role);
             return $role;
         } else {
             return $this->response(404, "Role not found");
@@ -27,8 +41,15 @@ class RBACController extends Controller
 
     public function createRole(Request $request)
     {
-        $role = Role::create($request->all());
+        $owner = Organ::find($request->owner_id);
 
+        if (!$owner) {
+            return $this->response(404, 'Owner not found');
+        }
+
+        $this->authorize('create', [Role::class,$owner->id]);
+
+        $role = Role::create($request->all());
         if ($role->isValid()) {
             return response()->json($role->id, 201);
         } else {
@@ -41,6 +62,7 @@ class RBACController extends Controller
         $role = Role::find($id);
 
         if ($role) {
+            $this->authorize('update', $role);
             $role->update($request->all());
             if ($role->isValid()) {
                 return response()->json("Role succesfully updated", 200);
@@ -56,6 +78,7 @@ class RBACController extends Controller
     {
         $role = Role::find($id);
         if ($role) {
+            $this->authorize('delete', $role);
             $role->delete();
             return response()->json("Role succesfully deleted", 200);
         } else {
@@ -70,6 +93,7 @@ class RBACController extends Controller
         }
         $role = Role::withTrashed()->find($id);
         if ($role) {
+            $this->authorize('update', $role);
             $role->restore();
             return response()->json("Role succesfully reinstated", 200);
         } else {
@@ -89,6 +113,7 @@ class RBACController extends Controller
         if (!$user) {
             return $this->response(404, 'User not found or is not a GEWIS member');
         }
+        $this->authorize('update', $role);
         if($role->users->contains($user_id)){
             return $this->response(409, 'Role already added to the user');
         }
@@ -102,7 +127,11 @@ class RBACController extends Controller
         $role = Role::find($role_id);
         if (!$role) {
             return $this->response(404, "Role not found");
-        } else if (!$role->users->contains($user_id)) {
+        }
+
+        $this->authorize('update', $role);
+
+       if(!$role->users->contains($user_id)) {
             return $this->response(404, "User does not contain this role");
         } else {
             $role->users()->detach($user_id);
@@ -117,6 +146,8 @@ class RBACController extends Controller
         if (!$role) {
             return $this->response(404, 'Role not found');
         }
+        $this->authorize('view', $role);
+
         return $role->permissions;
     }
 
@@ -137,6 +168,9 @@ class RBACController extends Controller
         if (!$role) {
            return $this->response(404, 'Role not found');
         }
+
+        $this->authorize('create', [Role::class,$role->owner->id]);
+
         if ($role->permissions->contains($permission_id)) {
            return $this->response(409, 'Permission already added to role');
         }
@@ -147,9 +181,18 @@ class RBACController extends Controller
     public function removePermissionFromRole($permission_id, $role_id)
     {
         $permission = Permission::find($permission_id);
+        $role = Role::find($role_id);
+
         if (!$permission) {
             return $this->response(404, "Permission not found");
-        } else if (!$permission->roles->contains($role_id)) {
+        }
+        if (!$role) {
+            return $this->response(404, 'Role not found');
+        }
+
+        $this->authorize('delete', $role);
+
+        if (!$permission->roles->contains($role_id)) {
             return $this->response(404, "Permission is not added to the role");
         } else {
             $permission->roles()->detach($role_id);
