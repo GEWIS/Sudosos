@@ -216,7 +216,7 @@ class TransactionController extends Controller{
      *     ),
      *     @SWG\Response(
      *         response=400,
-     *         description="Transaction or subtransaction invalid.",
+     *         description="(Sub)transaction invalid, see message body.",
      *     ),
      * ),
      */
@@ -224,71 +224,20 @@ class TransactionController extends Controller{
         // put subtransactions in documentation!
 
         $subtransactions = $request->subtransaction;
-
+        //dd($subtransactions[1]);
         $transaction = Transaction::create($request->all());
         if ($transaction->isValid()) {
             for($i =0; $i < sizeof($subtransactions); $i++){
                 $sub = app('App\Http\Controllers\Api\v1\SubtransactionController')
                     ->createSubtransaction($subtransactions[$i], $transaction->id);
-                if(!$sub->isValid())  return $this->response(400,"Subtransaction invalid", $sub->getErrors());
+                if(!$sub)  return $this->response(400,"Subtransaction invalid", $sub->getErrors());
             }
             return response()->json($transaction->id, 201);
         }else{
             return $this->response(400,"Transaction invalid", $transaction->getErrors());
         }
     }
-    
-//    /**
-//     * @SWG\Put(
-//     *     path ="/transactions/{id}",
-//     *     summary = "Updates a transaction by id.",
-//     *     tags = {"transaction"},
-//     *     description = "Updates the transaction.",
-//     *     operationId = "updateTransaction",
-//     *     produces = {"application/json"},
-//     *     @SWG\Parameter(
-//     *         name="request",
-//     *         in="path",
-//     *         description="Request body in JSON.",
-//     *         required=true,
-//     *         type="string",
-//     *     ),
-//     *     @SWG\Parameter(
-//     *         name="id",
-//     *         in="path",
-//     *         description="Id of the transaction",
-//     *         required=true,
-//     *         type="string",
-//     *     ),
-//     *     @SWG\Response(
-//     *         response=201,
-//     *         description="Transaction succesfully deleted",
-//     *     ),
-//     *     @SWG\Response(
-//     *         response=400,
-//     *         description="Transaction not valid",
-//     *     ),
-//     *     @SWG\Response(
-//     *         response=404,
-//     *         description="Transaction not found",
-//     *     ),
-//     * ),
-//     */
-//    public function updateTransaction(Request $request, $id){
-//        $transaction = Transaction::find($id);
-//
-//        if ($transaction) {
-//            $transaction->update($request->all());
-//            if($transaction->isValid()){
-//                return response()->json("Transaction succesfully updated", 200);
-//            }else{
-//                return $this->response(400, "Transaction invalid",$transaction->getErrors());
-//            }
-//        } else {
-//            return $this->response(404,"Transaction not found");
-//        }
 
-    }
     /**
      * @SWG\Delete(
      *     path="/transactions/{id}",

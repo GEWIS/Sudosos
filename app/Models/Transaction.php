@@ -83,7 +83,9 @@ namespace App\Models;
  *     @SWG\Property(
  *             property="subtransaction",
  *             type="array",
- *             description="JSON array containing (multiple) subtransactions."
+ *             items = @SWG\Schema(ref="#/definitions/inputSubtransaction"),
+ *             description="JSON array containing (multiple) subtransactions.",
+ *
  *         ),
  *    )
  */

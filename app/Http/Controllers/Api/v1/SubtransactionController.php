@@ -37,20 +37,18 @@ class SubtransactionController extends Controller{
      *     ),
      * ),
      */
-    public function createSubtransaction(Request $request,$transaction_id){
+    public function createSubtransaction($json,$transaction_id){
+        // find transaction
         $transaction = Transaction::find($transaction_id);
-        if(!$transaction){
-            return $this->response(404,"Transaction not found", $transaction->getErrors());
-        }
-        if(!$transaction->isValid()){
-            return $this->response(400,"Transaction invalid", $transaction->getErrors());
-        }
-        $subtransaction = Subtransaction::create($request->all() + ['transaction_id' => $transaction_id]);
-        if ($subtransaction->isValid()) {
-                return response()->json($subtransaction->id, 201);
-        }else{
-                return $this->response(400,"Subtransaction invalid", $subtransaction->getErrors());
-        }
+
+        // generate errors if needs be
+        if(!$transaction) return $this->response(404,"Transaction not found", $transaction->getErrors());
+        if(!$transaction->isValid()) return $this->response(400,"Transaction invalid", $transaction->getErrors());
+
+        // create new subtransactino
+        $subtransaction = Subtransaction::create($json + ['transaction_id' => $transaction_id]);
+        if ($subtransaction->isValid()) return true;
+        else return $this->response(400,"Subtransaction invalid", $subtransaction->getErrors());
     }
 
     /**
