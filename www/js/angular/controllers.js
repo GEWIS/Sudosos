@@ -8,7 +8,7 @@ angular.module('sudosos.controllers', [])
             currentBalance: 42.69,
             committees: [
                 {
-                    id: 2,
+                    id: 4,
                     name: "BAC"
                 },
                 {
@@ -29,22 +29,25 @@ angular.module('sudosos.controllers', [])
         $scope.transferAmount = {
             amount: 0
         };
+
+        $scope.searchTerm = "";
         $scope.$watch('currentCommittee.committee', function () {
-            $scope.loadingProducts = $http.get(rootUrl + '/api/v1/products').then(function (response) {
+            var currentCommitteeId = $scope.currentCommittee.committee.id;
+            $scope.loadingProducts = $http.get(rootUrl + '/api/v1/products/owner/' + currentCommitteeId).then(function (response) {
                 $scope.products = response.data;
                 for (var i = 0; i < $scope.products.length; i++) {
                     $scope.products[i].amount = parseInt(Math.random() * 100);
                 }
             });
 
-            $scope.loadingStorages = $http.get(rootUrl + '/api/v1/storages').then(function (response) {
+            $scope.loadingStorages = $http.get(rootUrl + '/api/v1/storages/owner/' + currentCommitteeId).then(function (response) {
                 $scope.storages = response.data;
                 for (var i = 0; i < $scope.storages.length; i++) {
                     $scope.storages[i].items = [];
                 }
             });
 
-            $scope.loadingPOS = $http.get(rootUrl + '/api/v1/pointsofsale').then(function (response) {
+            $scope.loadingPOS = $http.get(rootUrl + '/api/v1/pointsofsale/owner/' + currentCommitteeId).then(function (response) {
                 $scope.pointsOfSale = response.data;
                 for (var i = 0; i < $scope.pointsOfSale.length; i++) {
                     $scope.pointsOfSale[i].storages = [];
