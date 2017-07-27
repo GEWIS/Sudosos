@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Models\PointOfSale;
 use App\Http\Controllers\Controller;
-
+use App\Models\GEWIS\Organ;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
@@ -38,13 +38,12 @@ class PointOfSaleController extends Controller{
      */
     public function index($owner_id){
         $organ = Organ::find($owner_id);
-
         if (!$organ) {
             $this->response(404, "Owner not found");
         }
 
         $points  = PointOfSale::where('owner_id', $owner_id)->get();
-        if(isEmpty($points)){
+        if($points->isEmpty()){
             return $points;
         }
         $this->authorize('view', $points->first());

@@ -3,10 +3,47 @@
 namespace App\Models\RBAC;
 use App\Models\BaseModel;
 
+/**
+ * @SWG\Definition(
+ *      definition="role",
+ *      required={"id","owner_id","name"},
+ *      @SWG\Property(
+ *             property="id",
+ *             type="string",
+ *             description="The id of the product"
+ *         ),
+ *     @SWG\Property(
+ *             property="owner_id",
+ *             type="integer",
+ *             description="The id of the organ it belongs to"
+ *         ),
+ *      @SWG\Property(
+ *             property="name",
+ *             type="string",
+ *             description="The name of the role"
+ *         ),
+ *    )
+ */
+
+/**    @SWG\Definition(
+ *               definition="inputRole",
+ *               required={"owner_id","name"},
+ *     @SWG\Property(
+ *             property="owner_id",
+ *             type="integer",
+ *             description="The id of the organ it belongs to"
+ *         ),
+ *      @SWG\Property(
+ *             property="name",
+ *             type="string",
+ *             description="The name of the role"
+ *         ),
+ *    )
+ */
 class Role extends BaseModel
 {
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'owner_id'];
 
 
     public function users()

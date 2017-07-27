@@ -11,12 +11,14 @@ class AllPermissions extends Seeder
      */
     public function run()
     {
-        $u = App\Models\User::find('423c2a50-7135-11e7-ac20-177ce5d7b4f1');
+        $u = App\Models\User::where('user_code', 6494)->first();
+//        dd($u->getLastNameAttribute());
         $r = App\Models\RBAC\Role::first();
         $p = App\Models\RBAC\Permission::all();
         forEach($p as $permission){
             $r->permissions()->attach($permission);
         }
-        $u->roles()->attach($r);
+        $u->roles()->attach($r->id);
+
     }
 }

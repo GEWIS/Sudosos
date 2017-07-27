@@ -16,7 +16,7 @@ class CreateRolesTable extends Migration
     {
         Schema::create('roles', function (Blueprint $table) {
             $table->uuid('id');
-            $table->integer('organ_id');
+            $table->integer('owner_id');
             $table->string('name');
             $table->timestamps();
             $table->softDeletes();
@@ -24,7 +24,7 @@ class CreateRolesTable extends Migration
             $databaseName = DB::connection('mysql_gewisdb')->getDatabaseName();
 
             $table->primary('id');
-            $table->foreign('organ_id')->references('id')->on(new Expression($databaseName . '.Organ'));
+            $table->foreign('owner_id')->references('id')->on(new Expression($databaseName . '.Organ'));
         });
     }
 
