@@ -141,7 +141,7 @@ class User extends BaseModel implements Authenticatable
     }
 
     public function hasPermission($permission, $organId){
-        $organRoles = $this->roles->where('organ_id', '=', $organId);
+        $organRoles = $this->roles->where('owner_id', '=', $organId);
         forEach($organRoles as $role){
             if($role->hasPermission($permission)){
                  return true;
