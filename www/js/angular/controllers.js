@@ -146,7 +146,31 @@ angular.module('sudosos.controllers', [])
 
     }])
     .controller('ManageRolesCtrl', ['$scope', function ($scope) {
-
+        $scope.committeeMembers = [
+            "Wout de Ruiter",
+            "Stepah van den Berkmortel",
+            "Bram Wieringa",
+            "Sjaars Rik",
+            "Stefan Luijten",
+            "Leroy Visser",
+            "Yoram Meijaard",
+            "Niekie van Uum",
+            "Sako Arts"];
+        $scope.roles = [
+            "Voorzitter",
+            "Secretaris",
+            "Penningmeester",
+            "Sjaars"
+        ];
+        $scope.resources = [
+            "Update",
+            "Create",
+            "Delete",
+            "Select",
+            "Grant"
+        ]
+        $scope.itemsCol1 = $scope.committeeMembers;
+        $scope.itemsCol2 = $scope.roles;
     }])
     .run(function () {
     });

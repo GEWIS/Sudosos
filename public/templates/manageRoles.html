@@ -7,31 +7,41 @@
         </div>
     </div>
     <div class="row flexchain flexrow">
+        <div class="col-sm-6 hidden-xs flexchain">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                        <input type="text" class="form-control" placeholder="filter">
+                    </div>
+                </div>
+            </div>
+            <div class="row flexchain">
+                <div class="col-xs-12 flexchain yscroll">
+                    <div class="row" ng-repeat="item in itemsCol1">
+                        <div class="col-xs-12">
+                            <h3>{{item}}</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="col-sm-6 hidden-xs">
             <div class="row">
                 <div class="col-xs-12">
-                    <input/>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                        <input type="text" class="form-control" placeholder="filter">
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    <select>
-
-                    </select>
-                </div>
-            </div>
-        </div><!--
-        --><div class="col-sm-6 hidden-xs">
-            <div class="row">
-                <div class="col-xs-12">
-                    <input/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    <select>
-
-                    </select>
+            <div class="row flexchain">
+                <div class="col-xs-12 flexchain yscroll">
+                    <div class="row" ng-repeat="item in itemsCol2">
+                        <div class="col-xs-12 clickableItem">
+                            <h3>{{item}}</h3>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -44,7 +54,7 @@
             <button class="btn btn-success btn-block"> Save </button>
         </div>
         <div class="col-xs-4">
-            <button class="btn btn-info btn-block"> Roles management </button>
+            <button class="btn btn-info btn-block"> Role management </button>
         </div>
     </div>
 </div>
