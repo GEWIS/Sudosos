@@ -12,14 +12,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-//        $this->call(GEWISTableSeeder::class);
-//        $this->call(UserTableSeeder::class);
-//        $this->call(ProductTableSeeder::class);
-//        $this->call(StorageTableSeeder::class);
-//        $this->call(PointOfSaleTableSeeder::class);
-//        $this->call(ExternalUserSeeder::class);
-//        $this->call(PermissionTableSeeder::class);
-//        $this->call(RBACSeeder::class);
-        $this->call(AllPermissions::class);
+        $this->call(GEWISTableSeeder::class);
+        $this->call(UserTableSeeder::class);
+        $this->call(ProductTableSeeder::class);
+        $this->call(StorageTableSeeder::class);
+        $this->call(PointOfSaleTableSeeder::class);
+        $this->call(ExternalUserSeeder::class);
+        $this->call(PermissionTableSeeder::class);
+        $this->call(RBACSeeder::class);
+
+//        $this->call(AllPermissions::class);
+
     }
 }

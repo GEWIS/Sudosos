@@ -20,7 +20,7 @@ $factory->define(App\Models\GEWIS\OrganMember::class, function (Faker\Generator 
         'r_meeting_number' => $faker->numberBetween(0,10000),
         'r_decision_point' => $faker->numberBetween(0,100000),
         'r_decision_number' => $faker->numberBetween(0,100000),
-        'function' => array_random(['general','chairman', 'pm']),
+        'function' => array_random(['Voorzitter','Secretaris', 'PR-functionaris','Vice-Voorzitter']),
         'installDate' => $faker->date($format = 'Y-m-d', $max = 'now'),
         'dischargeDate' => array_random([null, $faker->date($format = 'Y-m-d', $max = 'now')]),
     ];

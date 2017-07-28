@@ -579,6 +579,10 @@ class StorageController extends Controller
      *         description="Storage or Product not found, see return message",
      *     ),
      *     @SWG\Response(
+     *         response=403,
+     *         description="Adding product of someone else is not allowed",
+     *     ),
+     *     @SWG\Response(
      *         response=400,
      *         description="Invalid stock property",
      *     ),
@@ -593,7 +597,9 @@ class StorageController extends Controller
         } else if (!$product) {
             return $this->response(404, "Product not found");
         }
-
+        if($storage->id != $product->id){
+            return $this->response(403, 'Adding product of someone else is not allowed');
+        }
         $this->authorize('create', [Storage::class,$storage->owner->id]);
 
         $stock =  $request->value;
