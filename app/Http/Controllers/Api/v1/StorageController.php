@@ -565,7 +565,7 @@ class StorageController extends Controller
      *     @SWG\Parameter(
      *         name="stock",
      *         in="body",
-     *         description="Id of the product",
+     *         description="Stock value",
      *         required=true,
      *         type="integer",
      *         @SWG\Schema(ref="#/definitions/inputProperty")

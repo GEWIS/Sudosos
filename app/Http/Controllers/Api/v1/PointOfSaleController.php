@@ -6,6 +6,7 @@ use App\Models\PointOfSale;
 use App\Http\Controllers\Controller;
 use App\Models\GEWIS\Organ;
 use App\Models\Product;
+use App\Models\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 
@@ -383,4 +384,130 @@ class PointOfSaleController extends Controller{
             }
         }
     }
+
+
+    /**
+     * @SWG\Post(
+     *     path ="/pointsofsale/{pos_id}/stores/{storage_id}",
+     *     summary = "Attach a storage to a point of sale.",
+     *     tags = {"POS"},
+     *     description = "Attach a storage to a point of sale.",
+     *     operationId = "postStoragePointOfSale",
+     *     produces = {"application/json"},
+     *     @SWG\Parameter(
+     *         name="pos_id",
+     *         in="path",
+     *         description="Id of the point of sale",
+     *         required=true,
+     *         type="string",
+     *     ),
+     *     @SWG\Parameter(
+     *         name="storage_id",
+     *         in="path",
+     *         description="Id of the storage",
+     *         required=true,
+     *         type="string",
+     *     ),
+     *     @SWG\Response(
+     *         response=201,
+     *         description="Storage succesfully added to points of sale",
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Point of sale not found",
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Storage not found",
+     *     ),
+     *     @SWG\Response(
+     *         response=409,
+     *         description="Storage already attached to the point of sale",
+     *     ),
+     * ),
+     */
+    public function postStoragePointsOfSale($pos_id, $storage_id){
+        $pos = PointOfSale::find($pos_id);
+        $storage = Storage::find($storage_id);
+        if (!$storage) {
+            return $this->response(404, "Storage not found");
+        }
+        if (!$pos) {
+            return $this->response(404, "Point of sale not found");
+        }
+
+        $this->authorize('update', [Storage::class,$storage->owner->id]);
+        $this->authorize('update', [PointOfSale::class,$pos->owner->id]);
+
+        // Adding storage of someone else thus required authentication of this person
+       // TODO, validate usercode + pin if given
+
+
+            if($pos->storages->contains($storage)){
+                return $this->response(409, 'Storage already attach to this point of sale');
+            }
+
+            $pos->storages()->attach($storage);
+            return response()->json("Storage successfully attached to the point of sale", 201);
+    }
+    /**
+     * @SWG\Delete(
+     *     path ="/pointsofsale/{pos_id}/stores/{storage_id}",
+     *     summary = "Detach a storage from a points of sale.",
+     *     tags = {"POS"},
+     *     description = "Detach a storage from a points of sale.",
+     *     operationId = "deleteStoragePointOfSale",
+     *     produces = {"application/json"},
+     *     @SWG\Parameter(
+     *         name="pos_id",
+     *         in="path",
+     *         description="Id of the point of sale",
+     *         required=true,
+     *         type="string",
+     *     ),
+     *     @SWG\Parameter(
+     *         name="storage_id",
+     *         in="path",
+     *         description="Id of the storage",
+     *         required=true,
+     *         type="string",
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Storage succesfully detached from points of sale",
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Point of sale not found",
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Storage not found",
+     *     ),
+     *     @SWG\Response(
+     *         response=409,
+     *         description="Storage not attached to the point of sale",
+     *     ),
+     * ),
+     */
+    public function deleteStoragePointsOfSale($pos_id, $storage_id){
+            $pos = PointOfSale::find($pos_id);
+            $storage = Storage::find($storage_id);
+            if (!$storage) {
+                return $this->response(404, "Storage not found");
+            }
+            if (!$pos) {
+                return $this->response(404, "Point of sale not found");
+            }
+
+            $this->authorize('delete', $pos);
+            $this->authorize('delete', $storage);
+
+            if (!$pos->storages->contains($storage)) {
+                return $this->response(409, "Storage not attached to point of sale");
+            } else {
+                $pos->storages()->detach($storage);
+                return response()->json("Storage succesfully detached from the point of sale", 200);
+            }
+        }
 }
