@@ -25,6 +25,7 @@ ui-view > .content-wrapper {
   flex: 1 1 auto;
   min-height: initial;
   padding: 15px;
+  overflow-y: scroll;
 }
 
 ui-view > footer {
@@ -116,6 +117,10 @@ tr:hover{
   border: @gewis-light-gray 2px solid;
   width: 100%;
   background-color: darken(@body-bg, 2%);
+  max-height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  flex: 1;
 }
 
 // The style for an item in an items-div

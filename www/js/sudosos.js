@@ -70,7 +70,7 @@ angular.module('sudosos', ['sudosos.controllers', 'sudosos.filters', 'sudosos.se
             );
         $urlRouterProvider.otherwise('/sudosos/products');
     }])
-    .value("rootUrl", "http://sudosos.dev")
+    .value("rootUrl", "http://sudosos.dev/api/v1")
     .run(['$rootScope', '$state', function ($rootScope, $state) {
 
     }]);

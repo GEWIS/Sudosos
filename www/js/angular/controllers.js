@@ -8,7 +8,7 @@ angular.module('sudosos.controllers', [])
             currentBalance: 42.69,
             committees: [
                 {
-                    id: 4,
+                    id: 18,
                     name: "BAC"
                 },
                 {
@@ -33,24 +33,39 @@ angular.module('sudosos.controllers', [])
         $scope.searchTerm = "";
         $scope.$watch('currentCommittee.committee', function () {
             var currentCommitteeId = $scope.currentCommittee.committee.id;
-            $scope.loadingProducts = $http.get(rootUrl + '/api/v1/products/owner/' + currentCommitteeId).then(function (response) {
+            $scope.loadingProducts = $http.get(rootUrl + '/products/owner/' + currentCommitteeId).then(function (response) {
                 $scope.products = response.data;
                 for (var i = 0; i < $scope.products.length; i++) {
                     $scope.products[i].amount = parseInt(Math.random() * 100);
                 }
             });
 
-            $scope.loadingStorages = $http.get(rootUrl + '/api/v1/storages/owner/' + currentCommitteeId).then(function (response) {
+            // Load the storages
+            $scope.loadingStorages = $http.get(rootUrl + '/storages/owner/' + currentCommitteeId).then(function (response) {
                 $scope.storages = response.data;
-                for (var i = 0; i < $scope.storages.length; i++) {
-                    $scope.storages[i].items = [];
+
+                $scope.storagePromises = [];
+                // This loop takes every storage, and creates a promise that will get the products in that storage.
+                for(var i = 0; i < $scope.storages.length; i++){
+                    // This anonymous function is needed because of closure issues
+                    (function (index) {
+                        var promise = $http.get(rootUrl + '/storages/' + $scope.storages[index].id + "/stores").then(function (response) {
+                            $scope.storages[index].items = response.data;
+                        });
+                        $scope.storagePromises.push(promise);
+                    })(i);
                 }
+
+                // Run all promises
+                return $q.all($scope.storagePromises);
             });
 
-            $scope.loadingPOS = $http.get(rootUrl + '/api/v1/pointsofsale/owner/' + currentCommitteeId).then(function (response) {
+            $scope.loadingPOS = $http.get(rootUrl + '/pointsofsale/owner/' + currentCommitteeId).then(function (response) {
                 $scope.pointsOfSale = response.data;
                 for (var i = 0; i < $scope.pointsOfSale.length; i++) {
-                    $scope.pointsOfSale[i].storages = [];
+                    (function (index) {
+                        var promise = $http.get(rootUrl + '/')
+                    })(i);
                 }
             });
         });
@@ -85,17 +100,42 @@ angular.module('sudosos.controllers', [])
 
 
         $scope.transferItems = function () {
+            // If the amount is < 1, we shouldn't add it, as it does not make sense.
             if($scope.transferAmount.amount < 1){
                 $scope.editModal.close();
                 return;
             }
-            $scope.currentProduct.amount = $scope.currentProduct.amount - $scope.transferAmount.amount;
-            $scope.itemToAdd = angular.copy($scope.currentProduct);
-            $scope.itemToAdd.amount = $scope.transferAmount.amount;
-            $scope.currentStorage.items.push($scope.itemToAdd);
-            $scope.editModal.close();
-        };
 
+            // Check if the same object is already in the list: If this is the case, increase the amount
+            for(var i = 0; i < $scope.currentStorage.items.length; i++){
+                var currentItem = $scope.currentStorage.items[i];
+                if(currentItem.id == $scope.currentProduct.id){
+                    currentItem.amount += $scope.transferAmount.amount;
+                    $http.put(rootUrl + "/storages/" + $scope.currentStorage.id + "/stock/" + currentItem.id,
+                        {
+                            value: $scope.transferAmount.amount
+                        }
+                    ).then(function (response) {
+                        console.log(response);
+                        $scope.editModal.close();
+                    });
+                    return;
+                }
+            }
+
+            $http.post(rootUrl + "/storages/" + $scope.currentStorage.id + "/stores/" + $scope.currentProduct.id,
+                {
+                    value: $scope.transferAmount.amount
+                }
+            ).then(function (response) {
+                console.log(response);
+                $scope.currentProduct.amount = $scope.currentProduct.amount - $scope.transferAmount.amount;
+                $scope.itemToAdd = angular.copy($scope.currentProduct);
+                $scope.itemToAdd.amount = $scope.transferAmount.amount;
+                $scope.currentStorage.items.push($scope.itemToAdd);
+                $scope.editModal.close();
+            });
+        };
     }])
     .controller('ProductsCtrl',['$scope', '$http', '$uibModal', 'rootUrl',
         function ($scope, $http, $uibModal, rootUrl) {
@@ -140,7 +180,7 @@ angular.module('sudosos.controllers', [])
                 }
             };
             $scope.$watch('currentCommittee.committee', function () {
-                $scope.loadingData = $http.get(rootUrl + '/api/v1/products/owner/' + $scope.currentCommittee.committee.id)
+                $scope.loadingData = $http.get(rootUrl + '/products/owner/' + $scope.currentCommittee.committee.id)
                     .then(function (response) {
                         $scope.products = response.data;
                         for(var i = 0; i < $scope.products.length; i++){
