@@ -412,13 +412,10 @@ class PointOfSaleController extends Controller{
      *         response=201,
      *         description="Storage succesfully added to points of sale",
      *     ),
+
      *     @SWG\Response(
      *         response=404,
-     *         description="Point of sale not found",
-     *     ),
-     *     @SWG\Response(
-     *         response=404,
-     *         description="Storage not found",
+     *         description="Storage or point of sale not found",
      *     ),
      *     @SWG\Response(
      *         response=409,
@@ -478,11 +475,7 @@ class PointOfSaleController extends Controller{
      *     ),
      *     @SWG\Response(
      *         response=404,
-     *         description="Point of sale not found",
-     *     ),
-     *     @SWG\Response(
-     *         response=404,
-     *         description="Storage not found",
+     *         description="Storage or point of sale not found",
      *     ),
      *     @SWG\Response(
      *         response=409,

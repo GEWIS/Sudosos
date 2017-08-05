@@ -146,15 +146,15 @@ class User extends BaseModel implements Authenticatable
         return $this->belongsToMany('App\Models\RBAC\Role', 'user_role');
     }
 
-    public function hasPermission($permission, $organ_id)
+    public function hasPermission($permission, $owner_id)
     {
 
         $organRoles = [];
         // Sudosos roles
-        $organRoles = $this->roles->where('organ_id', $organ_id);
+        $organRoles = $this->roles->where('owner_id', $owner_id);
         // Gewis roles
-        forEach ($this->getGEWISOrganRoles($organ_id) as $role) {
-            $r = Role::where([['name', $role], ['organ_id', $organ_id]])->first();
+        forEach ($this->getGEWISOrganRoles($owner_id) as $role) {
+            $r = Role::where([['name', $role], ['organ_id', $owner_id]])->first();
             if ($r) {
                 $organRoles->push($r);
             }
