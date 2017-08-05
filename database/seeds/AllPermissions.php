@@ -11,8 +11,11 @@ class AllPermissions extends Seeder
      */
     public function run()
     {
-        $u = App\Models\User::where('user_code', 6494)->first();
-//        dd($u->getLastNameAttribute());
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('user_role')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+        $u = App\Models\User::where('user_code',6494)->first();
         $r = App\Models\RBAC\Role::first();
         $p = App\Models\RBAC\Permission::all();
         forEach($p as $permission){
