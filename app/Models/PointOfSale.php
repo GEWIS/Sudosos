@@ -65,7 +65,7 @@ use Illuminate\Database\Eloquent\Model;
  *               required={"value"},
  *      @SWG\Property(
  *             property="value",
- *             type="string",
+ *             type="integer",
  *             description="Value of the property"
  *         ),
  *    )
