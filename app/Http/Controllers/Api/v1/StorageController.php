@@ -447,13 +447,6 @@ class StorageController extends Controller
      *         required=true,
      *         type="string",
      *     ),
-     *     @SWG\Parameter(
-     *         name="request",
-     *         in="path",
-     *         description="Request body in JSON",
-     *         required=true,
-     *         type="string",
-     *     ),
      *     @SWG\Response(
      *         response=200,
      *         description="Successful operation",
@@ -597,7 +590,7 @@ class StorageController extends Controller
         } else if (!$product) {
             return $this->response(404, "Product not found");
         }
-        if($storage->id != $product->id){
+        if($storage->owner->id != $product->owner->id){
             return $this->response(403, 'Adding product of someone else is not allowed');
         }
         $this->authorize('create', [Storage::class,$storage->owner->id]);
