@@ -113,6 +113,8 @@ angular.module("ngDraggable", [])
                     // console.log("110"+" onpress: "+Math.random()+" "+ evt.type);
                     if(! _dragEnabled)return;
 
+                    if (evt.target.type === 'button' || evt.target.tagName === 'INPUT' || evt.target.tagName === 'A') return;
+
                     if (isClickableElement(evt)) {
                         return;
                     }

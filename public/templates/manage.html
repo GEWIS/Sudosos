@@ -2,8 +2,13 @@
     <div class="row">
         <div cg-busy="loadingProducts" class="col-lg-4 col-md-4 col-sm-4 ">
             <h2 align="center">Products</h2>
+            <div class="form-group input-group">
+                <div class="input-group-addon"><i class="fa fa-search"></i> </div>
+                <label for="searchBar" class="sr-only">Search</label>
+                <input type="text" class="form-control" id="searchBar" placeholder="Search" ng-model="searchTerm">
+            </div>
             <div class="items-div">
-                <div class="item-div" ng-repeat="product in products" ng-drag="true" ng-drag-data="product">
+                <div class="item-div" ng-repeat="product in products | filter : searchTerm" ng-drag="true" ng-drag-data="product">
                     <div class="row">
                         <div class="col-sm-12 col-md-12 col-lg-12">
                             <h4>{{ product.name }}</h4>
@@ -11,7 +16,7 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-6 col-md-6 col-lg-6">
-                            <p>Price: €{{ product.price   }}</p>
+                            <p>Price: €{{ product.price }}</p>
                         </div>
                         <div class="col-sm-6 col-md-6 col-lg-6">
                             <p>Amount: {{ product.amount }}</p>
@@ -26,7 +31,7 @@
                 <div class="item-div" ng-repeat="storage in storages" ng-drag="true" ng-drag-data="storage">
                     <h4>{{ storage.name }}</h4>
                     <p>Products: </p>
-                    <div class="products-div" ng-drop="true"
+                    <div class="products-div" ng-drop="true" cg-busy="storagePromises[$index]"
                          ng-drop-success="dropProduct($data, $event)">
                         <p ng-repeat="item in storage.items">
                             {{ item.amount }} {{ item.name }}

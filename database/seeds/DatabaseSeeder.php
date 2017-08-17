@@ -20,5 +20,8 @@ class DatabaseSeeder extends Seeder
         $this->call(ExternalUserSeeder::class);
         $this->call(PermissionTableSeeder::class);
         $this->call(RBACSeeder::class);
+
+//        $this->call(AllPermissions::class);
+
     }
 }

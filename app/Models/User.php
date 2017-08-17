@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\RBAC\Role;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -26,15 +27,15 @@ class User extends BaseModel implements Authenticatable
         'type',
     ];
 
-    protected $guarded=[
-        "id",'balance', 'type',
+    protected $guarded = [
+        "id", 'balance', 'type',
     ];
 
     protected $rules = [
-        "user_code"     => "required|min:4|max:6|unique",
-        "pincode"    => "string|max:336",
+        "user_code" => "required|min:4|max:6|unique",
+        "pincode" => "string|max:336",
         "card_id" => "string|max:336",
-        "balance"    => "integer",
+        "balance" => "integer",
         "type" => "required|digits:1|in:0,1,2,3",
     ];
 
@@ -67,19 +68,23 @@ class User extends BaseModel implements Authenticatable
         return $this->hasOne('App\Models\GEWIS\Member', 'lidnr', 'user_code');
     }
 
-    public function products(){
-        return $this->hasMany('App\Models\Product','owner_id');
+    public function products()
+    {
+        return $this->hasMany('App\Models\Product', 'owner_id');
     }
 
-    public function storages(){
-        return $this->hasMany('App\Models\Storage','owner_id');
+    public function storages()
+    {
+        return $this->hasMany('App\Models\Storage', 'owner_id');
     }
 
-    public function pointsOfSale(){
-        return $this->hasMany('App\Models\PointOfSale','owner_id');
+    public function pointsOfSale()
+    {
+        return $this->hasMany('App\Models\PointOfSale', 'owner_id');
     }
 
-    public function additionalUserRoles(){
+    public function additionalUserRoles()
+    {
         return $this->hasMany('App\Models\UserRole');
     }
 
@@ -124,12 +129,13 @@ class User extends BaseModel implements Authenticatable
         }
     }
 
-    public function getOrganRoles()
+    public function getGEWISOrganRoles($organ_id)
     {
         $organRoles = [];
-        foreach ($this->GEWISMember->organMemberships as $om) {
+        $relations = $this->GEWISMember->organMemberships()->where('organ_id', $organ_id)->get();
+        foreach ($relations as $om) {
             if ($om->dischargeDate === null) {
-                $organRoles[$om->organ->abbr] = $om->function;
+                array_push($organRoles, $om->function);
             }
         }
         return $organRoles;
@@ -140,11 +146,24 @@ class User extends BaseModel implements Authenticatable
         return $this->belongsToMany('App\Models\RBAC\Role', 'user_role');
     }
 
-    public function hasPermission($permission, $organId){
-        $organRoles = $this->roles->where('organ_id', '=', $organId);
-        forEach($organRoles as $role){
-            if($role->hasPermission($permission)){
-                 return true;
+    public function hasPermission($permission, $owner_id)
+    {
+
+        $organRoles = [];
+        // Sudosos roles
+        $organRoles = $this->roles->where('owner_id', $owner_id);
+        // Gewis roles
+        forEach ($this->getGEWISOrganRoles($owner_id) as $role) {
+            $r = Role::where([['name', $role], ['organ_id', $owner_id]])->first();
+            if ($r) {
+                $organRoles->push($r);
+            }
+        }
+
+        // Get permission from the combined roles
+        forEach ($organRoles as $role) {
+            if ($role->hasPermission($permission)) {
+                return true;
             }
         }
         return false;

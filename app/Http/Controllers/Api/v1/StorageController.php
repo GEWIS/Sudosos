@@ -447,13 +447,6 @@ class StorageController extends Controller
      *         required=true,
      *         type="string",
      *     ),
-     *     @SWG\Parameter(
-     *         name="request",
-     *         in="path",
-     *         description="Request body in JSON",
-     *         required=true,
-     *         type="string",
-     *     ),
      *     @SWG\Response(
      *         response=200,
      *         description="Successful operation",
@@ -565,7 +558,7 @@ class StorageController extends Controller
      *     @SWG\Parameter(
      *         name="stock",
      *         in="body",
-     *         description="Id of the product",
+     *         description="Stock value",
      *         required=true,
      *         type="integer",
      *         @SWG\Schema(ref="#/definitions/inputProperty")
@@ -577,6 +570,10 @@ class StorageController extends Controller
      *     @SWG\Response(
      *         response=404,
      *         description="Storage or Product not found, see return message",
+     *     ),
+     *     @SWG\Response(
+     *         response=403,
+     *         description="Adding product of someone else is not allowed",
      *     ),
      *     @SWG\Response(
      *         response=400,
@@ -593,7 +590,9 @@ class StorageController extends Controller
         } else if (!$product) {
             return $this->response(404, "Product not found");
         }
-
+        if($storage->owner->id != $product->owner->id){
+            return $this->response(403, 'Adding product of someone else is not allowed');
+        }
         $this->authorize('create', [Storage::class,$storage->owner->id]);
 
         $stock =  $request->value;
