@@ -93,7 +93,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "successful operation"
+                        "description": "Successful operation"
                     },
                     "404": {
                         "description": "Point of sale not found"
@@ -293,6 +293,84 @@
                 }
             }
         },
+        "/pointsofsale/{pos_id}/stores/{storage_id}": {
+            "post": {
+                "tags": [
+                    "POS"
+                ],
+                "summary": "Attach a storage to a point of sale.",
+                "description": "Attach a storage to a point of sale.",
+                "operationId": "postStoragePointOfSale",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "pos_id",
+                        "in": "path",
+                        "description": "Id of the point of sale",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "storage_id",
+                        "in": "path",
+                        "description": "Id of the storage",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Storage succesfully added to points of sale"
+                    },
+                    "404": {
+                        "description": "Storage or point of sale not found"
+                    },
+                    "409": {
+                        "description": "Storage already attached to the point of sale"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "POS"
+                ],
+                "summary": "Detach a storage from a points of sale.",
+                "description": "Detach a storage from a points of sale.",
+                "operationId": "deleteStoragePointOfSale",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "pos_id",
+                        "in": "path",
+                        "description": "Id of the point of sale",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "storage_id",
+                        "in": "path",
+                        "description": "Id of the storage",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Storage succesfully detached from points of sale"
+                    },
+                    "404": {
+                        "description": "Storage or point of sale not found"
+                    },
+                    "409": {
+                        "description": "Storage not attached to the point of sale"
+                    }
+                }
+            }
+        },
         "/products/owner/{owner_id}": {
             "get": {
                 "tags": [
@@ -315,7 +393,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "successful operation"
+                        "description": "Successful operation"
                     },
                     "404": {
                         "description": "Owner not found"
@@ -347,7 +425,7 @@
                 ],
                 "responses": {
                     "201": {
-                        "description": "successful operation"
+                        "description": "Successful operation"
                     },
                     "400": {
                         "description": "Product invalid."
@@ -373,14 +451,14 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "id of the product",
+                        "description": "Id of the product",
                         "required": true,
                         "type": "string"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "successful operation"
+                        "description": "Successful operation"
                     },
                     "404": {
                         "description": "Product not found"
@@ -574,10 +652,414 @@
                 }
             }
         },
+        "/roles/owner/{owner_id}": {
+            "get": {
+                "tags": [
+                    "Role"
+                ],
+                "summary": "Returns all roles that belong to an organ.",
+                "description": "Returns all roles that belogn to an organ.",
+                "operationId": "getAllRoles",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "owner_id",
+                        "in": "path",
+                        "description": "Id of the owner",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Owner not found"
+                    }
+                }
+            }
+        },
+        "/roles/{id}": {
+            "get": {
+                "tags": [
+                    "Role"
+                ],
+                "summary": "Returns the role by id.",
+                "description": "Returns a role with a specified id.",
+                "operationId": "getRole",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of the product",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Role not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Role"
+                ],
+                "summary": "Updates a role by id.",
+                "description": "Updates the role.",
+                "operationId": "updateRole",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Role",
+                        "in": "body",
+                        "description": "Model of the role to store",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/inputRole"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of the role",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Role succesfully updated"
+                    },
+                    "400": {
+                        "description": "Role not valid"
+                    },
+                    "404": {
+                        "description": "Role not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Role"
+                ],
+                "summary": "Delete a role by id.",
+                "description": "Delete a role by id.",
+                "operationId": "deleteRole",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of the role",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Role succesfully deleted."
+                    },
+                    "404": {
+                        "description": "Role not found."
+                    }
+                }
+            }
+        },
+        "/roles": {
+            "post": {
+                "tags": [
+                    "Role"
+                ],
+                "summary": "Create a new role.",
+                "description": "Create a new role.",
+                "operationId": "createRole",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Role",
+                        "in": "body",
+                        "description": "Model of the Role to store",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/role"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Role created succesfully"
+                    },
+                    "400": {
+                        "description": "Role invalid."
+                    },
+                    "404": {
+                        "description": "Owner not found"
+                    }
+                }
+            }
+        },
+        "/roles/{id}/reinstate": {
+            "put": {
+                "tags": [
+                    "Role"
+                ],
+                "summary": "Reinstate a role by id.",
+                "description": "Reinstate a role by id.",
+                "operationId": "reinstateRole",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of the role",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Role succesfully reinstated"
+                    },
+                    "404": {
+                        "description": "Role not found"
+                    },
+                    "409": {
+                        "description": "Role already active"
+                    }
+                }
+            }
+        },
+        "/roles/{role_id}/assign/{user_id}": {
+            "post": {
+                "tags": [
+                    "Role"
+                ],
+                "summary": "Adds an user to a role.",
+                "description": "Adds an user to a role.",
+                "operationId": "addUserToRole",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "role_id",
+                        "in": "path",
+                        "description": "Id of the role",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "description": "Id of the user",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Role successfully added to the user"
+                    },
+                    "404": {
+                        "description": "Role / user not found"
+                    },
+                    "409": {
+                        "description": "User already added to the role"
+                    }
+                }
+            }
+        },
+        "/roles/{role_id}/remove/{user_id}": {
+            "delete": {
+                "tags": [
+                    "Role"
+                ],
+                "summary": "Removes an user from a role.",
+                "description": "Removes an user from a role.",
+                "operationId": "removeUserFromRole",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "role_id",
+                        "in": "path",
+                        "description": "Id of the role",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "description": "Id of the user",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Role succesfully removed from the user"
+                    },
+                    "404": {
+                        "description": "Role / user not found"
+                    },
+                    "409": {
+                        "description": "User does not have this role"
+                    }
+                }
+            }
+        },
+        "/roles/{id}/permissions": {
+            "get": {
+                "tags": [
+                    "Role"
+                ],
+                "summary": "Returns all permissions by role id.",
+                "description": "Returns all permissions by role id.",
+                "operationId": "getPermissionsByRole",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of the role",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Owner not found"
+                    }
+                }
+            }
+        },
+        "/permissions": {
+            "get": {
+                "tags": [
+                    "Permission"
+                ],
+                "summary": "Returns all permissions.",
+                "description": "Returns all permissions.",
+                "operationId": "getPermissions",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/permissions/{permission_id}/assign/{role_id}": {
+            "post": {
+                "tags": [
+                    "Permission"
+                ],
+                "summary": "Adds an permission to a role.",
+                "description": "Adds an permission to a role.",
+                "operationId": "addPermissionToRole",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "permission_id",
+                        "in": "path",
+                        "description": "Id of the permission",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "role_id",
+                        "in": "path",
+                        "description": "Id of the role",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Permission successfully added to the role"
+                    },
+                    "404": {
+                        "description": "Permission / role not found"
+                    },
+                    "409": {
+                        "description": "Permission already added to role"
+                    }
+                }
+            }
+        },
+        "/permissions/{permission_id}/remove/{role_id}": {
+            "delete": {
+                "tags": [
+                    "Permission"
+                ],
+                "summary": "Removes an permission from a role.",
+                "description": "Removes an permission from a role.",
+                "operationId": "removePermissionFromRole",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "permission_id",
+                        "in": "path",
+                        "description": "Id of the permission",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "role_id",
+                        "in": "path",
+                        "description": "Id of the role",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Permission succesfully removed from the role"
+                    },
+                    "404": {
+                        "description": "Permission / role not found"
+                    },
+                    "409": {
+                        "description": "Role does not contain this permission"
+                    }
+                }
+            }
+        },
         "/storages/owner/{owner_id}": {
             "get": {
                 "tags": [
-                    "storage"
+                    "Storage"
                 ],
                 "summary": "Returns all storages for an organ.",
                 "description": "Returns all storages for an organ.",
@@ -607,7 +1089,7 @@
         "/storages": {
             "post": {
                 "tags": [
-                    "storage"
+                    "Storage"
                 ],
                 "summary": "Create a new storage.",
                 "description": "Create a new storage.",
@@ -639,7 +1121,7 @@
         "/storages/{id}": {
             "get": {
                 "tags": [
-                    "storage"
+                    "Storage"
                 ],
                 "summary": "Returns storage by id.",
                 "description": "Returns a storage with a specified id.",
@@ -667,7 +1149,7 @@
             },
             "put": {
                 "tags": [
-                    "storage"
+                    "Storage"
                 ],
                 "summary": "Updates a storage by id.",
                 "description": "Updates the storage.",
@@ -705,7 +1187,7 @@
             },
             "delete": {
                 "tags": [
-                    "storage"
+                    "Storage"
                 ],
                 "summary": "Delete a storage by id.",
                 "description": "Delete a storage by id.",
@@ -735,7 +1217,7 @@
         "/storages/{id}/reinstate": {
             "put": {
                 "tags": [
-                    "storage"
+                    "Storage"
                 ],
                 "summary": "Reinstate a storage by id.",
                 "description": "Reinstate a storage by id.",
@@ -768,7 +1250,7 @@
         "/storages/{id}/{property}": {
             "get": {
                 "tags": [
-                    "storage"
+                    "Storage"
                 ],
                 "summary": "Returns a property of a storage by id.",
                 "description": "Returns a property of a storage by id.",
@@ -803,7 +1285,7 @@
             },
             "put": {
                 "tags": [
-                    "storage"
+                    "Storage"
                 ],
                 "summary": "Update a property of a storage by id.",
                 "description": "Update a property of a storage by id.",
@@ -850,7 +1332,7 @@
         "/storages/{id}/stores": {
             "get": {
                 "tags": [
-                    "storage"
+                    "Storage"
                 ],
                 "summary": "Returns all products in a storage by id.",
                 "description": "Returns all products in a storage by id.",
@@ -880,7 +1362,7 @@
         "/storages/{storage_id}/stock/{product_id}": {
             "get": {
                 "tags": [
-                    "storage"
+                    "Storage"
                 ],
                 "summary": "Returns stock of a product in a storage by id.",
                 "description": "Returns stock of a product in a storage by id.",
@@ -902,13 +1384,6 @@
                         "description": "Id of the product",
                         "required": true,
                         "type": "string"
-                    },
-                    {
-                        "name": "request",
-                        "in": "path",
-                        "description": "Request body in JSON",
-                        "required": true,
-                        "type": "string"
                     }
                 ],
                 "responses": {
@@ -922,7 +1397,7 @@
             },
             "put": {
                 "tags": [
-                    "storage"
+                    "Storage"
                 ],
                 "summary": "Sets the stock of a product in a storage by id.",
                 "description": "Sets the stock of a product in a storage by id.",
@@ -969,7 +1444,7 @@
         "/storages/{storage_id}/stores/{product_id}": {
             "post": {
                 "tags": [
-                    "storage"
+                    "Storage"
                 ],
                 "summary": "Stores a product in a storage by id.",
                 "description": "Stores a product in a storage by id.",
@@ -995,7 +1470,7 @@
                     {
                         "name": "stock",
                         "in": "body",
-                        "description": "Id of the product",
+                        "description": "Stock value",
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/inputProperty"
@@ -1010,6 +1485,9 @@
                     "404": {
                         "description": "Storage or Product not found, see return message"
                     },
+                    "403": {
+                        "description": "Adding product of someone else is not allowed"
+                    },
                     "400": {
                         "description": "Invalid stock property"
                     }
@@ -1017,7 +1495,7 @@
             },
             "delete": {
                 "tags": [
-                    "storage"
+                    "Storage"
                 ],
                 "summary": "Deletes a product in a storage by id.",
                 "description": "Deletes a product in a storage by id.",
@@ -1054,7 +1532,7 @@
         "/transactions/{transaction_id}/subtransactions": {
             "post": {
                 "tags": [
-                    "transaction"
+                    "Transaction"
                 ],
                 "summary": "Create a new subtransaction.",
                 "description": "Create a new subtransaction.",
@@ -1086,7 +1564,7 @@
         "/transactions/{transaction_id}/subtransactions/{subtransaction_id}": {
             "get": {
                 "tags": [
-                    "transaction"
+                    "Transaction"
                 ],
                 "summary": "Returns subtransaction by subtransaction id.",
                 "description": "Returns subtransactions with a specified subtransaction_id.",
@@ -1121,7 +1599,7 @@
             },
             "delete": {
                 "tags": [
-                    "transaction"
+                    "Transaction"
                 ],
                 "summary": "Deletes subtransaction by subtransaction id.",
                 "description": "Deletes subtransactions with a specified subtransaction_id.",
@@ -1158,7 +1636,7 @@
         "/transactions": {
             "get": {
                 "tags": [
-                    "transaction"
+                    "Transaction"
                 ],
                 "summary": "Returns all transactions.",
                 "description": "Returns all transactions, either within a certain range with the from and to parameter, or a certain number.",
@@ -1188,7 +1666,7 @@
             },
             "post": {
                 "tags": [
-                    "transaction"
+                    "Transaction"
                 ],
                 "summary": "Create a new transaction.",
                 "description": "Create a new transaction.",
@@ -1217,10 +1695,10 @@
                 }
             }
         },
-        "/transactions/user": {
+        "/transactions/user/{id}": {
             "get": {
                 "tags": [
-                    "transaction"
+                    "Transaction"
                 ],
                 "summary": "Returns all transactions of a single user.",
                 "description": "Returns all transactions of a single user, either within a certain range with the from and to parameter, or a certain number.",
@@ -1264,7 +1742,7 @@
         "/transactions/{id}": {
             "get": {
                 "tags": [
-                    "transaction"
+                    "Transaction"
                 ],
                 "summary": "Returns transaction by id.",
                 "description": "Returns a transaction with a specified id.",
@@ -1292,7 +1770,7 @@
             },
             "delete": {
                 "tags": [
-                    "transaction"
+                    "Transaction"
                 ],
                 "summary": "Delete a transaction by id.",
                 "description": "Delete a transaction by id.",
@@ -1322,7 +1800,7 @@
         "/transactions/activity/{id}": {
             "get": {
                 "tags": [
-                    "transaction"
+                    "Transaction"
                 ],
                 "summary": "Returns transaction by activity id.",
                 "description": "Returns transactions with a specified activity id.",
@@ -1351,7 +1829,7 @@
         }
     },
     "definitions": {
-        "PointOfSale": {
+        "pointOfSale": {
             "required": [
                 "id",
                 "owner_id",
@@ -1395,7 +1873,7 @@
             "properties": {
                 "owner_id": {
                     "description": "Id of the owner from this Point of Sale",
-                    "type": "string"
+                    "type": "integer"
                 },
                 "name": {
                     "description": "The name of the product",
@@ -1410,7 +1888,7 @@
             "properties": {
                 "value": {
                     "description": "Value of the property",
-                    "type": "string"
+                    "type": "integer"
                 }
             }
         },
@@ -1503,7 +1981,7 @@
                 },
                 "owner_id": {
                     "description": "ID of the owner from this product",
-                    "type": "string"
+                    "type": "integer"
                 },
                 "category": {
                     "description": "Category the product belongs to",
@@ -1515,6 +1993,43 @@
                         "ticket",
                         "other"
                     ]
+                }
+            }
+        },
+        "role": {
+            "required": [
+                "id",
+                "owner_id",
+                "name"
+            ],
+            "properties": {
+                "id": {
+                    "description": "The id of the product",
+                    "type": "string"
+                },
+                "owner_id": {
+                    "description": "The id of the organ it belongs to",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "The name of the role",
+                    "type": "string"
+                }
+            }
+        },
+        "inputRole": {
+            "required": [
+                "owner_id",
+                "name"
+            ],
+            "properties": {
+                "owner_id": {
+                    "description": "The id of the organ it belongs to",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "The name of the role",
+                    "type": "string"
                 }
             }
         },
@@ -1565,7 +2080,7 @@
                 },
                 "owner_id": {
                     "description": "ID of the owner from this storage",
-                    "type": "string"
+                    "type": "integer"
                 }
             }
         },
@@ -1587,11 +2102,11 @@
                 },
                 "amount": {
                     "description": "The amount of products bought.",
-                    "type": "int"
+                    "type": "integer"
                 },
                 "price_per_product": {
                     "description": "The price of a single product.",
-                    "type": "int"
+                    "type": "integer"
                 }
             }
         },
@@ -1633,7 +2148,10 @@
                 },
                 "subtransaction": {
                     "description": "JSON array containing (multiple) subtransactions.",
-                    "type": "array"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/inputSubtransaction"
+                    }
                 }
             }
         },
@@ -1657,7 +2175,7 @@
                 },
                 "total_price": {
                     "description": "Total price of the transaction.",
-                    "type": "int"
+                    "type": "integer"
                 },
                 "activity_id": {
                     "description": "The activity on which the transaction is made.",

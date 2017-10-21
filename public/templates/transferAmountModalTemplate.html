@@ -5,10 +5,24 @@
     <h2 align="center">
         Transfer {{ currentProduct.name }} to {{ currentStorage.name }}
     </h2>
+    <h6 align="center">
+        <b>Tray size: </b>{{ currentProduct.tray_size }}
+        <span ng-if="storageToStorage">
+            <b>Amount stored:</b> {{ currentProduct.pivot.stock }}
+        </span>
+    </h6>
     <div class="row">
         <div class="col-sm-8 col-md-8 col-lg-8 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
-            <label for="amountSelector" id="amountSelectorLabel">Amount</label>
-            <input ng-model="transferAmount.amount" type="number" min="0" max="{{ currentProduct.amount }}" id="amountSelector">
+            <label for="traysSelector" class="transferModalLabel">Trays</label>
+            <input ng-model="transferAmount.trays" type="number" min="0" id="traysSelector"
+                   class="transferModalInput" ng-change="addTrays()">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-8 col-md-8 col-lg-8 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+            <label for="amountSelector" class="transferModalLabel">Amount</label>
+            <input ng-model="transferAmount.amount" type="number" min="0" max="currentProduct.pivot.stock"
+                   id="amountSelector" class="transferModalInput">
         </div>
     </div>
     <button class="btn btn-primary btn-block" ng-click="transferItems()">
