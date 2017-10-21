@@ -528,7 +528,7 @@ class StorageController extends Controller
         if (!$storage->products->contains($product_id)) {
             return $this->response(404, "Relation between Storage and ProductS not found");
         } else {
-            $storage->products()->sync([$product_id => ["stock" => $request->value]]);
+            $storage->products()->syncWithoutDetaching([$product_id => ["stock" => $request->value]]);
             return response()->json("Successful operation", 200);
         }
     }
