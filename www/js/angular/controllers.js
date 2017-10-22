@@ -79,7 +79,7 @@ angular.module('sudosos.controllers', [])
                 return;
             }
             if(this.pointOfSale.storages === null){
-                
+
             }
             for(var i = 0; i < this.pointOfSale.storages.length; i++){
                 if(this.pointOfSale.storages[i] == $data){
@@ -139,7 +139,7 @@ angular.module('sudosos.controllers', [])
 
                         });
                     }
-
+                    // Add the products to the item in the database
                     $http.put(rootUrl + "/storages/" + $scope.currentStorage.id + "/stock/" + currentItem.id,
                         {
                             value: currentItem.pivot.stock + $scope.transferAmount.amount
@@ -147,8 +147,25 @@ angular.module('sudosos.controllers', [])
                     ).then(function (response) {
                         // Close the edit modal
                         $scope.editModal.close();
+                        // Check if all items are moved: If so, remove the item from the source storage
+                        if($scope.storageToStorage && ($scope.currentProduct.pivot.stock === 0)) {
+                            for (var j = 0; j < $scope.currentProduct.storage.items.length; j++) {
+                                if ($scope.currentProduct.storage.items[j].id === $scope.currentProduct.id) {
+                                    // Delete the product from the storage on the server
+                                    (function (index) {
+                                        $http.delete(rootUrl + '/storages/' + $scope.currentProduct.storage.id + '/stores/' + $scope.currentProduct.id)
+                                            .then(function (response) {
+                                                // Remove the item in the original storage and set the ite
+                                                $scope.currentProduct.storage.items.splice(index, 1);
+                                            });
+                                    })(j);
+                                }
+                            }
+                        }
                     });
                     currentItem.pivot.stock += $scope.transferAmount.amount;
+
+
                     return;
                 }
             }
@@ -165,6 +182,7 @@ angular.module('sudosos.controllers', [])
 
                 });
             }
+
             // Add the item
             $http.post(rootUrl + "/storages/" + $scope.currentStorage.id + "/stores/" + $scope.currentProduct.id,
                 {
@@ -184,18 +202,20 @@ angular.module('sudosos.controllers', [])
 
                 $scope.editModal.close();
             });
-            // Check if all items of a product are transferred
-            if($scope.storageToStorage && $scope.transferAmount.amount === $scope.currentProduct.stock){
-                for(var i = 0; i < $scope.currentProduct.storage.items; i++){
-                    if($scope.currentProduct.storage.items[i].id === $scope.currentProduct.id){
+            // Check if all items from the storage are moved and remove the object from source storage
+            if($scope.storageToStorage && ($scope.currentProduct.pivot.stock === 0)) {
+                for (var j = 0; j < $scope.currentProduct.storage.items.length; j++) {
+                    if ($scope.currentProduct.storage.items[j].id === $scope.currentProduct.id) {
                         // Delete the product from the storage on the server
-                        $http.delete(rootUrl + '/storages/' + $scope.currentProduct.storage.id + '/stores/' + $scope.currentProduct.id)
-                            .then(function (response) {
-                                // Remove the item in the original storage and set the ite
-                                $scope.currentProduct.storage.items.splice(i, 1);
-                                $scope.itemToAdd.storage = $scope.currentStorage;
-                                $scope.currentStorage.items.push($scope.itemToAdd);
-                            });
+                        (function (index) {
+                            $http.delete(rootUrl + '/storages/' + $scope.currentProduct.storage.id + '/stores/' + $scope.currentProduct.id)
+                                .then(function (response) {
+                                    // Remove the item in the original storage and set the ite
+                                    $scope.currentProduct.storage.items.splice(index, 1);
+                                    $scope.itemToAdd.storage = $scope.currentStorage;
+                                    $scope.currentStorage.items.push($scope.itemToAdd);
+                                });
+                        })(j);
                     }
                 }
             }
@@ -216,7 +236,7 @@ angular.module('sudosos.controllers', [])
                 }
             ).then(function (response) {
             });
-        }
+        };
     }])
     .controller('ProductsCtrl',['$scope', '$http', '$uibModal', 'rootUrl',
         function ($scope, $http, $uibModal, rootUrl) {
