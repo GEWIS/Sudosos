@@ -30,6 +30,7 @@ Route::group(['middleware'=> 'auth', 'namespace' => 'Api\v1', 'prefix' => 'v1'],
     Route::put('pointsofsale/{id}', 'PointOfSaleController@putPointOfSale');
     Route::delete('pointsofsale/{id}', 'PointOfSaleController@deletePointOfSale');
     Route::put('pointsofsale/{id}/reinstate', 'PointOfSaleController@reinstatePointOfSale');
+    Route::get('pointsofsale/{id}/stores', 'PointOfSaleController@getStoragesPointOfSale');
     Route::get('pointsofsale/{id}/{property}', 'PointOfSaleController@getPointOfSaleProperty');
     Route::put('pointsofsale/{id}/{property}', 'PointOfSaleController@putPointOfSaleProperty');
     Route::post('pointsofsale/{pos_id}/stores/{storage_id}', 'PointOfSaleController@postStoragePointsOfSale');

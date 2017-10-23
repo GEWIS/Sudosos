@@ -384,6 +384,41 @@ class PointOfSaleController extends Controller{
             }
         }
     }
+    /**
+     * @SWG\Get(
+     *     path ="/pointsofsale/{pos_id}/stores",
+     *     summary = "Get all storages in a point of sale.",
+     *     tags = {"POS"},
+     *     description = "Get all storages in a point of sale.",
+     *     operationId = "getStoragesPointOfSale",
+     *     produces = {"application/json"},
+     *     @SWG\Parameter(
+     *         name="pos_id",
+     *         in="path",
+     *         description="Id of the point of sale",
+     *         required=true,
+     *         type="string",
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *     ),
+
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Point of sale not found",
+     *     ),
+     * ),
+     */
+    public function getStoragesPointOfSale($id){
+        $pointOfSale = PointOfSale::find($id);
+        if(!$pointOfSale){
+            return $this->response(404, "Point of sale not found");
+        }else{
+            $this->authorize('view', $pointOfSale);
+            return response()->json($pointOfSale->storages, 200);
+        }
+    }
 
 
     /**
@@ -433,8 +468,8 @@ class PointOfSaleController extends Controller{
             return $this->response(404, "Point of sale not found");
         }
 
-        $this->authorize('update', [Storage::class,$storage->owner->id]);
-        $this->authorize('update', [PointOfSale::class,$pos->owner->id]);
+        $this->authorize('update', [Storage::class,$storage]);
+        $this->authorize('update', [PointOfSale::class,$pos]);
 
         // Adding storage of someone else thus required authentication of this person
        // TODO, validate usercode + pin if given
