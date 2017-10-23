@@ -33,10 +33,23 @@
                     <p>Products: </p>
                     <div class="products-div" ng-drop="true" cg-busy="storagePromises[$index]"
                          ng-drop-success="dropProduct($data, storage)" ng-drag="false">
-                        <p ng-repeat="item in storage.items" ng-drag="true" ng-drag-data="item"
-                           ng-mousedown="$event.stopPropagation()">
-                            {{ item.pivot.stock }} {{ item.name }}
-                        </p>
+                        <div ng-repeat="item in storage.items" ng-drag="true" ng-drag-data="item"
+                             ng-mousedown="$event.stopPropagation()">
+                            <p style="text-align: left">
+                                <span ng-dblclick="item.editing = true" ng-hide="item.editing">
+                                    {{ item.pivot.stock }}
+                                </span>
+                                <span ng-show="item.editing">
+                                    <input type="text" ng-model="item.pivot.stock"
+                                           ng-blur="stopEditing(item, storage)"
+                                           ng-keypress="stockKeyPress(item, storage, $event)">
+                                </span>
+                                {{ item.name }}
+                                <span style="float: right" ng-mousedown="removeItemFromStorage($event)">
+                                    <i class="fa fa-trash-o"></i>
+                                </span>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -48,9 +61,12 @@
                     <h4>{{ pointOfSale.name }}</h4>
                     <p>Storages: </p>
                     <div class="products-div" ng-drop="true"
-                         ng-drop-success="dropStorage($data, $event)">
-                        <p ng-repeat="storage in pointOfSale.storages">
+                         ng-drop-success="dropStorage($data, $event)" cg-busy="POSPromises[$index]">
+                        <p style="text-align: left" ng-repeat="storage in pointOfSale.storages">
                             {{ storage.name }}
+                            <span style="float: right" ng-mousedown="removeStorageFromPOS($event)">
+                                    <i class="fa fa-trash-o"></i>
+                                </span>
                         </p>
                     </div>
                 </div>

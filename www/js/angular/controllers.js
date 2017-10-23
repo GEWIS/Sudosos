@@ -32,6 +32,8 @@ angular.module('sudosos.controllers', [])
         };
 
         $scope.searchTerm = "";
+
+        $scope.isDragging = false;
         $scope.$watch('currentCommittee.committee', function () {
             var currentCommitteeId = $scope.currentCommittee.committee.id;
             $scope.loadingProducts = $http.get(rootUrl + '/products/owner/' + currentCommitteeId).then(function (response) {
@@ -65,27 +67,39 @@ angular.module('sudosos.controllers', [])
 
             $scope.loadingPOS = $http.get(rootUrl + '/pointsofsale/owner/' + currentCommitteeId).then(function (response) {
                 $scope.pointsOfSale = response.data;
+
+                $scope.POSPromises = [];
                 for (var i = 0; i < $scope.pointsOfSale.length; i++) {
                     (function (index) {
-                        var promise = $http.get(rootUrl + '/')
+                        var promise = $http.get(rootUrl + '/pointsofsale/' + $scope.pointsOfSale[index].id + "/stores").then(function (response) {
+                            $scope.pointsOfSale[index].storages = response.data;
+                        });
+                        $scope.POSPromises.push(promise);
                     })(i);
                 }
+                return $q.all($scope.POSPromises);
             });
         });
 
         $scope.dropStorage = function ($data, $event) {
+            console.log("Item dropped");
             // If the dropped object has the category attribute, it is not a storage.
-            if($data.category !== null){
+            if($data.category === null){
                 return;
             }
+
             if(this.pointOfSale.storages === null){
 
             }
+            // Do not include duplicate storages
             for(var i = 0; i < this.pointOfSale.storages.length; i++){
-                if(this.pointOfSale.storages[i] == $data){
+                if(this.pointOfSale.storages[i].id === $data.id){
                     return;
                 }
             }
+            $http.post(rootUrl + '/pointsofsale/' + this.pointOfSale.id + '/stores/' + $data.id).then(function (response) {
+
+            });
             this.pointOfSale.storages.push($data);
         };
 
@@ -221,6 +235,32 @@ angular.module('sudosos.controllers', [])
             }
         };
 
+        $scope.removeItemFromStorage = function (event) {
+            event.stopPropagation();
+            for(var i = 0; i < this.storage.items.length; i++){
+                if(this.storage.items[i].id === this.item.id){
+                    this.storage.items.splice(i, 1);
+                }
+            }
+            $http.delete(rootUrl + "/storages/" + this.storage.id + "/stores/" + this.item.id)
+                .then(function (response) {
+
+                });
+        };
+        // Remove a storage from a point of sale
+        $scope.removeStorageFromPOS = function (event) {
+            event.stopPropagation();
+            for(var i = 0; i < this.pointOfSale.storages.length; i++){
+                if(this.pointOfSale.storages[i].id === this.storage.id){
+                    this.pointOfSale.items.splice(i, 1);
+                }
+            }
+            $http.delete(rootUrl + "/pointsofsale/" + this.storage.id + "/stores/" + this.item.id)
+                .then(function (response) {
+
+                });
+        };
+
         // This function is needed to automatically add multiply the amount of trays to get the amount of items
         $scope.addTrays = function () {
             $scope.transferAmount.amount = $scope.transferAmount.trays * $scope.currentProduct.tray_size;
@@ -237,6 +277,13 @@ angular.module('sudosos.controllers', [])
             ).then(function (response) {
             });
         };
+
+        // The function that processes the keypresses, and catches the enter press
+        $scope.stockKeyPress = function (item, storage, event) {
+            if(event.keyCode === 13){
+                $scope.stopEditing(item, storage);
+            }
+        }
     }])
     .controller('ProductsCtrl',['$scope', '$http', '$uibModal', 'rootUrl',
         function ($scope, $http, $uibModal, rootUrl) {

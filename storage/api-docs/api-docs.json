@@ -293,6 +293,36 @@
                 }
             }
         },
+        "/pointsofsale/{pos_id}/stores": {
+            "get": {
+                "tags": [
+                    "POS"
+                ],
+                "summary": "Get all storages in a point of sale.",
+                "description": "Get all storages in a point of sale.",
+                "operationId": "getStoragesPointOfSale",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "pos_id",
+                        "in": "path",
+                        "description": "Id of the point of sale",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Point of sale not found"
+                    }
+                }
+            }
+        },
         "/pointsofsale/{pos_id}/stores/{storage_id}": {
             "post": {
                 "tags": [
