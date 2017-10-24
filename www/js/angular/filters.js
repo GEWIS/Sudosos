@@ -6,4 +6,9 @@ angular.module('sudosos.filters', [])
         return function (input) {
             return input.charAt(0).toUpperCase() + input.slice(1);
         }
+    })
+    .filter('toEuros', function () {
+        return function (input) {
+            return "€" + (input / 100).toFixed(2).toString().replace(".", ",");
+        }
     });

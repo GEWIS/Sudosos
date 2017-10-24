@@ -33,7 +33,7 @@
         </thead>
         <tbody>
         <tr ng-repeat="product in products | filter:filterProducts"
-            ng-class="{'selected': $index == selectedIndex}" ng-click="selectItem($index)" ts-repeat>
+            ng-class="{'selected': product.id === selectedId}" ng-click="selectItem(product.id)" ts-repeat>
             <td>
                 <span ng-hide="product.editing" ng-dblclick="startEditing(product)">
                     {{ product.name }}
@@ -42,7 +42,7 @@
             </td>
             <td>
                 <span ng-hide="product.editing" ng-dblclick="startEditing(product)">
-                    {{ product.price }}
+                    {{ product.price | toEuros }}
                 </span>
                 <input ng-show="product.editing" type="text" ng-model="product.price" ng-blur="stopEditing(product)" >
             </td>

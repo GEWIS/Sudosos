@@ -287,14 +287,14 @@ angular.module('sudosos.controllers', [])
     }])
     .controller('ProductsCtrl',['$scope', '$http', '$uibModal', 'rootUrl',
         function ($scope, $http, $uibModal, rootUrl) {
-            $scope.selectedIndex = -1;
             $scope.searchTerm = "";
             $scope.searchBy = "name";
             $scope.imageSrc = "http://gewis.nl/willem";
             $scope.categories = ["other", "ticket", "food"];
+            $scope.newItemAdded = false;
 
             $scope.filterProducts = function (value, index, array) {
-                if(value[$scope.searchBy].toString().toLowerCase().indexOf($scope.searchTerm.toString().toLowerCase()) != -1){
+                if(value[$scope.searchBy].toString().toLowerCase().indexOf($scope.searchTerm.toString().toLowerCase()) !== -1){
                     return true;
                 }
             };
@@ -307,8 +307,17 @@ angular.module('sudosos.controllers', [])
                 item.editing = false;
             };
 
-            $scope.editProduct = function () {
-                $scope.selectedProduct = $scope.products[$scope.selectedIndex];
+            $scope.addProduct = function () {
+                $scope.newItemAdded = true;
+                $scope.selectedProduct = {
+                    name: "",
+                    price: 1.00,
+                    tray_size: 24,
+                    category: "other",
+                    owner_id: $scope.currentCommittee.committee.id
+                };
+                $scope.imageSrc = "/img/beer_placeholder.svg";
+
                 $scope.editModal = $uibModal.open({
                     templateUrl: 'templates/editProductModalTemplate.html',
                     size: 'sm',
@@ -316,17 +325,57 @@ angular.module('sudosos.controllers', [])
                 });
             };
 
-            $scope.closeModal = function () {
+            $scope.editProduct = function () {
+                for (var i = 0; i < $scope.products.length; i++){
+                    if($scope.products[i].id === $scope.selectedId){
+                        $scope.selectedProduct = $scope.products[i];
+                    }
+                }
+                $scope.selectedProduct.price = $scope.selectedProduct.price / 100;
+                $scope.editModal = $uibModal.open({
+                    templateUrl: 'templates/editProductModalTemplate.html',
+                    size: 'sm',
+                    scope: $scope
+                });
+            };
+
+            $scope.deleteProduct = function () {
+                $http.delete(rootUrl + "/products/" + $scope.selectedProduct.id).then(function () {
+                    for(var i = 0; i < $scope.products.length; i++){
+                        if($scope.products[i].id === $scope.selectedProduct.id){
+                            $scope.products.splice(i, 1);
+                        }
+                    }
+                });
                 $scope.editModal.close();
             };
 
-            $scope.selectItem = function (index) {
-                if($scope.selectedIndex == index){
-                    $scope.selectedIndex = -1;
+            $scope.closeModal = function () {
+                $scope.editModal.close();
+                $scope.selectedProduct.price = parseInt($scope.selectedProduct.price * 100);
+
+                if($scope.newItemAdded){
+                    $http.post(rootUrl + "/products", $scope.selectedProduct)
+                        .then(function () {
+                            $scope.products.push($scope.selectedProduct);
+                        });
+
                 }else{
-                    $scope.selectedIndex = index;
+                    $http.put(rootUrl + "/products/" + $scope.selectedProduct.id, $scope.selectedProduct)
+                        .then(function () {});
+                }
+                $scope.newItemAdded = false;
+
+            };
+
+            $scope.selectItem = function (id) {
+                if($scope.selectedId === id){
+                    $scope.selectedId = null;
+                }else{
+                    $scope.selectedId = id;
                 }
             };
+
             $scope.$watch('currentCommittee.committee', function () {
                 $scope.loadingData = $http.get(rootUrl + '/products/owner/' + $scope.currentCommittee.committee.id)
                     .then(function (response) {
