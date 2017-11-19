@@ -27,6 +27,15 @@ angular.module('sudosos', ['sudosos.controllers', 'sudosos.filters', 'sudosos.se
                     }
                 }
             })
+            .state('sudosos.storages', {
+                url: '/storages',
+                views: {
+                    'admin-panel-content': {
+                        templateUrl: 'templates/storages.html',
+                        controller: 'StoragesCtrl'
+                    }
+                }
+            })
 
             .state('sudosos.personalHome', {
                 url: '/personalHome',

@@ -1,0 +1,34 @@
+<!-- The form for adding, editing and sorting products -->
+<div class="form-inline edit-filter-bar">
+    <button class="btn btn-success" ng-click="addStorage()">Add storage</button>
+    <button class="btn btn-primary" ng-class="{'disabled': selectedId === null}" ng-click="deleteStorage()">
+        Delete storage
+    </button>
+    <div class="form-group input-group">
+        <div class="input-group-addon"><i class="fa fa-search"></i> </div>
+        <label for="searchBar" class="sr-only">Search</label>
+        <input type="text" class="form-control" id="searchBar" placeholder="Search" ng-model="searchTerm">
+        <div class="input-group-addon"><i class="fa fa-search"></i> </div>
+    </div>
+</div>
+<div cg-busy="loadingData">
+    <table class="table" ts-wrapper>
+        <thead>
+        <tr>
+            <th ts-criteria="name | lowercase " ts-default>Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="storage in storages| filter:filterStorages"
+            ng-class="{'selected': storage.id === selectedId}" ng-click="selectItem(storage.id)" ts-repeat>
+            <td>
+                <span ng-hide="storage.editing" ng-dblclick="startEditing(storage)">
+                    {{ storage.name }}
+                </span>
+                <input ng-show="storage.editing" type="text" ng-model="storage.name"
+                       ng-keypress="storageKeyPress(storage, $event)" >
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
