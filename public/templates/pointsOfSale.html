@@ -1,0 +1,34 @@
+<!-- The form for adding, editing and sorting products -->
+<div class="form-inline edit-filter-bar">
+    <button class="btn btn-success" ng-click="addPointOfSale()">Add point of sale</button>
+    <button class="btn btn-primary" ng-class="{'disabled': selectedId === null}" ng-click="deletePointOfSale()">
+        Delete point of sale
+    </button>
+    <div class="form-group input-group">
+        <div class="input-group-addon"><i class="fa fa-search"></i> </div>
+        <label for="searchBar" class="sr-only">Search</label>
+        <input type="text" class="form-control" id="searchBar" placeholder="Search" ng-model="searchTerm">
+        <div class="input-group-addon"><i class="fa fa-search"></i> </div>
+    </div>
+</div>
+<div cg-busy="loadingData">
+    <table class="table" ts-wrapper>
+        <thead>
+        <tr>
+            <th ts-criteria="name | lowercase " ts-default>Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="pointOfSale in pointsOfSale | filter:filterPointsOfSale"
+            ng-class="{'selected': pointOfSale.id === selectedId}" ng-click="selectItem(pointOfSale.id)" ts-repeat>
+            <td>
+                <span ng-hide="pointOfSale.editing" ng-dblclick="startEditing(pointOfSale)">
+                    {{ pointOfSale.name }}
+                </span>
+                <input ng-show="pointOfSale.editing" type="text" ng-model="pointOfSale.name"
+                       ng-keypress="pointsOfSaleKeyPress(pointOfSale, $event)" >
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

@@ -481,6 +481,85 @@ angular.module('sudosos.controllers', [])
                 });
         });
     }])
+    .controller('POSCtrl', ['$scope', '$http', 'rootUrl', function ($scope, $http, rootUrl) {
+        $scope.searchTerm = "";
+        $scope.newItemAdded = false;
+
+        $scope.filterPointsOfSale = function (value, index, array) {
+            if(value["name"].toString().toLowerCase().indexOf($scope.searchTerm.toString().toLowerCase()) !== -1){
+                return true;
+            }
+        };
+
+        $scope.startEditing = function (item) {
+            item.editing = true;
+        };
+
+        $scope.stopEditing = function (item) {
+            item.editing = false;
+            if(item.hasOwnProperty("id")){
+                $http.put(rootUrl + "/pointsofsale/" + item.id, item).then(function () {
+
+                });
+            }else{
+                $http.post(rootUrl + "/pointsofsale", item).then(function (response) {
+
+                });
+            }
+
+        };
+
+        $scope.pointsOfSaleKeyPress = function (pointOfSale, event) {
+            if(event.keyCode === 13){
+                $scope.stopEditing(pointOfSale);
+            }
+        };
+
+        $scope.addPointOfSale = function () {
+            $scope.newItemAdded = true;
+            $scope.selectedPointOfSale = {
+                name: "",
+                owner_id: $scope.currentCommittee.committee.id
+            };
+            $scope.selectedPointOfSale.editing = true;
+            $scope.pointsOfSale.push($scope.selectedPointOfSale);
+        };
+
+        $scope.editPointOfSale = function () {
+            for (var i = 0; i < $scope.pointsOfSale.length; i++){
+                if($scope.pointsOfSale[i].id === $scope.selectedId){
+                    $scope.selectedPointOfSale = $scope.pointsOfSale[i];
+                }
+            }
+        };
+
+        $scope.deletePointOfSale = function () {
+            $http.delete(rootUrl + "/pointsofsale/" + $scope.selectedId).then(function () {
+                for(var i = 0; i < $scope.pointsOfSale.length; i++){
+                    if($scope.pointsOfSale[i].id === $scope.selectedId){
+                        $scope.pointsOfSale.splice(i, 1);
+                    }
+                }
+            });
+
+        };
+
+
+        $scope.selectItem = function (id) {
+            if($scope.selectedId === id){
+                $scope.selectedId = null;
+            }else{
+                $scope.selectedId = id;
+            }
+        };
+
+        $scope.$watch('currentCommittee.committee', function () {
+            $scope.loadingData = $http.get(rootUrl + '/pointsofsale/owner/' + $scope.currentCommittee.committee.id)
+                .then(function (response) {
+                    $scope.pointsOfSale = response.data;
+                });
+        });
+    }])
     .controller('FinancialCtrl', ['$scope', function ($scope) {
 
     }])
