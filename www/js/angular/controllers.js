@@ -387,6 +387,100 @@ angular.module('sudosos.controllers', [])
             });
 
         }])
+    .controller('StoragesCtrl', ['$scope', '$http', '$uibModal', 'rootUrl', function ($scope, $http, $uibModal, rootUrl) {
+        $scope.searchTerm = "";
+        $scope.newItemAdded = false;
+
+        $scope.filterStorages = function (value, index, array) {
+            if(value["name"].toString().toLowerCase().indexOf($scope.searchTerm.toString().toLowerCase()) !== -1){
+                return true;
+            }
+        };
+
+        $scope.startEditing = function (item) {
+            item.editing = true;
+        };
+
+        $scope.stopEditing = function (item) {
+            item.editing = false;
+            if(item.hasOwnProperty("id")){
+                $http.put(rootUrl + "/storages/" + item.id, item).then(function () {
+
+                });
+            }else{
+                $http.post(rootUrl + "/storages", item).then(function () {
+
+                });
+            }
+
+        };
+
+        $scope.storageKeyPress = function (storage, event) {
+            if(event.keyCode === 13){
+                $scope.stopEditing(storage);
+            }
+        };
+
+        $scope.addStorage = function () {
+            $scope.newItemAdded = true;
+            $scope.selectedProduct = {
+                name: "",
+                owner_id: $scope.currentCommittee.committee.id
+            };
+            $scope.selectedProduct.editing = true;
+            $scope.storages.push($scope.selectedProduct);
+        };
+
+        $scope.editStorage = function () {
+            for (var i = 0; i < $scope.storages.length; i++){
+                if($scope.storages[i].id === $scope.selectedId){
+                    $scope.selectedStorage = $scope.storages[i];
+                }
+            }
+        };
+
+        $scope.deleteStorage = function () {
+            $http.delete(rootUrl + "/storages/" + $scope.selectedId).then(function () {
+                for(var i = 0; i < $scope.storages.length; i++){
+                    if($scope.storages[i].id === $scope.selectedId){
+                        $scope.storages.splice(i, 1);
+                    }
+                }
+            });
+
+        };
+
+        $scope.closeModal = function () {
+            $scope.editModal.close();
+            if($scope.newItemAdded){
+                $http.post(rootUrl + "/products", $scope.selectedStorage)
+                    .then(function () {
+                        $scope.products.push($scope.selectedStorage);
+                    });
+
+            }else{
+                $http.put(rootUrl + "/products/" + $scope.selectedStorage.id, $scope.selectedStorage)
+                    .then(function () {});
+            }
+            $scope.newItemAdded = false;
+
+        };
+
+        $scope.selectItem = function (id) {
+            if($scope.selectedId === id){
+                $scope.selectedId = null;
+            }else{
+                $scope.selectedId = id;
+            }
+        };
+
+        $scope.$watch('currentCommittee.committee', function () {
+            $scope.loadingData = $http.get(rootUrl + '/storages/owner/' + $scope.currentCommittee.committee.id)
+                .then(function (response) {
+                    $scope.storages = response.data;
+                });
+        });
+    }])
     .controller('FinancialCtrl', ['$scope', function ($scope) {
 
     }])
