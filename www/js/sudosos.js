@@ -27,6 +27,7 @@ angular.module('sudosos', ['sudosos.controllers', 'sudosos.filters', 'sudosos.se
                     }
                 }
             })
+
             .state('sudosos.storages', {
                 url: '/storages',
                 views: {
@@ -37,6 +38,15 @@ angular.module('sudosos', ['sudosos.controllers', 'sudosos.filters', 'sudosos.se
                 }
             })
 
+            .state('sudosos.pointsOfSale', {
+                url: '/pointsOfSale',
+                views: {
+                    'admin-panel-content': {
+                        templateUrl: 'templates/pointsOfSale.html',
+                        controller: 'POSCtrl'
+                    }
+                }
+            })
             .state('sudosos.personalHome', {
                 url: '/personalHome',
                 views: {

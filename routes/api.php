@@ -25,7 +25,7 @@ Route::group(['middleware'=> 'auth', 'namespace' => 'Api\v1', 'prefix' => 'v1'],
     Route::put('products/{id}/{property}', 'ProductController@putProductProperty');
 
     Route::get('pointsofsale/owner/{owner_id}', 'PointOfSaleController@index');
-    Route::post('pointsofsale/owner', 'PointOfSaleController@store');
+    Route::post('pointsofsale', 'PointOfSaleController@store');
     Route::get('pointsofsale/{id}', 'PointOfSaleController@getPointOfSale');
     Route::put('pointsofsale/{id}', 'PointOfSaleController@putPointOfSale');
     Route::delete('pointsofsale/{id}', 'PointOfSaleController@deletePointOfSale');
