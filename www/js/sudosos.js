@@ -52,7 +52,7 @@ angular.module('sudosos', ['sudosos.controllers', 'sudosos.filters', 'sudosos.se
                 views: {
                     'admin-panel-content': {
                         templateUrl: 'templates/personalHome.html',
-                        controller: 'personalHomeCtrl'
+                        controller: 'PersonalHomeCtrl'
                     }
                 }
             })
