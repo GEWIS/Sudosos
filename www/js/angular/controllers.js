@@ -3,6 +3,14 @@
  */
 angular.module('sudosos.controllers', [])
     .controller('SudososCtrl', ['$scope', '$state', function ($scope) {
+        $scope.getRandomGreeting = function () {
+            var greetings = ["Hallo", "Hello", "Bonjour", "¡Hola", "Guten tag",
+                "你好", "Hej", "Moin", "नमस्ते", "Jó napot", "今日は",
+                "안녕하세요", "Salve", "God dag", "สวัสดี"];
+            return greetings[Math.floor(Math.random()*greetings.length)];
+        };
+        $scope.greeting = $scope.getRandomGreeting();
+        $scope.pinVisible = false;
         $scope.user = {
             name: "Ge Bruiker",
             currentBalance: 42.69,
@@ -15,7 +23,10 @@ angular.module('sudosos.controllers', [])
                     id: 9,
                     name: "GEILER"
                 }
-            ]
+            ],
+            id: "6619f580-72b0-11e7-8ad6-7d27383c393c",
+            user_code: 7987,
+            user_pin: 1234
         };
 
         $scope.currentCommittee = {
@@ -559,6 +570,16 @@ angular.module('sudosos.controllers', [])
                     $scope.pointsOfSale = response.data;
                 });
         });
+    }])
+    .controller('PersonalHomeCtrl', ['$scope', '$http', '$q', 'rootUrl', function ($scope, $http, $q, rootUrl) {
+
+        $scope.loadingTransactions = $http.get(rootUrl + '/transactions/user/' + $scope.user.id + "?amount=10").then(function (response) {
+            for(var i = 0; i < response.data.length; i++){
+                response.data[i].expanded = false;
+            }
+            $scope.transactions = response.data;
+        });
+
     }])
     .controller('FinancialCtrl', ['$scope', function ($scope) {
 

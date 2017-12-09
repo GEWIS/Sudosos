@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Models\Product;
+use App\Models\Storage;
 use App\Models\Subtransaction;
 use App\Models\Transaction;
 use App\Http\Controllers\Controller;
 
+use DebugBar\DebugBar;
 use function GuzzleHttp\Promise\is_fulfilled;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -55,8 +58,17 @@ class TransactionController extends Controller{
         // actually perform the request
         if(!is_null($amount)) {
             $transactions = Transaction::with('subtransactions')->where('created_at', '>', $from)->where('created_at', '<=', $to)->take($amount)->get();
-        }else $transactions = Transaction::with('subtransactions')->where('created_at', '>', $from)->where('created_at','<=', $to)->get();
-
+        }else {
+            $transactions = Transaction::with('subtransactions')->where('created_at', '>', $from)->where('created_at', '<=', $to)->get();
+        }
+        // Get the names of the storages and products
+        // TODO: Optimize this by somebody who actually has some laravel knowledge
+        foreach ($transactions as $transaction){
+            foreach ($transaction->subtransactions->all() as $subtransaction){
+                $subtransaction->product_name = Product::find($subtransaction->product_id)->name;
+                $subtransaction->storage_name = Storage::find($subtransaction->storage_id)->name;
+            }
+        }
         // return the request
         return response()->json($transactions, 200);
     }
@@ -119,7 +131,14 @@ class TransactionController extends Controller{
         // actually perform the request
         if(!is_null($amount)) $transactions = Transaction::with('subtransactions')->where('sold_to_id', '=', $id)->where('created_at', '>=', $from)->where('created_at','<=', $to)->take($amount)->get();
         else $transactions = Transaction::with('subtransactions')->where('sold_to_id', '=', $id)->where('created_at', '>=', $from)->where('created_at','<=', $to)->get();
-
+        // Get the names of the storages and products
+        // TODO: Optimize this by somebody who actually has some laravel knowledge
+        foreach ($transactions as $transaction){
+            foreach ($transaction->subtransactions->all() as $subtransaction){
+                $subtransaction->product_name = Product::find($subtransaction->product_id)->name;
+                $subtransaction->storage_name = Storage::find($subtransaction->storage_id)->name;
+            }
+        }
         // return the request
         return response()->json($transactions, 200);
     }

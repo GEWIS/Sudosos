@@ -9,6 +9,8 @@ angular.module('sudosos.filters', [])
     })
     .filter('toEuros', function () {
         return function (input) {
-            return "€" + (input / 100).toFixed(2).toString().replace(".", ",");
+            if(input.toString().indexOf(".") !== -1){
+                return "€" + input.toString().replace(".", ",");
+            } else return "€" + (input / 100).toFixed(2).toString().replace(".", ",");
         }
     });
