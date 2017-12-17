@@ -184,8 +184,10 @@ tr:hover{
   background: darken(@body-bg, 5%);
 }
 .table>tbody>tr.subtransaction-row>td{
-  padding-left: 25px;
   border-top: none;
+}
+.table>tbody>tr.subtransaction-row>td:not(.amount-cell){
+  padding-left: 25px;
 }
 .manage-panel-container{
   margin: 8px;

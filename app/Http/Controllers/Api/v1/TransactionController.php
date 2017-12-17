@@ -8,6 +8,7 @@ use App\Models\Subtransaction;
 use App\Models\Transaction;
 use App\Http\Controllers\Controller;
 
+use App\Models\User;
 use DebugBar\DebugBar;
 use function GuzzleHttp\Promise\is_fulfilled;
 use Illuminate\Http\Request;
@@ -64,6 +65,13 @@ class TransactionController extends Controller{
         // Get the names of the storages and products
         // TODO: Optimize this by somebody who actually has some laravel knowledge
         foreach ($transactions as $transaction){
+            // Get the user codes of the authorizer and the person it has been sold to
+            $transaction->authorized_name = User::find($transaction->authorized_id)->user_code;
+            if($transaction->authorized_id === $transaction->sold_to_id){
+                $transaction->sold_to_name = $transaction->authorized_name;
+            }else{
+                $transaction->sold_to_name = User::find($transaction->sold_to_id)->user_code;
+            }
             foreach ($transaction->subtransactions->all() as $subtransaction){
                 $subtransaction->product_name = Product::find($subtransaction->product_id)->name;
                 $subtransaction->storage_name = Storage::find($subtransaction->storage_id)->name;

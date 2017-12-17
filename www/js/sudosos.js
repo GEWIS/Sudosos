@@ -1,5 +1,5 @@
 angular.module('sudosos', ['sudosos.controllers', 'sudosos.filters', 'sudosos.services', 'sudosos.directives',
-    'ui.router', 'ui.bootstrap', 'cgBusy', 'tableSort', 'ngDraggable'])
+    'ui.router', 'ui.bootstrap', 'cgBusy', 'tableSort', 'ngDraggable', 'chart.js'])
     .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
         $stateProvider.state('sudosos', {
             url: '/sudosos',
@@ -89,7 +89,7 @@ angular.module('sudosos', ['sudosos.controllers', 'sudosos.filters', 'sudosos.se
             );
         $urlRouterProvider.otherwise('/sudosos/products');
     }])
-    .value("rootUrl", "http://sudosos.dev/api/v1")
+    .value("rootUrl", "https://sudosos.dev/api/v1")
     .run(['$rootScope', '$state', function ($rootScope, $state) {
 
     }]);

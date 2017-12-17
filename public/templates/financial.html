@@ -1,1 +1,102 @@
-Kaas
+<div class="hidden-xs manage-panel-container">
+    <div class="row">
+        <h1 align="center">
+            Financial overview
+        </h1>
+    </div>
+    <div class="row" cg-busy="loadingTransactions">
+        <div class="hidden-xs hidden-sm col-md-4 col-lg-4">
+            <h2>Transactions per month</h2>
+            <canvas id="transactions-per-month" class="chart chart-line" chart-data="transactionsData"
+                    chart-labels="monthLabels"></canvas>
+        </div>
+        <div class="hidden-xs hidden-sm col-md-4 col-lg-4">
+            <h2>Most sold product</h2>
+            <canvas id="most-sold-product" class="chart chart-pie" chart-data="mostSoldProducts"
+                    chart-labels="mostSoldProductLabels"></canvas>
+        </div>
+        <div class="hidden-xs hidden-sm col-md-4 col-lg-4">
+            Third graph
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-md-12 col-sm-12 col-xs-12">
+            <h1>Most recent transactions</h1>
+        </div>
+    </div>
+    <div class="row transactions-table">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="form-inline">
+                <div class="form-group input-group">
+                    <div class="input-group-addon"><i class="fa fa-search"></i> </div>
+                    <label for="searchBar" class="sr-only">Search</label>
+                    <input type="text" class="form-control" id="searchBar" placeholder="Search" ng-model="searchTerm">
+                    <div class="input-group-addon"><i class="fa fa-search"></i> </div>
+                </div>
+                <div class="form-group">
+                    <label for="searchTypeSelect">Search by </label>
+                    <select class="form-control" id="searchTypeSelect" ng-model="searchBy">
+                        <option value="created_at" >Created at</option>
+                        <option value="sold_to_name">Paid by</option>
+                        <option value="authorized_name">Ordered by</option>
+                        <option value="comment" selected="selected">Description</option>
+                        <option value="total_price">Total price</option>
+                    </select>
+                </div>
+            </div>
+            <div cg-busy="loadingTransactions">
+                <table class="table" ts-wrapper>
+                    <thead>
+                    <tr>
+                        <th ts-criteria="created_at">Date</th>
+                        <th ts-criteria="sold_to_name">Paid by</th>
+                        <th ts-criteria="authorized_name">Ordered by</th>
+                        <th ts-criteria="comment">Description</th>
+                        <th ts-criteria="total_price">Total</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody ng-repeat="transaction in transactions | filter:filterTransactions" ng-click="transaction.expanded = !transaction.expanded" ts-repeat>
+                    <tr>
+                        <td>{{ transaction.created_at | date:'d MMM yyyy H:m'}}</td>
+                        <td>{{ transaction.sold_to_name}}</td>
+                        <td>{{ transaction.authorized_name }}</td>
+                        <td>{{ transaction.comment }}</td>
+                        <td>{{ transaction.total_price | toEuros}}</td>
+                        <td>
+                            <i class="fa fa-plus-circle" aria-hidden="true" ng-hide="transaction.expanded">
+                            </i>
+                            <i class="fa fa-minus-circle" aria-hidden="true" ng-show="transaction.expanded">
+                            </i>
+                        </td>
+                    </tr>
+                    <tr ng-repeat="subtransaction in transaction.subtransactions" class="subtransaction-row"
+                        ng-class="{'subtransaction-hidden': !transaction.expanded, 'subtransaction-visible': transaction.expanded}">
+                        <td colspan="4" class="subtransaction-cell">
+                            {{ subtransaction.amount }}x {{ subtransaction.product_name}} from {{ subtransaction.storage_name }}
+                        </td>
+                        <td class="subtransaction-cell amount-cell">
+                            {{ subtransaction.price_per_product * subtransaction.amount | toEuros}}
+                        </td>
+                        <td ng-click="deleteTransaction($event)" class="subtransaction-cell amount-cell">
+                            <b>Delete</b>
+                        </td>
+                    </tr>
+                    <tr class="subtransaction-row" ng-if="transaction.subtransactions.length > 0"
+                        ng-class="{'subtransaction-hidden': !transaction.expanded, 'subtransaction-visible': transaction.expanded}">
+                        <td colspan="4" class="subtransaction-cell">
+                            <b>Total: </b>
+                        </td>
+                        <td class="subtransaction-cell amount-cell">
+                            <b>{{ transaction.total_price | toEuros}}</b>
+                        </td>
+                        <td ng-click="deleteTransaction($event)" class="subtransaction-cell amount-cell">
+                            <b>Delete transaction</b>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -581,7 +581,94 @@ angular.module('sudosos.controllers', [])
         });
 
     }])
-    .controller('FinancialCtrl', ['$scope', function ($scope) {
+    .controller('FinancialCtrl', ['$scope', '$http', '$q', 'rootUrl', function ($scope, $http, $q, rootUrl) {
+        $scope.searchBy = "total_price";
+        $scope.searchTerm = "";
+        $scope.monthLabels = ["January", "February", "March", "April", "May", "June", "July",
+            "August", "September", "October", "November", "December"];
+        $scope.filterTransactions = function (value, index, array) {
+            if($scope.searchTerm === "") return true;
+            return value[$scope.searchBy].toString().toLowerCase().indexOf($scope.searchTerm.toLowerCase()) !== -1;
+        };
+
+        $scope.sortFilterFunction = function (item) {
+            return item.hasOwnProperty("total_price");
+        };
+
+        $scope.loadingTransactions = $http.get(rootUrl + '/transactions?amount=25').then(function (response) {
+            for(var i = 0; i < response.data.length; i++){
+                response.data[i].expanded = false;
+            }
+            $scope.transactions = response.data;
+            var transactionsData = [];
+            // Initialize the array with 0 transactions every month
+            for(var i = 0; i < $scope.monthLabels.length; i++){
+                transactionsData[i] = 0;
+            }
+            var products = {};
+            var total = 0;
+            // Set the data for the various graphs
+            for(var i = 0; i < $scope.transactions.length; i++){
+                // Add the transaction to the correct month
+                var transactionDate = new Date($scope.transactions[i].created_at);
+                transactionsData[transactionDate.getMonth()]++;
+                // Create an object containing the amount every product is sold
+                for(var j = 0; j < $scope.transactions[i].subtransactions.length; j++){
+                    if(products[$scope.transactions[i].subtransactions[j].product_name] === undefined){
+                        products[$scope.transactions[i].subtransactions[j].product_name] = $scope.transactions[i].subtransactions[j].amount;
+                    }else{
+                        products[$scope.transactions[i].subtransactions[j].product_name] += $scope.transactions[i].subtransactions[j].amount;
+                    }
+                    // Also count the total amount of products sold
+                    total += $scope.transactions[i].subtransactions[j].amount;
+                }
+            }
+            $scope.mostSoldProducts = [];
+            $scope.mostSoldProductLabels = [];
+            var totalAdded = 0;
+            for(var product in products){
+                // Check if the amount of items sold of a product is at least 5% of the total
+                if(products.hasOwnProperty(product) && products[product] >= 0.05 * total){
+                    totalAdded += products[product];
+                    $scope.mostSoldProducts.push(products[product]);
+                    $scope.mostSoldProductLabels.push(product);
+                }
+            }
+            // Create a slice "Other" as well, with the items that are too small to count
+            $scope.mostSoldProducts.push(total - totalAdded);
+            $scope.mostSoldProductLabels.push("Other");
+
+            $scope.transactionsData = transactionsData;
+        });
+
+        $scope.deleteTransaction = function (event) {
+            event.stopImmediatePropagation();
+            if(this.hasOwnProperty("subtransaction")){
+                for(var i = 0; i < this.$parent.transaction.subtransactions.length; i++){
+                    if(this.$parent.transaction.subtransactions[i].id === this.subtransaction.id){
+
+                        $http.delete(rootUrl + "/transactions/"
+                            + this.$parent.transaction.id + "/subtransactions/" + this.subtransaction.id)
+                            .then(function (response) {
+                                this.$parent.transaction.subtransactions.splice(i, 1);
+                            });
+                        return;
+                    }
+                }
+            }else{
+                for(var i = 0; i < $scope.transactions.length; i++){
+                    if($scope.transactions[i].id === this.$parent.transaction.id){
+
+                        $http.delete(rootUrl + "/transactions/"
+                            + this.$parent.transaction.id)
+                            .then(function (response) {
+                                $scope.transactions.splice(i, 1);
+                            });
+                        return;
+                    }
+                }
+            }
+        }
 
     }])
     .controller('IncreaseBalanceCtrl', ['$scope', function ($scope) {
